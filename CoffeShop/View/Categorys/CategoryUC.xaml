@@ -23,6 +23,7 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
+    
     <materialDesign:TransitioningContent>
         <materialDesign:TransitioningContent.OpeningEffects >
             <materialDesign:TransitionEffect Kind="SlideInFromRight"/>
@@ -118,9 +119,7 @@
                 </materialDesign:Card>
 
                 <!--#region [Paging] -->
-                <Grid Grid.Row="2">
-                    <paginguc:PagingUC DataContext="{Binding PagingViewmodel}"/>
-                </Grid>
+               
                 <!--#endregion-->
 
             </Grid>

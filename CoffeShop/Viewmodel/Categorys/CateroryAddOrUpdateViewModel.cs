@@ -1,15 +1,8 @@
-﻿using Business.Model;
-using CoffeShop.ExtentionCommon;
+﻿using CoffeShop.ExtentionCommon;
 using CoffeShop.Model;
-using CoffeShop.Utility;
-using CoffeShop.View.Dialog;
 using CoffeShop.Viewmodel.Base;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CoffeShop.Viewmodel.Categorys
@@ -34,15 +27,15 @@ namespace CoffeShop.Viewmodel.Categorys
         }
         #endregion
         #region [Action]
-        public Action ReLoadList { get; set; }
+        public Action<CategoryModel> AddCategoryOrEditCategoryCallback { get; set; }
         public Action CloseDialogParent { get; set; }
         #endregion
         #region [Command]
         public ICommand CloseDialogCMD { get { return new CommandHelper(CloseDialogParent); } }
         public ICommand SaveCMD { get { return new CommandHelper(Save); } }
         #endregion
-
-        public CateroryAddOrUpdateViewModel(Action reLoadListCat, Action closeDialog, CategoryModel category = null)
+         
+        public CateroryAddOrUpdateViewModel(Action<CategoryModel> addCategoryOrEditCategoryCallback, Action closeDialog, CategoryModel category = null)
         {
             if (category == null) // Add new
             {
@@ -52,16 +45,17 @@ namespace CoffeShop.Viewmodel.Categorys
             {
                 CurrentCategory = category.Clone();
                 _isEdit = true;
-            }
-               
+            } 
 
             MaxLengthName = CurrentCategory.GetAttributeFrom<MaxLengthAttribute>(nameof(CurrentCategory.Name)).Length;
-            ReLoadList = reLoadListCat;
+            AddCategoryOrEditCategoryCallback = addCategoryOrEditCategoryCallback;
             CloseDialogParent = closeDialog;
         }
+
         public void Save()
         {
-             
+            AddCategoryOrEditCategoryCallback(CurrentCategory);
+            CloseDialogParent();
         }
     }
 }

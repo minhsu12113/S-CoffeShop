@@ -1,0 +1,70 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\Codes\\mentor\\S-CoffeShop\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3386AB89-C187-4DDA-98FC-0133F398997E}|CoffeShop\\CoffeShop.csproj|e:\\codes\\mentor\\s-coffeshop\\coffeshop\\view\\categorys\\categoryuc.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{3386AB89-C187-4DDA-98FC-0133F398997E}|CoffeShop\\CoffeShop.csproj|solutionrelative:coffeshop\\view\\categorys\\categoryuc.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3386AB89-C187-4DDA-98FC-0133F398997E}|CoffeShop\\CoffeShop.csproj|e:\\codes\\mentor\\s-coffeshop\\coffeshop\\viewmodel\\categorys\\cateroryaddorupdateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3386AB89-C187-4DDA-98FC-0133F398997E}|CoffeShop\\CoffeShop.csproj|solutionrelative:coffeshop\\viewmodel\\categorys\\cateroryaddorupdateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3386AB89-C187-4DDA-98FC-0133F398997E}|CoffeShop\\CoffeShop.csproj|e:\\codes\\mentor\\s-coffeshop\\coffeshop\\viewmodel\\categorys\\categoryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3386AB89-C187-4DDA-98FC-0133F398997E}|CoffeShop\\CoffeShop.csproj|solutionrelative:coffeshop\\viewmodel\\categorys\\categoryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CategoryViewModel.cs",
+              "DocumentMoniker": "E:\\Codes\\mentor\\S-CoffeShop\\CoffeShop\\Viewmodel\\Categorys\\CategoryViewModel.cs",
+              "RelativeDocumentMoniker": "CoffeShop\\Viewmodel\\Categorys\\CategoryViewModel.cs",
+              "ToolTip": "E:\\Codes\\mentor\\S-CoffeShop\\CoffeShop\\Viewmodel\\Categorys\\CategoryViewModel.cs",
+              "RelativeToolTip": "CoffeShop\\Viewmodel\\Categorys\\CategoryViewModel.cs",
+              "ViewState": "AQIAAGgAAAAAAAAAAAAwwEUAAABFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-20T13:25:22.704Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CateroryAddOrUpdateViewModel.cs",
+              "DocumentMoniker": "E:\\Codes\\mentor\\S-CoffeShop\\CoffeShop\\Viewmodel\\Categorys\\CateroryAddOrUpdateViewModel.cs",
+              "RelativeDocumentMoniker": "CoffeShop\\Viewmodel\\Categorys\\CateroryAddOrUpdateViewModel.cs",
+              "ToolTip": "E:\\Codes\\mentor\\S-CoffeShop\\CoffeShop\\Viewmodel\\Categorys\\CateroryAddOrUpdateViewModel.cs",
+              "RelativeToolTip": "CoffeShop\\Viewmodel\\Categorys\\CateroryAddOrUpdateViewModel.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAC4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-20T13:24:40.119Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CategoryUC.xaml",
+              "DocumentMoniker": "E:\\Codes\\mentor\\S-CoffeShop\\CoffeShop\\View\\Categorys\\CategoryUC.xaml",
+              "RelativeDocumentMoniker": "CoffeShop\\View\\Categorys\\CategoryUC.xaml",
+              "ToolTip": "E:\\Codes\\mentor\\S-CoffeShop\\CoffeShop\\View\\Categorys\\CategoryUC.xaml",
+              "RelativeToolTip": "CoffeShop\\View\\Categorys\\CategoryUC.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-20T13:24:07.75Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

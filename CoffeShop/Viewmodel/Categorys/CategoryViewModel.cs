@@ -1,18 +1,12 @@
 ﻿using CoffeShop.Model;
 using CoffeShop.Viewmodel.Base;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
-using Business.Model;
-using CoffeShop.ExtentionCommon;
 using System.Windows.Input;
 using CoffeShop.View.Categorys;
-using CoffeShop.Viewmodel.Categorys;
 using CoffeShop.View.Dialog;
 using CoffeShop.Internationalization;
+using System.Collections.ObjectModel;
 
 namespace CoffeShop.Viewmodel.Categorys
 {
@@ -49,11 +43,12 @@ namespace CoffeShop.Viewmodel.Categorys
             set { _isOpendialog = value; OnPropertyChanged(); }
         }
         #endregion
+
         #region [Collection]
-        private List<CategoryModel> _categoryList;
+        private ObservableCollection<CategoryModel> _categoryList;
 
 
-        public List<CategoryModel> CategoryList
+        public ObservableCollection<CategoryModel> CategoryList
         {
             get { return _categoryList; }
             set { _categoryList = value; OnPropertyChanged(); }
@@ -61,18 +56,18 @@ namespace CoffeShop.Viewmodel.Categorys
 
 
         #endregion
+
         #region [Command]
-        public ICommand AddNewCMD { get { return new CommandHelper(AddNew); } }
-        public ICommand EditCMD { get { return new CommandHelper<CategoryModel>((c) => { return c != null; }, Edit); } }
-        public ICommand DeleteCMD { get { return new CommandHelper<CategoryModel>((c) => { return c != null; }, Delete); } }
+        public ICommand AddNewCMD { get { return new CommandHelper(OpenDialogAddNew); } }
+        public ICommand EditCMD { get { return new CommandHelper<CategoryModel>((c) => { return c != null; }, OpenDialogEdit); } }
+        public ICommand DeleteCMD { get { return new CommandHelper<CategoryModel>((c) => { return c != null; }, DeleteCategory); } }
         public ICommand SearchCMD { get { return new CommandHelper(LoadCategory); } }
         #endregion
+
         public CategoryViewModel()
         {
             NameSearch = String.Empty;
-            //PagingViewmodel = new PagingViewmodel(SearchCategory);
-            //PagingViewmodel.TotalCountItem = LoadTotalCount();
-            //LoadCategory();
+            CategoryList = new ObservableCollection<CategoryModel>();
         }
        
         public int LoadTotalCount()
@@ -90,26 +85,41 @@ namespace CoffeShop.Viewmodel.Categorys
            
         }   
         
-        public void AddNew()
+        public void OpenDialogAddNew()
         {
-            OpenDialog(new CategoryAddOrUpdateUC(new CateroryAddOrUpdateViewModel(LoadCategory, CloseDialog)));           
+            OpenDialog(new CategoryAddOrUpdateUC(new CateroryAddOrUpdateViewModel(AddCategoryOrEdit, CloseDialog)));           
         }
 
-        public void Edit(CategoryModel category)
+        public void OpenDialogEdit(CategoryModel category)
         {
-            OpenDialog(new CategoryAddOrUpdateUC(new CateroryAddOrUpdateViewModel(LoadCategory, CloseDialog,category)));
+            OpenDialog(new CategoryAddOrUpdateUC(new CateroryAddOrUpdateViewModel(AddCategoryOrEdit, CloseDialog,category)));
         }
 
-        public void Delete(CategoryModel category)
+        public void DeleteCategory(CategoryModel category)
         {
             string question = String.Format(StringResources.Find("CATEGORY_CONFIRM_DELETE"), category.Name);
             OpenDialog(new ConfirmUC(question,
                 () =>
                 {
-                           
+                    CategoryList.Remove(category);
+                    CloseDialog();
 
                 }, CloseDialog));
             
+        }
+
+        public void AddCategoryOrEdit(CategoryModel category)
+        {
+            var addOrUpdateObj = CategoryList.Where(c => c.Id == category.Id)?.FirstOrDefault();
+            if(addOrUpdateObj != null)
+            {
+                CategoryList.Remove(addOrUpdateObj);
+                CategoryList.Add(category);
+            }
+            else
+            {
+                CategoryList.Add(category);
+            }
         }
 
         public void OpenDialog(object uc = null)
