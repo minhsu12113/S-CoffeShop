@@ -1,14 +1,9 @@
-﻿using Business.Model;
-using CoffeShop.ExtentionCommon;
-using CoffeShop.Model;
-using CoffeShop.Utility;
+﻿using CoffeShop.Model;
 using CoffeShop.View.Dialog;
 using CoffeShop.View.Foods;
 using CoffeShop.Viewmodel.Base;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 

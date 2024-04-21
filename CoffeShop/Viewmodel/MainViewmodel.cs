@@ -1,30 +1,16 @@
 ﻿using CoffeShop.Viewmodel.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Microsoft.Win32;
-using System.Management;
-using CoffeShop.DBHelper;
-using System.ComponentModel;
 using CoffeShop.Internationalization;
 using static CoffeShop.Enums.ALL_ENUM;
 using CoffeShop.Model.UI;
 using System.Windows.Media;
 using CoffeShop.View.Category;
-using CoffeShop.View.Home;
 using CoffeShop.View.Foods;
 using CoffeShop.View.Statistics;
 using CoffeShop.View.User;
 using CoffeShop.View.Setting;
 using CoffeShop.View.Dialog;
-using Business.Model;
-using CoffeShop.Model;
-using CoffeShop.ExtentionCommon;
-using System.Threading;
 using CoffeShop.View.FoodsTable;
 
 namespace CoffeShop.Viewmodel

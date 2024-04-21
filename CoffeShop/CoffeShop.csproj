@@ -337,10 +337,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Business\Business.csproj">
-      <Project>{67696231-1789-417F-AE0E-64392047CE06}</Project>
-      <Name>Business</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CommonResources\CommonResources.csproj">
       <Project>{4e396439-a6f5-45c3-9578-f95660b86383}</Project>
       <Name>CommonResources</Name>

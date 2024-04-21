@@ -7,8 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using CoffeShop.ExtentionCommon; 
-using Business.Model;
+using CoffeShop.ExtentionCommon;  
 
 namespace CoffeShop.Viewmodel.Food
 {

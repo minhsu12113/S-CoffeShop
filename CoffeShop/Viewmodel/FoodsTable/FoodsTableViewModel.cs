@@ -1,5 +1,4 @@
-﻿using Business.Model;
-using CoffeShop.ExtentionCommon;
+﻿using CoffeShop.ExtentionCommon;
 using CoffeShop.Model;
 using CoffeShop.View.Dialog;
 using CoffeShop.View.FoodsTable;

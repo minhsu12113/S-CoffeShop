@@ -1,5 +1,4 @@
-﻿using Business.Model;
-using CoffeShop.ExtentionCommon;
+﻿using CoffeShop.ExtentionCommon;
 using CoffeShop.Internationalization;
 using CoffeShop.Model;
 using CoffeShop.Utility;
@@ -21,7 +20,7 @@ namespace CoffeShop.Viewmodel
         #region [Variable]
         private object _dialogContent;
         private bool _isOpendialog;
-        private User _currentUser;
+        private UserModel _currentUser;
         private WindowState _windowState;
 
 
@@ -34,7 +33,7 @@ namespace CoffeShop.Viewmodel
             get { return _windowState; }
             set { _windowState = value; OnPropertyChanged(); }
         }
-        public User CurrentUser
+        public UserModel CurrentUser
         {
             get { return _currentUser; }
             set { _currentUser = value; OnPropertyChanged(); }
@@ -60,7 +59,7 @@ namespace CoffeShop.Viewmodel
 
         public LoginViewmodel()
         {
-            CurrentUser = new User();
+           // CurrentUser = new User();
         }
         public void CloseDialog()
         {
