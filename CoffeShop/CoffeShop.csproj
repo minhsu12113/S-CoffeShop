@@ -142,6 +142,8 @@
     <Compile Include="Viewmodel\Food\FoodViewModel.cs" />
     <Compile Include="Viewmodel\Home\HomeViewmodel.cs" />
     <Compile Include="Viewmodel\PagingViewmodel.cs" />
+    <Compile Include="Viewmodel\User\AddOrUpdateUserViewModel.cs" />
+    <Compile Include="Viewmodel\User\UserViewModel.cs" />
     <Compile Include="View\Categorys\CategoryAddOrUpdateUC.xaml.cs">
       <DependentUpon>CategoryAddOrUpdateUC.xaml</DependentUpon>
     </Compile>
@@ -171,6 +173,9 @@
     </Compile>
     <Compile Include="View\Statistics\StatisticsUC.xaml.cs">
       <DependentUpon>StatisticsUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\User\AddOrUpdateUserUC.xaml.cs">
+      <DependentUpon>AddOrUpdateUserUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\User\UserUC.xaml.cs">
       <DependentUpon>UserUC.xaml</DependentUpon>
@@ -301,6 +306,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Statistics\StatisticsUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\User\AddOrUpdateUserUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

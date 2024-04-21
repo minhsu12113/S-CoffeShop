@@ -52,10 +52,12 @@ namespace CoffeShop.Viewmodel
             set { _currentView = value; OnPropertyChanged(); }
         }
         #endregion
+
         #region [Command]        
         public ICommand NavigateToViewCMD { get { return new CommandHelper<ItemNavigate>((v) => { return v != null; }, NavigateToView); } }
         public ICommand DragmoveWindowCMD { get { return new CommandHelper<Window>((w) => { return w != null; }, DragmoveWindow); } }
         public ICommand MinimizedWindowCMD { get { return new CommandHelper(MinimizedWindow); } }
+        public ICommand MaximizeWindowCMD { get { return new CommandHelper(MaximizeWindow); } }
         public ICommand ShutdownAppCMD { get { return new CommandHelper(ShutdownApp); } }
         #endregion
 
@@ -64,7 +66,6 @@ namespace CoffeShop.Viewmodel
             StringResources.ApplyLanguage(Enums.ALL_ENUM.LANGUAGE.VN);
             CurrenView = new FoodsTableUC();
             StateWindow = WindowState.Normal;
-            GenerationTabel();
         }
 
         public void NavigateToView(ItemNavigate itemNavigate)
@@ -95,6 +96,7 @@ namespace CoffeShop.Viewmodel
                     break;
             }
         }
+
         public void HandleItemNavigateWhenChangeView(ItemNavigate itemNavigate)
         {
             if (itemNavigate != null)
@@ -105,33 +107,22 @@ namespace CoffeShop.Viewmodel
                 itemNavigate.StatePointer = Visibility.Visible;
             }
         }
-        public void DragmoveWindow(Window window)
-        {
-            window.DragMove();
-        }
-        public void MinimizedWindow()
-        {
-            StateWindow = WindowState.Minimized;
-        }
-        public void ShutdownApp()
-        {
-            OpenDialog(new ConfirmUC("Bạn có muốn đóng ứng dụng không?", () => { App.Current.Shutdown(); }, CloseDialog));
-        }
+
+        public void DragmoveWindow(Window window) => window.DragMove();
+
+        public void MinimizedWindow() => StateWindow = WindowState.Minimized;
+
+        public void MaximizeWindow() => StateWindow = (StateWindow == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized);
+
+        public void ShutdownApp() => OpenDialog(new ConfirmUC("Bạn có muốn đóng ứng dụng không?", () => { App.Current.Shutdown(); }, CloseDialog));
+
         public void OpenDialog(object uc = null)
         {
             if (uc != null)
                 DialogContent = uc;
             IsOpenDialog = true;
         }
-        public void CloseDialog()
-        {
-            IsOpenDialog = false;
-        }
 
-        // Chỗ này cần loadtable
-        public async void GenerationTabel()
-        {
-            
-        }
+        public void CloseDialog() => IsOpenDialog = false;
     }
 }

@@ -90,7 +90,7 @@
                                 <TextBox Grid.Row="2" Text="{Binding CurrentUser.UserName}" FontSize="{Binding FontSize16,Source={StaticResource SizeManager}}" Grid.Column="1" VerticalContentAlignment="Bottom" materialDesign:HintAssist.Hint="{DynamicResource ENTER_USERNAME}"/>
 
                                 <TextBlock Grid.Row="3" Grid.Column="1" Margin="0 15 0 0"  FontSize="{Binding FontSize16,Source={StaticResource SizeManager}}" FontWeight="SemiBold" HorizontalAlignment="Left" Text="{DynamicResource PASSWORD}"/>
-                                <PasswordBox Grid.Row="4" Grid.Column="1" util:PasswordHelper.Attach="True" util:PasswordHelper.Password="{Binding CurrentUser.PassWord,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                <PasswordBox Grid.Row="4" Grid.Column="1" util:PasswordHelper.Attach="True" util:PasswordHelper.Password="{Binding CurrentUser.Password,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                              FontSize="{Binding FontSize16,Source={StaticResource SizeManager}}" 
                                              VerticalContentAlignment="Bottom" 
                                              materialDesign:HintAssist.Hint="{DynamicResource ENTER_PASSWORD}"/>

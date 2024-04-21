@@ -7,6 +7,8 @@ using CoffeShop.View.Categorys;
 using CoffeShop.View.Dialog;
 using CoffeShop.Internationalization;
 using System.Collections.ObjectModel;
+using System.Windows.Documents;
+using System.Collections.Generic;
 
 namespace CoffeShop.Viewmodel.Categorys
 {
@@ -18,20 +20,16 @@ namespace CoffeShop.Viewmodel.Categorys
         private PagingViewmodel _pagingViewmodel;
         private string _nameSearch;
 
-
-
-
-
         public string NameSearch
         {
             get { return _nameSearch; }
-            set { _nameSearch = value; OnPropertyChanged(); }
+            set { 
+                _nameSearch = value; 
+                OnPropertyChanged();
+                SearchCategory();
+            }
         }
-        public PagingViewmodel PagingViewmodel
-        {
-            get { return _pagingViewmodel; }
-            set { _pagingViewmodel = value; OnPropertyChanged(); }
-        }
+
         public object DialogContent 
         {
             get { return _dialogContent; }
@@ -46,15 +44,13 @@ namespace CoffeShop.Viewmodel.Categorys
 
         #region [Collection]
         private ObservableCollection<CategoryModel> _categoryList;
-
-
         public ObservableCollection<CategoryModel> CategoryList
         {
             get { return _categoryList; }
             set { _categoryList = value; OnPropertyChanged(); }
         }
 
-
+        public List<CategoryModel> MastetCategoryList { get; set; }
         #endregion
 
         #region [Command]
@@ -66,28 +62,30 @@ namespace CoffeShop.Viewmodel.Categorys
 
         public CategoryViewModel()
         {
-            NameSearch = String.Empty;
             CategoryList = new ObservableCollection<CategoryModel>();
+            MastetCategoryList = new List<CategoryModel>();
         }
        
         public int LoadTotalCount()
         {
             return 0;
         }
-
-        public void LoadCategory()
-        {
-            PagingViewmodel.TotalCountItem = LoadTotalCount();
-        }   
         
-        public void SearchCategory(int pageIndex, int pageSize)
+        public void SearchCategory()
         {
-           
+            if (String.IsNullOrEmpty(NameSearch))
+            {
+                CategoryList = new ObservableCollection<CategoryModel>(MastetCategoryList);
+                return;
+            }
+                
+            var searchData = MastetCategoryList.Where(c => c.Name.ToLower().Contains(NameSearch.ToLower())).ToList();
+            CategoryList = new ObservableCollection<CategoryModel>(searchData);
         }   
         
         public void OpenDialogAddNew()
         {
-            OpenDialog(new CategoryAddOrUpdateUC(new CateroryAddOrUpdateViewModel(AddCategoryOrEdit, CloseDialog)));           
+            OpenDialog(new CateroryAddOrUpdateViewModel(AddCategoryOrEdit, CloseDialog));           
         }
 
         public void OpenDialogEdit(CategoryModel category)
@@ -101,7 +99,8 @@ namespace CoffeShop.Viewmodel.Categorys
             OpenDialog(new ConfirmUC(question,
                 () =>
                 {
-                    CategoryList.Remove(category);
+                    MastetCategoryList.Remove(category);
+                    LoadCategory();
                     CloseDialog();
 
                 }, CloseDialog));
@@ -110,16 +109,21 @@ namespace CoffeShop.Viewmodel.Categorys
 
         public void AddCategoryOrEdit(CategoryModel category)
         {
-            var addOrUpdateObj = CategoryList.Where(c => c.Id == category.Id)?.FirstOrDefault();
+            var addOrUpdateObj = MastetCategoryList.Where(c => c.Id == category.Id)?.FirstOrDefault();
             if(addOrUpdateObj != null)
             {
-                CategoryList.Remove(addOrUpdateObj);
-                CategoryList.Add(category);
+                MastetCategoryList.Remove(addOrUpdateObj);
+                MastetCategoryList.Add(category);
             }
             else
-            {
-                CategoryList.Add(category);
-            }
+                MastetCategoryList.Add(category);
+
+            LoadCategory();
+        }
+
+        private void LoadCategory()
+        {
+            CategoryList = new ObservableCollection<CategoryModel>(MastetCategoryList);
         }
 
         public void OpenDialog(object uc = null)

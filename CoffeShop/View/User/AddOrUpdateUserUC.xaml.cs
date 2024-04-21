@@ -17,14 +17,14 @@ using System.Windows.Shapes;
 namespace CoffeShop.View.User
 {
     /// <summary>
-    /// Interaction logic for UserUC.xaml
+    /// Interaction logic for AddOrUpdateUser.xaml
     /// </summary>
-    public partial class UserUC : UserControl
+    public partial class AddOrUpdateUserUC : UserControl
     {
-        public UserUC()
+        public AddOrUpdateUserUC(AddOrUpdateUserViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = new UserViewModel();
+            this.DataContext = viewModel;
         }
     }
 }

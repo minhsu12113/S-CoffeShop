@@ -6,19 +6,114 @@
              xmlns:local="clr-namespace:CoffeShop.View.User"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:converter="clr-namespace:CoffeShop.Converters"
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto" 
              TextElement.FontWeight="Regular"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:ListViewIndexConvert x:Key="CountItemListView"/>
+        <Style TargetType="materialDesign:PackIcon" x:Key="CumtomStylePack">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
     <materialDesign:TransitioningContent>
         <materialDesign:TransitioningContent.OpeningEffects >
             <materialDesign:TransitionEffect Kind="SlideInFromRight"/>
         </materialDesign:TransitioningContent.OpeningEffects>
 
 
-        <materialDesign:Card UniformCornerRadius="20">
-            <TextBlock Text="User View" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        </materialDesign:Card>
+        <materialDesign:DialogHost IsOpen="{Binding IsOpenDialog}" DialogContent="{Binding DialogContent}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.08*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" materialDesign:ButtonAssist.CornerRadius="5" Command="{Binding AddNewCMD}" Margin="15 5 10 0" HorizontalContentAlignment="Stretch" VerticalAlignment="Bottom">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Grid.Column="0" Kind="Add" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto"/>
+                            <TextBlock Grid.Column="1" Margin="5 0 0 0" Text="Thêm mới" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+
+                    <TextBox Grid.Column="4" FontSize="16" Text="{Binding NameSearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
+                  HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Top" Margin="15 5 20 0">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding SearchCMD}"/>
+                        </TextBox.InputBindings>
+                        <materialDesign:HintAssist.Hint>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Tìm Kiếm" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2 3 0 0"/>
+                            </StackPanel>
+                        </materialDesign:HintAssist.Hint>
+                    </TextBox>
+
+                </Grid>
+
+                <materialDesign:Card Grid.Row="1" UniformCornerRadius="20" Margin="10 10 10 10">
+                    <ListView ItemsSource="{Binding UserModelList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="16">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignGridViewItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource CountItemListView}}"/>
+                                <GridViewColumn Header="Tên Tài Khoản" DisplayMemberBinding="{Binding UserName}"/>
+                                <GridViewColumn Header="Chức Danh" DisplayMemberBinding="{Binding Permission}"/>
+                                <GridViewColumn Header="Ghi Chú" DisplayMemberBinding="{Binding Note}"/>
+                                <GridViewColumn>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon Kind="PencilBox" Style="{StaticResource CumtomStylePack}" Margin="5" Foreground="Gray" HorizontalAlignment="Center" Width="Auto" Height="Auto">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                            <i:InvokeCommandAction Command="{Binding Path=DataContext.EditCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" 
+                                                                        CommandParameter="{Binding}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </materialDesign:PackIcon>
+                                                <materialDesign:PackIcon Kind="CloseBox" Style="{StaticResource CumtomStylePack}" Margin="5" Foreground="DarkRed" HorizontalAlignment="Center" Width="Auto" Height="Auto">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                            <i:InvokeCommandAction Command="{Binding Path=DataContext.DeleteCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" 
+                                                                        CommandParameter="{Binding}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </materialDesign:PackIcon>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </materialDesign:Card> 
+            </Grid>
+        </materialDesign:DialogHost>
     </materialDesign:TransitioningContent>
 </UserControl>

@@ -28,8 +28,6 @@
         <materialDesign:TransitioningContent.OpeningEffects >
             <materialDesign:TransitionEffect Kind="SlideInFromRight"/>
         </materialDesign:TransitioningContent.OpeningEffects>
-
-
         <materialDesign:DialogHost IsOpen="{Binding IsOpenDialog}" DialogContent="{Binding DialogContent}">
             <Grid>
                 <Grid.RowDefinitions>
@@ -85,11 +83,7 @@
                                 <GridViewColumn Header="STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource CountItemListView}}"/>
                                 <GridViewColumn Header="Tên" DisplayMemberBinding="{Binding Name}"/>
                                 <GridViewColumn Header="Ghi Chú" DisplayMemberBinding="{Binding Note}"/>
-                                <GridViewColumn Header="Người Tạo" DisplayMemberBinding="{Binding UserCreated}"/>
-                                <GridViewColumn Header="Ngày Tạo" DisplayMemberBinding="{Binding TimeCreated, StringFormat='{}{0:dd/MM/yyyy hh:mm:ss}'}"/>
-                                <GridViewColumn Header="Người Chỉnh Sửa" DisplayMemberBinding="{Binding UserModified}"/>
-                                <GridViewColumn Header="Ngày Chỉnh Sửa" DisplayMemberBinding="{Binding TimeModified, StringFormat='{}{0:dd/MM/yyyy hh:mm:ss}'}"/>
-                                <GridViewColumn Header="Chức Năng">
+                                <GridViewColumn>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">

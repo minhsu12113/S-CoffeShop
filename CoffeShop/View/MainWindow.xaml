@@ -22,9 +22,11 @@
         TextOptions.TextRenderingMode="Auto" 
         TextElement.FontWeight="Regular"
         WindowStartupLocation="CenterScreen">
+    
     <Window.DataContext >
         <viewmodel:MainViewmodel/>
     </Window.DataContext>
+    
     <Window.Resources>
         <converter:BoolToVisibilityConverter x:Key="BooleanToVisibility"/>
     </Window.Resources>
@@ -96,6 +98,9 @@
                         <StackPanel Margin="0 5 10 0" Orientation="Horizontal" HorizontalAlignment="Right">
                             <Button Background="Transparent" BorderBrush="Transparent" Foreground="Gray" Command="{Binding MinimizedWindowCMD}">
                                 <materialDesign:PackIcon Kind="WindowMinimize" Width="Auto" Height="Auto" Margin="2"/>
+                            </Button>
+                            <Button Background="Transparent" BorderBrush="Transparent" Foreground="Gray" Command="{Binding MaximizeWindowCMD}">
+                                <materialDesign:PackIcon Kind="WindowMaximize" Width="Auto" Height="Auto" Margin="2"/>
                             </Button>
                             <Button Background="Transparent" BorderBrush="Transparent" Foreground="OrangeRed" Command="{Binding ShutdownAppCMD}">
                                 <materialDesign:PackIcon Kind="Power" Width="Auto" Height="Auto" Margin="2"/>

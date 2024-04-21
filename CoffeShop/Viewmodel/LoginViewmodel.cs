@@ -25,9 +25,6 @@ namespace CoffeShop.Viewmodel
 
 
 
-
-
-
         public WindowState StateWindow
         {
             get { return _windowState; }
@@ -49,6 +46,7 @@ namespace CoffeShop.Viewmodel
             set { _isOpendialog = value; OnPropertyChanged(); }
         }
         #endregion
+
         #region [Command]
         public ICommand DragMoveWindowCMD { get { return new CommandHelper<Window>((w) => { return w != null; }, DragMoveWindow); } }
         public ICommand LoginCMD { get { return new CommandHelper(Login); } }
@@ -57,20 +55,17 @@ namespace CoffeShop.Viewmodel
         #endregion
 
 
-        public LoginViewmodel()
-        {
-           // CurrentUser = new User();
-        }
-        public void CloseDialog()
-        {
-            IsOpenDialog = false;
-        }
+        public LoginViewmodel() => CurrentUser = new UserModel();
+
+        public void CloseDialog() => IsOpenDialog = false;
+
         public void OpenDialog(object uc = null)
         {
             if (uc != null)
                 DialogContent = uc;
             IsOpenDialog = true;
         }
+
         public void OpenDialog(int timeSecondAutoClose, object uc = null)
         {
             if (uc != null)
@@ -81,33 +76,29 @@ namespace CoffeShop.Viewmodel
             }               
             IsOpenDialog = true;
         }
-        public void DragMoveWindow(Window window)
-        {
-            window.DragMove();
-        }
+
+        public void DragMoveWindow(Window window) => window.DragMove();
+
         public void Login()
         {
-            if (!string.IsNullOrWhiteSpace(CurrentUser.UserName) && !string.IsNullOrWhiteSpace(CurrentUser.PassWord))
+            if (!string.IsNullOrWhiteSpace(CurrentUser.UserName) && !string.IsNullOrWhiteSpace(CurrentUser.Password))
             {
-                if(CurrentUser.UserName == "admin" && CurrentUser.PassWord == "admin")
+                if(CurrentUser.UserName == "admin" && CurrentUser.Password == "admin")
+                {
+                    CSGlobal.Instance.LoginWindow.Hide();
+                    CSGlobal.Instance.MainWindow = new MainWindow();
+                    CSGlobal.Instance.MainWindow.Show();
+                    CSGlobal.Instance.CurrentUser = CurrentUser;
+                }
+                else
+                {
+                    OpenDialog(2, new WarningUC(StringResources.Find("ERROR_LOGIN")));
+                }
+            }
+        }
 
-                CSGlobal.Instance.LoginWindow.Hide();
-                CSGlobal.Instance.MainWindow = new MainWindow();
-                CSGlobal.Instance.MainWindow.Show();
-                CSGlobal.Instance.CurrentUser = MyExtention.CloneData<UserModel>(CurrentUser);
-            }
-            else
-            {
-                OpenDialog(2, new WarningUC(StringResources.Find("ERROR_LOGIN")));
-            }
-        }
-        public void MiniMizedWindow()
-        {
-            StateWindow = WindowState.Minimized;
-        }
-        public void CloseWindow()
-        {
-            OpenDialog(new ConfirmUC("Bạn có muốn đóng ứng dụng không?", () => { App.Current.Shutdown(); }, CloseDialog));
-        }
+        public void MiniMizedWindow() => StateWindow = WindowState.Minimized;
+
+        public void CloseWindow() => OpenDialog(new ConfirmUC("Bạn có muốn đóng ứng dụng không?", () => { App.Current.Shutdown(); }, CloseDialog));
     }
 }

@@ -3,6 +3,7 @@ using CoffeShop.Model;
 using CoffeShop.Viewmodel.Base;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CoffeShop.Viewmodel.Categorys
@@ -54,6 +55,12 @@ namespace CoffeShop.Viewmodel.Categorys
 
         public void Save()
         {
+            if (String.IsNullOrEmpty(CurrentCategory.Name))
+            {
+                MessageBox.Show("Vui Lòng Nhập Đầy Đủ Thông Tin!");
+                return;
+            }
+
             AddCategoryOrEditCategoryCallback(CurrentCategory);
             CloseDialogParent();
         }
