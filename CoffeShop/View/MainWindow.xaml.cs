@@ -1,4 +1,6 @@
 ﻿using CoffeShop.Utility;
+using CoffeShop.View.Dialog;
+using CoffeShop.Viewmodel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +27,18 @@ namespace CoffeShop
         {
             InitializeComponent();
             CSGlobal.Instance.MainWindow = this;
+            CSGlobal.Instance.MainViewmodel = this.DataContext as MainViewmodel;
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            CSGlobal.Instance.MainViewmodel.OpenDialog(new ConfirmUC("Bạn có muốn đăng xuất không?", () => {
+                (CSGlobal.Instance.LoginWindow.DataContext as LoginViewmodel).CurrentUser.UserName = "";
+                (CSGlobal.Instance.LoginWindow.DataContext as LoginViewmodel).CurrentUser.Password = "";
+                (CSGlobal.Instance.LoginWindow.DataContext as LoginViewmodel).SaveRememberData();
+                this.Hide();
+                CSGlobal.Instance.LoginWindow.Show();
+            }, CSGlobal.Instance.MainViewmodel.CloseDialog));
         }
     }
 }

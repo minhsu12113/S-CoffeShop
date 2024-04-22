@@ -16,7 +16,7 @@ namespace CoffeShop.Converters
         {
             if (value != null)
                 return MyExtention.Base64ToImageSource(value as string);
-            return CSGlobal.Instance.NoImage();
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

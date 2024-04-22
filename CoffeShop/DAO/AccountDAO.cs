@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoffeShop.DAO.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -34,15 +35,18 @@ namespace CoffeShop.DAO
 			DataTable dt = DataProvider.Instance.ExecuteQuery(query);
 			return dt;
 		}
-		public int Insert(string id_User,string pass,string userName,string email, string phone_Number,string cccd,string position,int working_Day)
+		//string id_User,string pass,string userName,string email, string phone_Number,string cccd,string position,int working_Day
+		public int Insert(USER user)
 		{
-			string query = $"EXEC TM_USER_Insert '{id_User}','{pass}','{userName}','{email}','{phone_Number}','{cccd}','{position}',{working_Day}";
+			string query = $"EXEC TM_USER_Insert '{user.ID_User}','{user.Pass}','{user.UserName}','{user.Email}','{user.PhoneNumber}','{user.CCCD}','{user.Position}',{user.Working_Days}";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}
-		public int Update(string id_User, string pass, string userName, string email, string phone_Number, string cccd, string position, int working_Day)
+		//string id_User, string pass, string userName, string email, string phone_Number, string cccd, string position, int working_Day
+		//{id_User}','{pass}','{userName}','{email}','{phone_Number}','{cccd}','{position}',{working_Day}
+		public int Update(USER user)
 		{
-			string query = $"EXEC TM_USER_Update '{id_User}','{pass}','{userName}','{email}','{phone_Number}','{cccd}','{position}',{working_Day}";
+			string query = $"EXEC TM_USER_Update '{user.ID_User}','{user.Pass}','{user.UserName}','{user.Email}','{user.PhoneNumber}','{user.CCCD}','{user.Position}',{user.Working_Days}";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}

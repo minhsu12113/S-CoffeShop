@@ -68,6 +68,7 @@ namespace CoffeShop.ExtentionCommon
             return bi;
         }
     }
+
     public static class ObjectCopier
     {
         public static T Clone<T>(this T source)
@@ -82,5 +83,4 @@ namespace CoffeShop.ExtentionCommon
             return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source), deserializeSettings);
         }
     }
-    
 }

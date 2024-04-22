@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoffeShop.DAO.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CoffeShop.DAO
 {
-	public class TM_FOOD_DAO
+	public class TM_FOOD_DAO:FOOD
 	{
 		private static TM_FOOD_DAO instance;
 		public static TM_FOOD_DAO Instance
@@ -34,15 +35,16 @@ namespace CoffeShop.DAO
 			DataTable dataTable = DataProvider.Instance.ExecuteQuery(query);
 			return dataTable;
 		}
-		public int Update(int id, string food_Name, int unit_Cost, int discount, string id_Catelogy, string base64_Image)
+		//int id, string food_Name, int unit_Cost, int discount, string id_Catelogy, string base64_Image
+		public int Update(FOOD food)
 		{
-			string query = "EXEC TM_FOOD_Update ";
+			string query = $"EXEC TM_FOOD_Update '{food.ID}', '{food.Food_Name}','{food.Unit_Cost}','{food.Discount}','{food.ID_Catelogy}','{food.Base64_Image}'   ";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return (int)data;
 		}
-		public int Insert(string food_Name, int unit_Cost, int discount, string id_Catelogy, string base64_Image)
+		public int Insert(FOOD food)
 		{
-			string query = $"EXEC TM_FOOD_Insert ";
+			string query = $"EXEC TM_FOOD_Insert '{food.Food_Name}','{food.Unit_Cost}','{food.Discount}','{food.ID_Catelogy}','{food.Base64_Image}' ";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return (int)data;
 		}

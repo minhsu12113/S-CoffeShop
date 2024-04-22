@@ -63,6 +63,7 @@ namespace CoffeShop.Viewmodel.Food
             ReloadFoodsList = reloadFoodsList;            
             LoadCategoryList();
         }
+
         public void OpenDialogChooseImage()
         {
             OpenFileDialog openFile = new OpenFileDialog() { Filter = "Image files (*.jpg, *.png) | *.jpg; *.png" };
@@ -70,53 +71,15 @@ namespace CoffeShop.Viewmodel.Food
             if (openFile.ShowDialog() == DialogResult.OK)
                 FoodCurrent.ImageData = MyExtention.ConvertImageToBase64(openFile.FileName);
         }
+
         public void LoadCategoryList()
         {
-            //using (var unitOfWork = new UnitOfWork(new CoffeeShopContext()))
-            //{
-            //    var catListBase = unitOfWork.Category.GetAll().ToList();
-            //    var catListConvert = new List<CategoryModel>();
-            //    if (catListBase != null)
-            //    {
-            //        foreach (var category in catListBase)
-            //        {
-            //            CategoryModel cloener = category.CloneData<CategoryModel>();
-            //            catListConvert.Add(cloener);
-            //        }
-            //    }
-            //    CategoryList = catListConvert;
-            //}
+            
         }
+
         public void Save()
         {
-            //using (var uniOfWork = new UnitOfWork(new CoffeeShopContext()))
-            //{
-            //    var selectImage = uniOfWork.Images.SingleOrDefault((i) => i.IdParent == FoodCurrent.Id);
-            //    if (selectImage != null)
-            //        uniOfWork.Images.Remove(selectImage);
-
-            //    uniOfWork.Foods.AddOrUpdate(new Foods()
-            //    {
-            //        Id = FoodCurrent.Id,
-            //        CategoryId = CategoryCurrent.Id,
-            //        Name = FoodCurrent.Name,
-            //        Note = FoodCurrent.Note,
-            //        Price = FoodCurrent.Price,
-            //        IsOutOfStock = FoodCurrent.IsOutOfStock
-            //    });
-            //    uniOfWork.Images.AddOrUpdate(new Images() 
-            //    {
-            //        Id = Guid.NewGuid(), 
-            //        IdParent = FoodCurrent.Id,
-            //        Data = FoodCurrent.ImageData 
-            //    });
-            //    var result = uniOfWork.Completed();
-            //    if (string.IsNullOrEmpty(result.ErrorMessage))
-            //    {
-            //        CloseDialogParent.Invoke();
-            //        ReloadFoodsList.Invoke();
-            //    }                   
-            //}
+            
         }
     }
 }

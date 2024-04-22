@@ -51,6 +51,14 @@ namespace CoffeShop.Viewmodel
             get { return _currentView; }
             set { _currentView = value; OnPropertyChanged(); }
         }
+
+        private string _currentUserNameLogin;
+        public string CurrentUserNameLogin
+        {
+            get { return _currentUserNameLogin; }
+            set { _currentUserNameLogin = value; OnPropertyChanged(); }
+        }
+
         #endregion
 
         #region [Command]        

@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CoffeShop.DAO.Model
+{
+	public class USER
+	{
+		public string ID_User { get; set; }
+		public string Pass { get; set; }
+		public string UserName { get; set; }
+		public string Email { get; set; }
+		public string PhoneNumber { get; set; }
+		public string CCCD { get; set; }
+		public string Position { get; set; }
+		public int Working_Days { get; set; }
+		
+		USER() { }
+		USER(string iD_User, string pass, string userName, string email, string phoneNumber, string cCCD, string position, int working_Days)
+		{
+			ID_User = iD_User;
+			Pass = pass;
+			UserName = userName;
+			Email = email;
+			PhoneNumber = phoneNumber;
+			CCCD = cCCD;
+			Position = position;
+			Working_Days = working_Days;
+		}
+	}
+}

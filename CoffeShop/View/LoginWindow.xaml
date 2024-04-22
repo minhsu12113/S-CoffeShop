@@ -94,9 +94,9 @@
                                              FontSize="{Binding FontSize16,Source={StaticResource SizeManager}}" 
                                              VerticalContentAlignment="Bottom" 
                                              materialDesign:HintAssist.Hint="{DynamicResource ENTER_PASSWORD}"/>
-                                
 
-                                <CheckBox Grid.Row="5" Content="{DynamicResource REMEMBER_PASSWORD}" Grid.Column="1"  VerticalAlignment="Center"/>
+
+                                <CheckBox Grid.Row="5" IsChecked="{Binding IsRemember, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource REMEMBER_PASSWORD}" Grid.Column="1"  VerticalAlignment="Center"/>
                                 <Button Grid.Row="6" Grid.Column="1" IsDefault="True" Command="{Binding LoginCMD}" materialDesign:ShadowAssist.ShadowDepth="Depth3" Background="#FB718C" BorderBrush="#FB718C"  HorizontalAlignment="Center" Content="{DynamicResource LOGIN}"/>
                                 
                                 

@@ -113,9 +113,9 @@
             </Grid.RowDefinitions>
             <GroupBox Header="{DynamicResource IMAGE}" Style="{x:Null}" Margin="5 10 0 10">
                 <Border CornerRadius="7">
-                    <!--<Border.Background>
+                    <Border.Background>
                         <ImageBrush ImageSource="{Binding FoodCurrent.ImageData,Converter={StaticResource Base64ToImageSource}}"/>
-                    </Border.Background>-->
+                    </Border.Background>
                     <Button Command="{Binding OpenDialogChooseImageCMD}" Style="{StaticResource Stl_btn_edit_image}" Content="{materialDesign:PackIcon Kind=Edit}"/>
                 </Border>
             </GroupBox>

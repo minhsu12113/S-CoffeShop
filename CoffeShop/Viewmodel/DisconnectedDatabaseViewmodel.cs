@@ -1,6 +1,4 @@
-﻿using CoffeShop.DBHelper;
-using CoffeShop.Internationalization;
-using CoffeShop.Utility;
+﻿using CoffeShop.Internationalization;
 using CoffeShop.View.Dialog;
 using CoffeShop.Viewmodel.Base;
 using System;
@@ -127,27 +125,7 @@ namespace CoffeShop.Viewmodel
             if (!string.IsNullOrEmpty(serverName))
             {
                 OpenDialog(new WaitingDialogUc());
-                Task.Run(() =>
-                {
-                    IsValidConnect = DBSetting.Instance.CheckConnectMasterDB(serverName);
-                    App.Current.Dispatcher?.Invoke(() =>
-                    {
-                        if (IsValidConnect)
-                        {
-                            MessConnected = string.Format(StringResources.Find("CONNECTED_TO_SERVER_SUCCES"), serverName);
-                            ColorMess = new SolidColorBrush(Colors.Blue);
-                            _currentServerName = serverName;
-                            DBSetting.Instance.MainConectString = DBSetting.Instance.BuidConnectString(_currentServerName);
-                            DBSetting.Instance.WriteConfig(_currentServerName);
-                        }
-                        else
-                        {
-                            MessConnected = string.Format(StringResources.Find("CONNECTED_TO_SERVER_ERROR"), serverName);
-                            ColorMess = new SolidColorBrush(Colors.Red);
-                        }
-                        CloseDialog();
-                    });
-                });
+                
             }
         }
         public void OpenDialog(object uc = null)

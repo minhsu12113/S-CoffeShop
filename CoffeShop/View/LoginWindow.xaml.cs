@@ -1,6 +1,7 @@
 ﻿using CoffeShop.Enums;
 using CoffeShop.Internationalization;
 using CoffeShop.Utility;
+using CoffeShop.Viewmodel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace CoffeShop.View
             InitializeComponent();
             StringResources.ApplyLanguage(ALL_ENUM.LANGUAGE.VN);
             CSGlobal.Instance.LoginWindow = this;
+            (CSGlobal.Instance.LoginWindow.DataContext as LoginViewmodel).LoadRememberData();
         }
     }
 }

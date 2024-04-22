@@ -1,5 +1,4 @@
-﻿using CoffeShop.DBHelper;
-using CoffeShop.Enums;
+﻿using CoffeShop.Enums;
 using CoffeShop.Internationalization;
 using CoffeShop.Utility;
 using CoffeShop.View;
@@ -24,27 +23,7 @@ namespace CoffeShop.Viewmodel
         }
         public async void Loaded()
         {
-            await Task.Run(() =>
-            {
-            try
-            {
-                Thread.Sleep(3000);
-                string connectString = DBSetting.Instance.LoadConfig();
-                bool isConnectDB = DBSetting.Instance.CheckConnectMainDB(connectString);
-
-                CSGlobal.Instance.LoginWindow = new LoginWindow();
-                CSGlobal.Instance.LoginWindow.Show();
-                CSGlobal.Instance.InitializeWindow.Hide();
-                CSGlobal.Instance.MainWindow = new MainWindow();
-                CSGlobal.Instance.MainWindow.Show();
- 
-               }
-               catch (Exception ex)
-               {
-
-
-               }
-           });
+             
         }
         public async void CreateAccountAdmin()
         {

@@ -51,6 +51,11 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Margin="8" Foreground="Silver" Kind="ShieldUser" Width="80" Height="80"/>
+                            <TextBlock FontSize="18" Foreground="Silver" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding CurrentUserNameLogin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+
                         <ItemsControl Grid.Row="1" ItemsSource="{Binding Source={x:Static model:ItemNavigate.ListItemNavigate}}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -79,6 +84,12 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+
+                        <Button Margin="8 0 8 16" VerticalAlignment="Bottom" Grid.Row="2" ToolTip="Đăng Xuất"
+                                Click="Logout_Click" Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
+                            <materialDesign:PackIcon Kind="Logout"/>
+                        </Button>
+                        
                     </Grid>
                 </materialDesign:Card>
 
