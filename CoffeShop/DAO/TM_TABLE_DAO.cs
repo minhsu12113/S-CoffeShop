@@ -27,5 +27,18 @@ namespace CoffeShop.DAO
 			DataTable dataTable = DataProvider.Instance.ExecuteQuery(query);
 			return dataTable;
 		}
+		public int Insert(TABLE table)
+		{
+			string query = $"EXEC TM_TABLE_Insert '{table.Table_Name}','{table.Status}','{table.ID_Area}'";
+			int data=DataProvider.Instance.ExecuteNonQuery(query);
+			return data;
+		}
+		public int Update_Status(TABLE table)
+		{
+			string query = $"EXEC TM_TABLE_Update_ChangeStatus '{table.ID_Table}','{table.Status}','{table.ID_Area}'";
+			int data = DataProvider.Instance.ExecuteNonQuery(query);
+			return data;
+		}
+
 	}
 }

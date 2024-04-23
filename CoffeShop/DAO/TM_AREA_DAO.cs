@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoffeShop.DAO.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -27,6 +28,11 @@ namespace CoffeShop.DAO
 			DataTable dataTable = DataProvider.Instance.ExecuteQuery(query);
 			return dataTable;
 		}
-
+		public int Insert(AREA area)
+		{
+			string query = $"EXEC TM_AREA_Insert '{area.ID_Area}','{area.Area_Name}'";
+			int data=DataProvider.Instance.ExecuteNonQuery(query);
+			return data;
+		}
 	}
 }

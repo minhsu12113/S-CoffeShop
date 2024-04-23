@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoffeShop.DAO
 {
-	internal class TABLE
+	public class TABLE
 	{
 		public int ID_Table {  get; set; }
 		public string Table_Name {  get; set; }
