@@ -1,4 +1,5 @@
-﻿using CoffeShop.Internationalization;
+﻿using CoffeShop.DAO;
+using CoffeShop.Internationalization;
 using CoffeShop.Model;
 using CoffeShop.View.Categorys;
 using CoffeShop.View.Dialog;
@@ -75,9 +76,24 @@ namespace CoffeShop.Viewmodel.User
         }
         #endregion
 
+        public UserViewModel()
+        {
+            LoadUser();
+        }
+
         private void LoadUser()
         {
-            UserModelList = new ObservableCollection<UserModel>(UserModelMasterList);
+            try
+            {
+                UserModelMasterList.Clear();
+                var dt = AccountDAO.Instance.Get_All();
+                var user = UserModel.ParseUsers(dt);
+                UserModelMasterList.AddRange(user);
+                UserModelList = new ObservableCollection<UserModel>(UserModelMasterList);
+            }
+            catch  
+            {  }
+            
         }
 
         public void SearchCategory()
@@ -102,12 +118,13 @@ namespace CoffeShop.Viewmodel.User
         {
             var addOrUpdateObj = UserModelMasterList.Where(u => u.Id == model.Id)?.FirstOrDefault();
             if (addOrUpdateObj != null)
-            {
-                UserModelMasterList.Remove(addOrUpdateObj);
-                UserModelMasterList.Add(addOrUpdateObj);
+            { 
+                AccountDAO.Instance.Update(model.Data);
             }
             else
-                UserModelMasterList.Add(model);
+            {
+                AccountDAO.Instance.Insert(model.Data);
+            }    
 
             LoadUser();
         }
@@ -122,8 +139,7 @@ namespace CoffeShop.Viewmodel.User
             string question = String.Format(StringResources.Find("CATEGORY_CONFIRM_DELETE"), model.UserName);
             OpenDialog(new ConfirmUC(question,
                 () =>
-                {
-                    UserModelMasterList.Remove(model);
+                { 
                     LoadUser();
                     CloseDialog();
 

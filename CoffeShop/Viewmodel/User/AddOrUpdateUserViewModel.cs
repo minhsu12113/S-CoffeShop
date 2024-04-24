@@ -78,7 +78,8 @@ namespace CoffeShop.Viewmodel.User
             IsCanEditUserName = true;
             if (user == null) // Add new
             {
-                CurrentUser = new UserModel(); 
+                CurrentUser = new UserModel();
+                CurrentUser.Id = Guid.NewGuid().ToString();
                 Permision = PermisionList[0];
             }
             else  // Edit

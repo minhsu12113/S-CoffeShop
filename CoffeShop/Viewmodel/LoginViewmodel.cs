@@ -1,4 +1,6 @@
-﻿using CoffeShop.ExtentionCommon;
+﻿using CoffeShop.DAO;
+using CoffeShop.DAO.Model;
+using CoffeShop.ExtentionCommon;
 using CoffeShop.Internationalization;
 using CoffeShop.Model;
 using CoffeShop.Utility;
@@ -6,6 +8,7 @@ using CoffeShop.View.Dialog;
 using CoffeShop.Viewmodel.Base;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -94,7 +97,21 @@ namespace CoffeShop.Viewmodel
 
         public void Login()
         {
+            bool isAuthenticated = false;
             if (CurrentUser.UserName == "admin" && CurrentUser.Password == "admin")
+            {
+                isAuthenticated = true;
+            }
+            else
+            {
+                var resLogin = AccountDAO.Instance.Login(CurrentUser.UserName, CurrentUser.Password);
+                var user = ParseUser(resLogin);
+                isAuthenticated = user != null;
+               
+                
+            }
+
+            if (isAuthenticated)
             {
                 CSGlobal.Instance.LoginWindow.Hide();
                 CSGlobal.Instance.MainWindow = new MainWindow();
@@ -103,11 +120,10 @@ namespace CoffeShop.Viewmodel
                 if (IsRemember) SaveRememberData();
                 CSGlobal.Instance.MainViewmodel.CurrentUserNameLogin = CurrentUser.UserName;
             }
-            else
-            {
-                OpenDialog(2, new WarningUC(StringResources.Find("ERROR_LOGIN")));
-            }
+            OpenDialog(2, new WarningUC(StringResources.Find("ERROR_LOGIN")));
         }
+
+
 
         public void MiniMizedWindow() => StateWindow = WindowState.Minimized;
 
@@ -132,6 +148,8 @@ namespace CoffeShop.Viewmodel
             }
             catch { }            
         }
+
+        private UserModel ParseUser(DataTable dt) => UserModel.ParseUser(dt);
 
         public void SaveRememberData()
         {

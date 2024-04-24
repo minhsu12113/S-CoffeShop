@@ -23,13 +23,16 @@ namespace CoffeShop.DAO
 		}
 
 		private DataProvider() { }
-		private string connectionSTR = @"Data Source=.\;Initial Catalog=QL_Quan_Coffee;Integrated Security=True";
+		//private string connectionSTR = @"Data Source=.\;Initial Catalog=QL_Quan_Coffee;Integrated Security=True";
+		private string connectionSTR = @"Server=DESKTOP-FDV40RB\SQLEXPRESS;Database=QL_Quan_Coffee;Trusted_Connection=True;";
 		public DataTable ExecuteQuery(string query, object[] parameters = null)
 		{
 			DataTable data = new DataTable();
 			using (SqlConnection connection = new SqlConnection(connectionSTR))
 			{
-				SqlCommand cmd = new SqlCommand(query, connection);
+
+                connection.Open();
+                SqlCommand cmd = new SqlCommand(query, connection);
 
 				if (parameters != null)
 				{
@@ -55,28 +58,38 @@ namespace CoffeShop.DAO
 
 		public int ExecuteNonQuery(string query, object[] parameters = null)
 		{
-			int data = 0;
-
-			using (SqlConnection connection = new SqlConnection(connectionSTR))
+			try
 			{
-				SqlCommand cmd = new SqlCommand(query, connection);
+                int data = 0;
 
-				if (parameters != null)
-				{
-					string[] listPara = query.Split(' ');
-					int i = 0;
-					foreach (string item in listPara)
-					{
-						if (item.Contains('@'))
-						{
-							cmd.Parameters.AddWithValue(item, parameters[i]);
-							i++;
-						}
-					}
-				}
-				data = cmd.ExecuteNonQuery();
+                using (SqlConnection connection = new SqlConnection(connectionSTR))
+                {
+					connection.Open();
+                    SqlCommand cmd = new SqlCommand(query, connection);
+
+                    if (parameters != null)
+                    {
+                        string[] listPara = query.Split(' ');
+                        int i = 0;
+                        foreach (string item in listPara)
+                        {
+                            if (item.Contains('@'))
+                            {
+                                cmd.Parameters.AddWithValue(item, parameters[i]);
+                                i++;
+                            }
+                        }
+                    }
+                    data = cmd.ExecuteNonQuery();
+                }
+                return data;
+            }
+			catch (Exception ex)
+			{
+
+				throw;
 			}
-			return data;
+			
 		}
 	}
 }

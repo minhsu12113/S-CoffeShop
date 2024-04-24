@@ -17,7 +17,7 @@ namespace CoffeShop.DAO.Model
 		public string Position { get; set; }
 		public int Working_Days { get; set; }
 		
-		USER() { }
+		public USER() { }
 		USER(string iD_User, string pass, string userName, string email, string phoneNumber, string cCCD, string position, int working_Days)
 		{
 			ID_User = iD_User;
