@@ -79,6 +79,7 @@ namespace CoffeShop.Viewmodel.User
             if (user == null) // Add new
             {
                 CurrentUser = new UserModel();
+                //Em k bt sua lam sao a
                 CurrentUser.Id = Guid.NewGuid().ToString();
                 Permision = PermisionList[0];
             }

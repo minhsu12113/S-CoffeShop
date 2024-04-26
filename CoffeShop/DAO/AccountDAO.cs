@@ -35,20 +35,20 @@ namespace CoffeShop.DAO
 			DataTable dt = DataProvider.Instance.ExecuteQuery(query);
 			return dt;
 		}
-		//string id_User,string pass,string userName,string email, string phone_Number,string cccd,string position,int working_Day
+		
 		public int Insert(USER user)
 		{
 			string query = $"EXEC TM_USER_Insert '{user.ID_User}','{user.Pass}','{user.UserName}','{user.Email}','{user.PhoneNumber}','{user.CCCD}','{user.Position}',{user.Working_Days}";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}
-		//string id_User, string pass, string userName, string email, string phone_Number, string cccd, string position, int working_Day
-		//{id_User}','{pass}','{userName}','{email}','{phone_Number}','{cccd}','{position}',{working_Day}
+		
 		public int Update(USER user)
 		{
 			string query = $"EXEC TM_USER_Update '{user.ID_User}','{user.Pass}','{user.UserName}','{user.Email}','{user.PhoneNumber}','{user.CCCD}','{user.Position}',{user.Working_Days}";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}
+
 	}
 }

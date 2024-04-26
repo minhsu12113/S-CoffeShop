@@ -13,7 +13,7 @@ namespace CoffeShop.Model
    {
         public USER Data { get; set; } = new USER(); 
             
-        public string Id
+        public int Id
         {
             get { return Data.ID_User; }
             set { Data.ID_User = value; }
@@ -63,7 +63,7 @@ namespace CoffeShop.Model
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     user = new UserModel();
-                    user.Id = dt.Rows[i]["ID_User"].ToString();
+                    user.Id = int.Parse(dt.Rows[i]["ID_User"].ToString());
                     user.UserName = dt.Rows[i]["UserName"].ToString();
                     user.Password = dt.Rows[i]["Pass"].ToString();
                     user.CCCD = dt.Rows[i]["CCCD"].ToString();
@@ -85,7 +85,7 @@ namespace CoffeShop.Model
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     var user = new UserModel();
-                    user.Id = dt.Rows[i]["ID_User"].ToString();
+                    user.Id = int.Parse(dt.Rows[i]["ID_User"].ToString());
                     user.UserName = dt.Rows[i]["UserName"].ToString();
                     user.Password = dt.Rows[i]["Pass"].ToString();
                     user.CCCD = dt.Rows[i]["CCCD"].ToString();

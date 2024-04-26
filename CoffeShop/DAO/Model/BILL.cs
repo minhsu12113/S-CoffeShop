@@ -16,8 +16,8 @@ namespace CoffeShop.DAO.Model
 		public DateTime Hour_Export { get; set; }
 		public int ID_Area { get; set; }
 		public int ID_Table { get; set; }
-		public string ID_User {  get; set; }
-		BILL(int iD_HoaDon, int total, string table_Status, DateTime day_Create, DateTime hour_Create, DateTime hour_Export, int iD_Area, int iD_Table, string iD_User)
+		public int ID_User {  get; set; }
+		BILL(int iD_HoaDon, int total, string table_Status, DateTime day_Create, DateTime hour_Create, DateTime hour_Export, int iD_Area, int iD_Table, int iD_User)
 		{
 			ID_HoaDon = iD_HoaDon;
 			Total = total;

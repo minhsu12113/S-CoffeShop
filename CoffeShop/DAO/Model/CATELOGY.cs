@@ -8,10 +8,10 @@ namespace CoffeShop.DAO.Model
 {
 	internal class CATELOGY
 	{
-		public string ID_Catelogy {  get; set; }
+		public int ID_Catelogy {  get; set; }
 		public string Catelogy_Name {  get; set; }
 		CATELOGY() { }
-		CATELOGY(string iD_Catelogy, string catelogy_Name)
+		CATELOGY(int iD_Catelogy, string catelogy_Name)
 		{
 			ID_Catelogy = iD_Catelogy;
 			Catelogy_Name = catelogy_Name;

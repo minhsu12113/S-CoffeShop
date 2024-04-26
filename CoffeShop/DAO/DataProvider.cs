@@ -24,7 +24,7 @@ namespace CoffeShop.DAO
 
 		private DataProvider() { }
 		//private string connectionSTR = @"Data Source=.\;Initial Catalog=QL_Quan_Coffee;Integrated Security=True";
-		private string connectionSTR = @"Server=DESKTOP-FDV40RB\SQLEXPRESS;Database=QL_Quan_Coffee;Trusted_Connection=True;";
+		private string connectionSTR = @"Server=.\;Database=QL_Quan_Coffee;Trusted_Connection=True;";
 		public DataTable ExecuteQuery(string query, object[] parameters = null)
 		{
 			DataTable data = new DataTable();

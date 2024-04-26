@@ -8,7 +8,7 @@ namespace CoffeShop.DAO.Model
 {
 	public class USER
 	{
-		public string ID_User { get; set; }
+		public int ID_User { get; set; }
 		public string Pass { get; set; }
 		public string UserName { get; set; }
 		public string Email { get; set; }
@@ -18,7 +18,7 @@ namespace CoffeShop.DAO.Model
 		public int Working_Days { get; set; }
 		
 		public USER() { }
-		USER(string iD_User, string pass, string userName, string email, string phoneNumber, string cCCD, string position, int working_Days)
+		USER(int iD_User, string pass, string userName, string email, string phoneNumber, string cCCD, string position, int working_Days)
 		{
 			ID_User = iD_User;
 			Pass = pass;

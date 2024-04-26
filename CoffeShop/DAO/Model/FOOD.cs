@@ -13,11 +13,11 @@ namespace CoffeShop.DAO.Model
 		public string Food_Name { get; set; }
 		public int Unit_Cost {  get; set; }
 		public int Discount { get; set; }
-		public string ID_Catelogy { get; set; }
+		public int ID_Catelogy { get; set; }
 
 		public string Base64_Image {  get; set; }
 		public FOOD() { }
-		FOOD(int iD, string food_Name, int unit_Cost, int discount, string iD_Catelogy, string base64_Image)
+		FOOD(int iD, string food_Name, int unit_Cost, int discount, int iD_Catelogy, string base64_Image)
 		{
 			ID = iD;
 			Food_Name = food_Name;
