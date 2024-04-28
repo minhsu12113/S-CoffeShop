@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoffeShop.DAO.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -28,6 +29,25 @@ namespace CoffeShop.DAO
 			DataTable dataTable = DataProvider.Instance.ExecuteQuery(query);
 			return dataTable;
 		}
+		public int Delete(CATELOGY catelogy)
+		{
+			string query = $"EXEC TM_CATELOGY_Delete '{catelogy.ID_Catelogy}'";
+			int data = DataProvider.Instance.ExecuteNonQuery(query);
+			return data;
+		}
+		public int Insert(CATELOGY catelogy)
+		{
+			string query = $"EXEC TM_CATELOGY_Insert '{catelogy.Catelogy_Name}'";
+			int data = DataProvider.Instance.ExecuteNonQuery(query);
+			return data;
+		}
+		public int Update(CATELOGY catelogy)
+		{
+			string query = $"EXEC TM_CATELOGY_Update '{catelogy.ID_Catelogy}' ,'{catelogy.Catelogy_Name}'";
+			int data = DataProvider.Instance.ExecuteNonQuery(query);
+			return data;
+		}
+
 
 	}
 }

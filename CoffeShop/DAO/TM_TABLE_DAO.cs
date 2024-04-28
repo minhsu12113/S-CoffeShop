@@ -33,12 +33,25 @@ namespace CoffeShop.DAO
 			int data=DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}
+		// Cập nhật trạng thái của bàn khi hóa đơn mở thì mở, đóng thì đóng
 		public int Update_Status(TABLE table)
 		{
 			string query = $"EXEC TM_TABLE_Update_ChangeStatus '{table.ID_Table}','{table.Status}','{table.ID_Area}'";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}
+		public int Update(TABLE table)
+		{
+			string query = $"EXEC TM_TABLE_Update '{table.ID_Table}','{table.Table_Name}','{table.Status}','{table.ID_Area}'";
+			int data = DataProvider.Instance.ExecuteNonQuery(query);
+			return data;
+		}
 
+		public int Delete(TABLE table)
+		{
+			string query = $"EXEC TM_TABLE_Delete '{table.ID_Table}'";
+			int data = DataProvider.Instance.ExecuteNonQuery(query);
+			return data;
+		}
 	}
 }

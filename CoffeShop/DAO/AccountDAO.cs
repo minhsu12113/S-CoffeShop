@@ -49,6 +49,11 @@ namespace CoffeShop.DAO
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}
-
+		public int Delete(USER user)
+		{
+			string query = $"EXEC TM_User_Delete '{user.ID_User}'";
+			int data=DataProvider.Instance.ExecuteNonQuery(query);
+			return data;
+		}
 	}
 }

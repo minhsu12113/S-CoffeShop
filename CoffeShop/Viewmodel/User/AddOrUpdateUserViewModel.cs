@@ -80,7 +80,7 @@ namespace CoffeShop.Viewmodel.User
             {
                 CurrentUser = new UserModel();
                 //Em k bt sua lam sao a
-                CurrentUser.Id = Guid.NewGuid().ToString();
+                CurrentUser.Id = int.Parse(Guid.NewGuid().ToString());
                 Permision = PermisionList[0];
             }
             else  // Edit

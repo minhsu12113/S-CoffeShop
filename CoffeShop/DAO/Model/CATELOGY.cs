@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoffeShop.DAO.Model
 {
-	internal class CATELOGY
+	public class CATELOGY
 	{
 		public int ID_Catelogy {  get; set; }
 		public string Catelogy_Name {  get; set; }
