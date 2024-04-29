@@ -9,6 +9,7 @@ using CoffeShop.Internationalization;
 using System.Collections.ObjectModel;
 using System.Windows.Documents;
 using System.Collections.Generic;
+using CoffeShop.DAO;
 
 namespace CoffeShop.Viewmodel.Categorys
 {
@@ -64,12 +65,8 @@ namespace CoffeShop.Viewmodel.Categorys
         {
             CategoryList = new ObservableCollection<CategoryModel>();
             MastetCategoryList = new List<CategoryModel>();
-        }
-       
-        public int LoadTotalCount()
-        {
-            return 0;
-        }
+            LoadCategory();
+        }       
         
         public void SearchCategory()
         {
@@ -85,12 +82,12 @@ namespace CoffeShop.Viewmodel.Categorys
         
         public void OpenDialogAddNew()
         {
-            OpenDialog(new CateroryAddOrUpdateViewModel(AddCategoryOrEdit, CloseDialog));           
+            OpenDialog(new CategoryAddOrUpdateUC(new CateroryAddOrUpdateViewModel(AddCategoryOrEdit, CloseDialog)));           
         }
 
         public void OpenDialogEdit(CategoryModel category)
         {
-            OpenDialog(new CategoryAddOrUpdateUC(new CateroryAddOrUpdateViewModel(AddCategoryOrEdit, CloseDialog,category)));
+            OpenDialog(new CategoryAddOrUpdateUC(new CateroryAddOrUpdateViewModel(AddCategoryOrEdit, CloseDialog, category)));
         }
 
         public void DeleteCategory(CategoryModel category)
@@ -99,7 +96,7 @@ namespace CoffeShop.Viewmodel.Categorys
             OpenDialog(new ConfirmUC(question,
                 () =>
                 {
-                    MastetCategoryList.Remove(category);
+                    TM_CATELOGY_DAO.Instance.Delete(category.Data);
                     LoadCategory();
                     CloseDialog();
 
@@ -112,17 +109,20 @@ namespace CoffeShop.Viewmodel.Categorys
             var addOrUpdateObj = MastetCategoryList.Where(c => c.Id == category.Id)?.FirstOrDefault();
             if(addOrUpdateObj != null)
             {
-                MastetCategoryList.Remove(addOrUpdateObj);
-                MastetCategoryList.Add(category);
+                TM_CATELOGY_DAO.Instance.Update(category.Data);
             }
             else
-                MastetCategoryList.Add(category);
-
+            {
+                TM_CATELOGY_DAO.Instance.Insert(category.Data);
+            }
             LoadCategory();
         }
 
         private void LoadCategory()
         {
+            var category = TM_CATELOGY_DAO.Instance.GetAll();
+            var categorys = CategoryModel.ParseCategoryList(category);
+            MastetCategoryList = new List<CategoryModel>(categorys);
             CategoryList = new ObservableCollection<CategoryModel>(MastetCategoryList);
         }
 

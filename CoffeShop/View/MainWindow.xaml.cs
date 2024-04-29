@@ -33,9 +33,12 @@ namespace CoffeShop
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             CSGlobal.Instance.MainViewmodel.OpenDialog(new ConfirmUC("Bạn có muốn đăng xuất không?", () => {
-                (CSGlobal.Instance.LoginWindow.DataContext as LoginViewmodel).CurrentUser.UserName = "";
-                (CSGlobal.Instance.LoginWindow.DataContext as LoginViewmodel).CurrentUser.Password = "";
-                (CSGlobal.Instance.LoginWindow.DataContext as LoginViewmodel).SaveRememberData();
+                var dataContext = CSGlobal.Instance.LoginWindow.DataContext as LoginViewmodel;
+                dataContext.CurrentUser.UserName = "";
+                dataContext.CurrentUser.Password = "";
+                dataContext.IsRemember = false;
+                dataContext.SaveRememberData();
+                CSGlobal.Instance.MainViewmodel.CloseDialog();
                 this.Hide();
                 CSGlobal.Instance.LoginWindow.Show();
             }, CSGlobal.Instance.MainViewmodel.CloseDialog));

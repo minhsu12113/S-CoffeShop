@@ -62,7 +62,16 @@ namespace CoffeShop.Model.UI
                     BackgoundItem = new SolidColorBrush(Color.FromRgb(255,255,255)),
                     ForegroundItem = new SolidColorBrush(Color.FromRgb(51, 38, 174)),
                     StatePointer = Visibility.Visible
-                },                
+                }, 
+                new ItemNavigate()
+                {
+                    TypeView = TYPE_VIEW.AREA,
+                    Content = "Khu Vực",
+                    Icon = PackIconKind.SurfaceArea,
+                    BackgoundItem = new SolidColorBrush(Colors.Transparent),
+                    ForegroundItem = new SolidColorBrush(Color.FromRgb(255,255,255)),
+                    StatePointer = Visibility.Collapsed
+                },
                 new ItemNavigate()
                 {
                     TypeView = TYPE_VIEW.CATEGORY,

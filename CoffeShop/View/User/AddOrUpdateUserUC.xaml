@@ -36,8 +36,7 @@
             </materialDesign:HintAssist.Hint>
         </TextBox>
 
-        <TextBox Grid.Row="2" Text="{Binding CurrentUser.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                 IsEnabled="{Binding IsCanEditUserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+        <TextBox Grid.Row="2" Text="{Binding CurrentUser.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
                  FontSize="16"  VerticalContentAlignment="Bottom" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                  Margin="16 0 16 0">
             <materialDesign:HintAssist.Hint>
@@ -48,7 +47,7 @@
         </TextBox>
 
         <TextBox Grid.Row="3" util:TextBoxService.IsNumericOnly="True" Text="{Binding CurrentUser.PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                 IsEnabled="{Binding IsCanEditUserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  FontSize="16"  
+                 FontSize="16"  
                  VerticalContentAlignment="Bottom" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                  Margin="16 0 16 0">
             <materialDesign:HintAssist.Hint>
@@ -59,7 +58,7 @@
         </TextBox>
 
         <TextBox Grid.Row="4" util:TextBoxService.IsNumericOnly="True" Text="{Binding CurrentUser.CCCD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                 IsEnabled="{Binding IsCanEditUserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+                  
                  FontSize="16"  VerticalContentAlignment="Bottom" 
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="16 0 16 0">
             <materialDesign:HintAssist.Hint>
@@ -88,7 +87,7 @@
             </materialDesign:HintAssist.Hint>
         </PasswordBox>
 
-        <ComboBox IsEnabled="{Binding IsCanEditUserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="7" SelectedItem="{Binding Permision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PermisionList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" 
+        <ComboBox   Grid.Row="7" SelectedItem="{Binding Permision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PermisionList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" 
           FontSize="16" Margin="16 0 16 0" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
             <materialDesign:HintAssist.Hint>
                 <StackPanel Orientation="Horizontal">

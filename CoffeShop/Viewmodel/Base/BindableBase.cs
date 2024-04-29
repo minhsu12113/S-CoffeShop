@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoffeShop.Utility;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -23,6 +24,13 @@ namespace CoffeShop.Viewmodel.Base
         {
             member = val;
             OnPropertyChanged(propertyName);
+        }
+
+        private bool _isAdmin;
+        public bool IsAdmin
+        {
+            get { return CSGlobal.Instance.CurrentUser.IsAdminType; }
+            set { _isAdmin = CSGlobal.Instance.CurrentUser.IsAdminType; OnPropertyChanged(); }
         }
     }
 }

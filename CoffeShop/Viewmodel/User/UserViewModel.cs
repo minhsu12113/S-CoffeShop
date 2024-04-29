@@ -1,6 +1,7 @@
 ﻿using CoffeShop.DAO;
 using CoffeShop.Internationalization;
 using CoffeShop.Model;
+using CoffeShop.Utility;
 using CoffeShop.View.Categorys;
 using CoffeShop.View.Dialog;
 using CoffeShop.View.User;
@@ -10,8 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CoffeShop.Viewmodel.User
@@ -87,7 +86,8 @@ namespace CoffeShop.Viewmodel.User
             {
                 UserModelMasterList.Clear();
                 var dt = AccountDAO.Instance.Get_All();
-                var user = UserModel.ParseUsers(dt);
+                var user = CSGlobal.Instance.CurrentUser.IsAdmin ? UserModel.ParseUsers(dt) 
+                    : UserModel.ParseUsers(dt)?.Where(u => u.UserName == CSGlobal.Instance.CurrentUser.UserName);
                 UserModelMasterList.AddRange(user);
                 UserModelList = new ObservableCollection<UserModel>(UserModelMasterList);
             }
@@ -116,6 +116,7 @@ namespace CoffeShop.Viewmodel.User
 
         private void AddUserOrEdit(UserModel model)
         {
+            
             var addOrUpdateObj = UserModelMasterList.Where(u => u.Id == model.Id)?.FirstOrDefault();
             if (addOrUpdateObj != null)
             { 
@@ -139,7 +140,8 @@ namespace CoffeShop.Viewmodel.User
             string question = String.Format(StringResources.Find("CATEGORY_CONFIRM_DELETE"), model.UserName);
             OpenDialog(new ConfirmUC(question,
                 () =>
-                { 
+                {
+                    AccountDAO.Instance.Delete(model.Data);
                     LoadUser();
                     CloseDialog();
 

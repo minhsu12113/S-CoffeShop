@@ -12,6 +12,7 @@ using CoffeShop.View.User;
 using CoffeShop.View.Setting;
 using CoffeShop.View.Dialog;
 using CoffeShop.View.FoodsTable;
+using CoffeShop.View.Area;
 
 namespace CoffeShop.Viewmodel
 {
@@ -87,6 +88,9 @@ namespace CoffeShop.Viewmodel
                     break;
                 case TYPE_VIEW.FOODS:
                     CurrenView = new FoodsUC();
+                    break;
+                case TYPE_VIEW.AREA:
+                    CurrenView = new AreaUC();
                     break;
                 case TYPE_VIEW.CATEGORY:
                     CurrenView = new CategoryUC();

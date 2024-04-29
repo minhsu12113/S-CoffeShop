@@ -3,6 +3,7 @@ using CoffeShop.DAO.Model;
 using CoffeShop.ExtentionCommon;
 using CoffeShop.Internationalization;
 using CoffeShop.Model;
+using CoffeShop.Model.UI;
 using CoffeShop.Utility;
 using CoffeShop.View.Dialog;
 using CoffeShop.Viewmodel.Base;
@@ -98,32 +99,38 @@ namespace CoffeShop.Viewmodel
         public void Login()
         {
             bool isAuthenticated = false;
-            if (CurrentUser.UserName == "admin" && CurrentUser.Password == "admin")
-            {
-                isAuthenticated = true;
-            }
-            else
+            bool isAdmin = CurrentUser.UserName == "admin" && CurrentUser.Password == "admin";
+            isAuthenticated = isAdmin;
+
+
+            if (!isAdmin)
             {
                 var resLogin = AccountDAO.Instance.Login(CurrentUser.UserName, CurrentUser.Password);
                 var user = ParseUser(resLogin);
                 isAuthenticated = user != null;
-               
-                
+            }
+
+            if (!isAuthenticated)
+            {
+                OpenDialog(2, new WarningUC(StringResources.Find("ERROR_LOGIN")));
+                return;
             }
 
             if (isAuthenticated)
             {
                 CSGlobal.Instance.LoginWindow.Hide();
-                CSGlobal.Instance.MainWindow = new MainWindow();
+
+                if(CSGlobal.Instance.MainWindow == null)
+                    CSGlobal.Instance.MainWindow = new MainWindow();
+
                 CSGlobal.Instance.MainWindow.Show();
+                CSGlobal.Instance.MainViewmodel.NavigateToView(ItemNavigate.ListItemNavigate[0]); // Dashborad
+
                 CSGlobal.Instance.CurrentUser = CurrentUser;
                 if (IsRemember) SaveRememberData();
                 CSGlobal.Instance.MainViewmodel.CurrentUserNameLogin = CurrentUser.UserName;
-            }
-            OpenDialog(2, new WarningUC(StringResources.Find("ERROR_LOGIN")));
-        }
-
-
+            } 
+        } 
 
         public void MiniMizedWindow() => StateWindow = WindowState.Minimized;
 

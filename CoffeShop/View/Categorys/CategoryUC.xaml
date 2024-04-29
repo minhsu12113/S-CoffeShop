@@ -44,7 +44,10 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" materialDesign:ButtonAssist.CornerRadius="5" Command="{Binding AddNewCMD}" Margin="15 5 10 0" HorizontalContentAlignment="Stretch" VerticalAlignment="Bottom">
+                    <Button Grid.Column="0" materialDesign:ButtonAssist.CornerRadius="5" 
+                            Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                            Command="{Binding AddNewCMD}" Margin="15 5 10 0"
+                            HorizontalContentAlignment="Stretch" VerticalAlignment="Bottom">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -55,8 +58,12 @@
                         </Grid>
                     </Button>
 
-                    <TextBox Grid.Column="4" FontSize="16" Text="{Binding NameSearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
-                         HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Top" Margin="15 5 20 0">
+                    <TextBox Grid.Column="4" FontSize="16" 
+                             Text="{Binding NameSearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
+                             Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                             HorizontalAlignment="Stretch" VerticalAlignment="Center" 
+                             VerticalContentAlignment="Top" Margin="15 5 20 0">
                         <TextBox.InputBindings>
                             <KeyBinding Key="Enter" Command="{Binding SearchCMD}"/>
                         </TextBox.InputBindings>
@@ -87,7 +94,8 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon Kind="PencilBox" Style="{StaticResource CumtomStylePack}" Margin="5" Foreground="Gray" HorizontalAlignment="Center" Width="Auto" Height="Auto">
+                                                <materialDesign:PackIcon Kind="PencilBox" Style="{StaticResource CumtomStylePack}" Margin="5" Foreground="Gray" HorizontalAlignment="Center" Width="Auto" Height="Auto"
+                                                                         Visibility="{Binding Path=DataContext.IsAdmin, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Converter={StaticResource BooleanToVisibilityConverter}}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonDown">
                                                             <i:InvokeCommandAction Command="{Binding Path=DataContext.EditCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" 
@@ -95,11 +103,12 @@
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                 </materialDesign:PackIcon>
-                                                <materialDesign:PackIcon Kind="CloseBox" Style="{StaticResource CumtomStylePack}" Margin="5" Foreground="DarkRed" HorizontalAlignment="Center" Width="Auto" Height="Auto">
+                                                <materialDesign:PackIcon Kind="CloseBox" Style="{StaticResource CumtomStylePack}" Margin="5" Foreground="DarkRed" HorizontalAlignment="Center" Width="Auto" Height="Auto"
+                                                                         Visibility="{Binding Path=DataContext.IsAdmin, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Converter={StaticResource BooleanToVisibilityConverter}}">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonDown">
                                                             <i:InvokeCommandAction Command="{Binding Path=DataContext.DeleteCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" 
-                                                                               CommandParameter="{Binding}"/>
+                                                                               CommandParameter="{Binding}" />
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                 </materialDesign:PackIcon>

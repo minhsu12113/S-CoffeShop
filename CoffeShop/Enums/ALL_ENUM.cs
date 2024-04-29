@@ -19,6 +19,7 @@ namespace CoffeShop.Enums
             DASHBOARD,
             FOODS,
             CATEGORY,
+            AREA,
             STATISTICS,
             USER,
             SETTING

@@ -10,7 +10,7 @@ namespace CoffeShop.DAO.Model
 	{
 		public int ID_Area {  get; set; }
 		public string Area_Name {  get; set; }
-		AREA() { }
+		public AREA() { }
 		AREA(int iD_Area, string area_Name)
 		{
 			ID_Area = iD_Area;

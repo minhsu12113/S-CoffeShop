@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using CoffeShop.ExtentionCommon;  
+using CoffeShop.ExtentionCommon;
+using CoffeShop.DAO;
 
 namespace CoffeShop.Viewmodel.Food
 {
@@ -21,7 +22,13 @@ namespace CoffeShop.Viewmodel.Food
         public CategoryModel CategoryCurrent
         {
             get { return _categoryCurrent; }
-            set { _categoryCurrent = value; OnPropertyChanged(); }
+            set 
+            { 
+                _categoryCurrent = value;
+                FoodCurrent.CategoryName = _categoryCurrent.Name;
+                FoodCurrent.CategoryId = _categoryCurrent.Id;
+                OnPropertyChanged(); 
+            }
         }
         public FoodModel FoodCurrent
         {
@@ -49,37 +56,46 @@ namespace CoffeShop.Viewmodel.Food
 
         #region [Action]
         public Action CloseDialogParent { get; set; }
-        public Action ReloadFoodsList { get; set; }
+        public Action<FoodModel> CallbackAddFood { get; set; }
         #endregion
 
-        public FoodsAddOrUpdateViewModel(Action closeDialog, Action reloadFoodsList, FoodModel foodModel = null)
+        public FoodsAddOrUpdateViewModel(Action closeDialog,
+            Action<FoodModel> callbackAddFood, FoodModel foodModel = null)
         {
+
+            LoadCategoryList();
             if (foodModel != null)
+            {
                 FoodCurrent = foodModel.Clone();
+                CategoryCurrent = CategoryList?.Where(c => c.Id == foodModel.CategoryId).FirstOrDefault();
+                
+            }
             else
                 FoodCurrent = new FoodModel();
 
             CloseDialogParent = closeDialog;
-            ReloadFoodsList = reloadFoodsList;            
-            LoadCategoryList();
+            CallbackAddFood = callbackAddFood;            
+            
         }
 
         public void OpenDialogChooseImage()
         {
             OpenFileDialog openFile = new OpenFileDialog() { Filter = "Image files (*.jpg, *.png) | *.jpg; *.png" };
-
             if (openFile.ShowDialog() == DialogResult.OK)
                 FoodCurrent.ImageData = MyExtention.ConvertImageToBase64(openFile.FileName);
         }
 
         public void LoadCategoryList()
         {
-            
+            var dt = TM_CATELOGY_DAO.Instance.GetAll();
+            var cats = CategoryModel.ParseCategoryList(dt);
+            CategoryList = new List<CategoryModel>(cats);
         }
 
         public void Save()
         {
-            
+            CallbackAddFood(FoodCurrent);
+            CloseDialogParent();
         }
     }
 }

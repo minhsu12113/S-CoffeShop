@@ -15,7 +15,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <Style x:Key="Stl_btn_common" TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionMiniButton}">
+        <Style x:Key="Stl_btn_common" TargetType="Button" 
+               BasedOn="{StaticResource MaterialDesignFloatingActionMiniButton}">
             <Setter Property="Background" Value="Transparent"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
@@ -142,7 +143,7 @@
                                     <materialDesign:TransitionEffect Kind="FadeIn"/>
                                     <materialDesign:TransitionEffect Kind="ExpandIn"/>
                                 </materialDesign:TransitioningContent.OpeningEffects>
-                                <materialDesign:Card Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left" Width="245" Height="360" UniformCornerRadius="10">
+                                <materialDesign:Card Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left" Width="245" Height="300" UniformCornerRadius="10">
                                     <materialDesign:Card.Style>
                                         <Style TargetType="materialDesign:Card">
                                             <Style.Triggers >
@@ -174,13 +175,14 @@
                                                        FontSize="{Binding FontSize14,Source={StaticResource SizeManager}}" 
                                                        Foreground="#13548A" Margin="5 15" FontWeight="SemiBold"  
                                                        VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                                        <CheckBox Grid.Row="4" Margin="15 0 5 5" Content="Hết Hàng" FontSize="{Binding FontSize16,Source={StaticResource SizeManager}}" />
+                                        <!--<CheckBox Grid.Row="4" Margin="15 0 5 5" Content="Hết Hàng" FontSize="{Binding FontSize16,Source={StaticResource SizeManager}}" />-->
                                         <StackPanel Grid.Row="4" Margin="5" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                                             <Button Margin="5" Style="{StaticResource Stl_btn_common}" Name="btn_Edit" Command="{Binding Path=DataContext.EditCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" 
                                                                                CommandParameter="{Binding}">
                                                 <materialDesign:PackIcon Kind="Pencil" Style="{StaticResource Stl_packicon_edit}"/>
                                             </Button>
-                                            <Button Margin="5" Style="{StaticResource Stl_btn_common}" Name="btn_Delete" Command="{Binding Path=DataContext.DeleteCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" 
+                                            <Button Margin="5" Style="{StaticResource Stl_btn_common}" Name="btn_Delete"
+                                                    Command="{Binding Path=DataContext.DeleteCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" 
                                                                                CommandParameter="{Binding}">
                                                 <materialDesign:PackIcon Kind="Delete" Style="{StaticResource Stl_packicon_delete}"/>
                                             </Button>
@@ -193,12 +195,6 @@
                 </ItemsControl>
             </ScrollViewer>
             <!--#endregion-->
-            <!--#region [Paging] -->
-            <Grid Grid.Row="2">
-                <paginguc:PagingUC DataContext="{Binding PagingViewmodel}"/>
-            </Grid>
-            <!--#endregion-->
-
         </Grid>
     </materialDesign:DialogHost>
 </UserControl>

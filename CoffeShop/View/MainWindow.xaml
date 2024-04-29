@@ -56,7 +56,8 @@
                             <TextBlock FontSize="18" Foreground="Silver" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding CurrentUserNameLogin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
 
-                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Source={x:Static model:ItemNavigate.ListItemNavigate}}">
+                        <ItemsControl Grid.Row="1" 
+                                      ItemsSource="{Binding Source={x:Static model:ItemNavigate.ListItemNavigate}}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Button Margin="17 5 17 5" Command="{Binding Path=DataContext.NavigateToViewCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"

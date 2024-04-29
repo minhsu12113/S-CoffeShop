@@ -1,9 +1,12 @@
-﻿using CoffeShop.Model;
+﻿using CoffeShop.DAO;
+using CoffeShop.DAO.Model;
+using CoffeShop.Model;
 using CoffeShop.View.Dialog;
 using CoffeShop.View.Foods;
 using CoffeShop.Viewmodel.Base;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -71,97 +74,88 @@ namespace CoffeShop.Viewmodel.Food
         public ICommand AddNewCMD { get { return new CommandHelper(AddNew); } }
         public ICommand EditCMD { get { return new CommandHelper<FoodModel>((f) => { return f != null; }, Edit); } }
         public ICommand DeleteCMD { get { return new CommandHelper<FoodModel>((f) => { return f != null; }, Delete); } }
-        public ICommand SearchCMD { get { return new CommandHelper(LoadFood); } }
+        public ICommand SearchCMD { get { return new CommandHelper<CategoryModel>((c) => { return c != null; }, LoadFoodAsync); } }
         public ICommand CheckedCategoryTagCMD { get { return new CommandHelper<CategoryModel>((c) => { return c != null; }, CheckedCategoryTag); } }
         public ICommand UnCheckedCategoryTagCMD { get { return new CommandHelper<CategoryModel>((c) => { return c != null; }, UnCheckedCategoryTag); } }
         #endregion
 
         public FoodViewModel()
         {
-            //LoadCategoryList();
             SearchFoodContent = string.Empty;
-            PagingViewmodel = new PagingViewmodel(LoadFoodListPaging);
-            //LoadFood();
+            LoadFoodAsync();
         }
+
         public void AddNew()
         {
-            OpenDialog(new FoodsAddOrUpdateUC(new FoodsAddOrUpdateViewModel(CloseDialog, LoadFood)));
+            OpenDialog(new FoodsAddOrUpdateUC(new FoodsAddOrUpdateViewModel(CloseDialog, AddOrUpdateFood)));
         }
+
         public void OpenDialog(object uc = null)
         {
             if (uc != null)
                 DialogContent = uc;
             IsOpenDialog = true;
         }
+
         public void CloseDialog()
         {
             IsOpenDialog = false;
         }
-        public async void LoadFood()
-        {
-            // Gọi hàm LoadFoodListPaging khi TotalCountItem có sự thay đổi
-            PagingViewmodel.TotalCountItem = await LoadCountFood();
-        }
-        public async void LoadFoodListPaging(int pageIndex, int pageSize)
+
+        public void LoadFoodAsync(CategoryModel category = null)
         {
             OpenDialog(new WaitingDialogUc());
 
-            await Task.Delay(500);
-            await Task.Run(() => 
+            Task.Delay(400);
+            Task.Run(() =>
             {
-                 
+                if(CategoryList == null)
+                {
+                    var dtCat = TM_CATELOGY_DAO.Instance.GetAll();
+                    var cats = CategoryModel.ParseCategoryList(dtCat);
+                    CategoryList = new List<CategoryModel>(cats);
+                }
+
+                var dtFood = TM_FOOD_DAO.Instance.Get_All();
+                var foods = (category == null) ? FoodModel.ParseFoods(dtFood) : FoodModel.ParseFoods(dtFood)?.Where(f => f.CategoryId == category.Id);
+                FoodList = new List<FoodModel>(foods);
+                CloseDialog();
             });
         }
-        public async Task<int> LoadCountFood()
-        {
-            int count = 0;
-            await Task.Delay(500);
-            await Task.Run(() =>
-            {
-                          
-            });
-            return count;
-        }
+        
         public void Edit(FoodModel foodModel)
         {
-            //using (var context = new UnitOfWork(new CoffeeShopContext()))
-            //{
-            //    foodModel.ImageData = context.Images.SingleOrDefault((i) => i.IdParent == foodModel.Id)?.Data;
-            //    OpenDialog(new FoodsAddOrUpdateUC(new FoodsAddOrUpdateViewModel(CloseDialog, LoadFood, foodModel)));
-            //}
+            OpenDialog(new FoodsAddOrUpdateUC(new FoodsAddOrUpdateViewModel(CloseDialog, AddOrUpdateFood, foodModel)));
         }
+
         public void Delete(FoodModel foodModel)
         {
             OpenDialog(new ConfirmUC($@"Bạn có muốn xóa [{foodModel.Name}] không?", () =>
             {
-                
+                TM_FOOD_DAO.Instance.Delete(foodModel.Data);
+                LoadFoodAsync();
             }, CloseDialog));
         }
-        public void LoadCategoryList()
+
+        public void AddOrUpdateFood(FoodModel food)
         {
-            //using (var unitOfWork = new UnitOfWork(new CoffeeShopContext()))
-            //{
-            //    var catListBase = unitOfWork.Category.GetAll().ToList();
-            //    var catListConvert = new List<CategoryModel>();
-            //    if (catListBase != null)
-            //    {
-            //        foreach (var category in catListBase)
-            //        {
-            //            CategoryModel cloener = category.CloneData<CategoryModel>();
-            //            catListConvert.Add(cloener);
-            //        }
-            //    }
-            //    CategoryList = catListConvert;
-            //    CategoryFilterList = catListConvert.Select((i) => i.Id).ToList();
-            //}
+            var objEdit = FoodList?.Where(f => f.Id == food.Id).FirstOrDefault();
+            if(objEdit != null)
+            {
+                TM_FOOD_DAO.Instance.Update(food.Data);
+            }
+            else
+            {
+                TM_FOOD_DAO.Instance.Insert(food.Data);
+            }
+
+            LoadFoodAsync();
         }
-        public void CheckedCategoryTag(CategoryModel category)
-        {
-            CategoryFilterList.Add(category.Id);
-        }
-        public void UnCheckedCategoryTag(CategoryModel category)
-        {
-            CategoryFilterList.Remove(category.Id);
-        }
+
+
+        public void CheckedCategoryTag(CategoryModel category) => LoadFoodAsync(category);
+
+        public void UnCheckedCategoryTag(CategoryModel category) => LoadFoodAsync(category);
+
     }
 }

@@ -22,9 +22,9 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />-->
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />                
-                <ResourceDictionary Source="/Styles/GradientColor.xaml"/>
-                <ResourceDictionary Source="/Styles/IScrollBar.xaml"/>
-                <ResourceDictionary Source="/Styles/IScrollThumbs.xaml"/>-->
+                <ResourceDictionary Source="/Styles/GradientColor.xaml"/>-->
+                <ResourceDictionary Source="/Style/IScrollBar.xaml"/>
+                <ResourceDictionary Source="/Style/IScrollThumbs.xaml"/>
                 <ResourceDictionary Source="/CoffeShop;component/Style/SizeDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

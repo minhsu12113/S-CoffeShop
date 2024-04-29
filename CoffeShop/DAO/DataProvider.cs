@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CoffeShop.DAO
 {
@@ -27,33 +28,41 @@ namespace CoffeShop.DAO
 		private string connectionSTR = @"Server=.\;Database=QL_Quan_Coffee;Trusted_Connection=True;";
 		public DataTable ExecuteQuery(string query, object[] parameters = null)
 		{
-			DataTable data = new DataTable();
-			using (SqlConnection connection = new SqlConnection(connectionSTR))
+			try
 			{
+                DataTable data = new DataTable();
+                using (SqlConnection connection = new SqlConnection(connectionSTR))
+                {
 
-                connection.Open();
-                SqlCommand cmd = new SqlCommand(query, connection);
+                    connection.Open();
+                    SqlCommand cmd = new SqlCommand(query, connection);
 
-				if (parameters != null)
-				{
-					string[] listPara = query.Split(' ');
-					int i = 0;
-					foreach (string item in listPara)
-					{
-						if (item.Contains('@'))
-						{
-							cmd.Parameters.AddWithValue(item, parameters[i]);
-							i++;
-						}
-					}
-				}
+                    if (parameters != null)
+                    {
+                        string[] listPara = query.Split(' ');
+                        int i = 0;
+                        foreach (string item in listPara)
+                        {
+                            if (item.Contains('@'))
+                            {
+                                cmd.Parameters.AddWithValue(item, parameters[i]);
+                                i++;
+                            }
+                        }
+                    }
 
-				SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
 
-				adapter.Fill(data);
+                    adapter.Fill(data);
+                }
+
+                return data;
+            }
+			catch (Exception ex)
+			{
+                MessageBox.Show(ex.Message);
+                return null;
 			}
-
-			return data;
 		}
 
 		public int ExecuteNonQuery(string query, object[] parameters = null)
@@ -86,9 +95,9 @@ namespace CoffeShop.DAO
             }
 			catch (Exception ex)
 			{
-
-				throw;
-			}
+                MessageBox.Show(ex.Message);
+                return -1;
+            }
 			
 		}
 	}

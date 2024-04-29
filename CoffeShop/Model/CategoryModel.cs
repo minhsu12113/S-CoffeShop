@@ -1,8 +1,10 @@
-﻿using CoffeShop.Utility;
+﻿using CoffeShop.DAO.Model;
+using CoffeShop.Utility;
 using CoffeShop.Viewmodel.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,67 +13,62 @@ namespace CoffeShop.Model
 {
     public class CategoryModel : BindableBase
     {
-        private Guid _id;
-        private string _name;
-        private string _note;
-        private string _userCreated;
-        private DateTime _timeCreated;
-        private string _userModified;
-        private Nullable<DateTime> _timeModified;
-        private bool _isSelected = true;
+        public CATELOGY Data { get; set; } = new CATELOGY();
 
-
-
+        private bool _isSelected = true; 
         public bool IsSelected 
         {
             get { return _isSelected; }
             set { _isSelected = value; OnPropertyChanged(); }
         }
-        public Guid Id 
+
+        private int _id;
+        public int Id 
         {
-            get { return _id; }
-            set { _id = value; OnPropertyChanged(); }
+            get { return Data.ID_Catelogy; }
+            set { Data.ID_Catelogy = value; OnPropertyChanged(); }
         }
+
+         
         [MaxLength(39)]
         public string Name 
         {
-            get { return _name; }
-            set { _name = value; OnPropertyChanged(); }
-        }
-        public string Note
-        {
-            get { return _note; }
-            set { _note = value; OnPropertyChanged(); }
-        }
-        public string UserCreated
-        {
-            get { return _userCreated; }
-            set { _userCreated = value; OnPropertyChanged(); }
-        }
-        public DateTime TimeCreated
-        {
-            get { return _timeCreated; }
-            set { _timeCreated = value; OnPropertyChanged(); }
-        }
-        public string UserModified
-        {
-            get { return _userModified; }
-            set { _userModified = value; OnPropertyChanged(); }
-        }
-        public Nullable<DateTime> TimeModified
-        {
-            get { return _timeModified; }
-            set { _timeModified = value; OnPropertyChanged(); }
+            get { return Data.Catelogy_Name; }
+            set { Data.Catelogy_Name = value; OnPropertyChanged(); }
         }
 
-        public CategoryModel()
+
+        public static CategoryModel ParseCategory(DataTable dt)
         {
-            this.Id = Guid.NewGuid();
-            this.Name = String.Empty;
-            this.Note = String.Empty;
-            this.UserCreated = CSGlobal.Instance.CurrentUser?.UserName == null ? "" : CSGlobal.Instance.CurrentUser.UserName;
-            this.TimeCreated = DateTime.Now;
-            this.UserModified = String.Empty;
+            CategoryModel cat = null;
+            if (dt != null)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cat = new CategoryModel();
+                    cat.Id = int.Parse(dt.Rows[i]["ID_Categogy"].ToString());
+                    cat.Name = dt.Rows[i]["Category_Name"].ToString(); 
+                }
+                return cat;
+            }
+
+            return null;
+        }
+
+        public static List<CategoryModel> ParseCategoryList(DataTable dt)
+        {
+            var users = new List<CategoryModel>();
+            if (dt != null)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    var cat = new CategoryModel();
+                    cat.Id = int.Parse(dt.Rows[i]["ID_Catelogy"].ToString());
+                    cat.Name = dt.Rows[i]["Catelogy_Name"].ToString();
+                    users.Add(cat);
+                }
+            }
+            return users;
         }
     }
 }

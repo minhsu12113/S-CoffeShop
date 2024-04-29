@@ -44,15 +44,6 @@ namespace CoffeShop.Utility
         public DisconnectedDatabaseWindow DisconnectedDatabaseWindow { get; set; }
         public MainViewmodel MainViewmodel { get; set; }
         public LoginWindow LoginWindow { get; set; }
-        public InitializeWindow InitializeWindow { get; set; }
-        public BitmapImage NoImage()
-        {
-            var uri = new Uri("pack://application:,,,/CommonResources;component/Images/nothumb370x300.png");
-            return new BitmapImage();
-        }
-        public void ExitApp()
-        {
-            App.Current.Shutdown();
-        }
+        public InitializeWindow InitializeWindow { get; set; } 
     }
 }

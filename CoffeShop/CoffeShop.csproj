@@ -131,6 +131,7 @@
     <Compile Include="Enums\ALL_ENUM.cs" />
     <Compile Include="ExtentionCommon\MyExtention.cs" />
     <Compile Include="Internationalization\StringResources.cs" />
+    <Compile Include="Model\AreaModel.cs" />
     <Compile Include="Model\CategoryModel.cs" />
     <Compile Include="Model\FoodModel.cs" />
     <Compile Include="Model\ImageModel.cs" />
@@ -144,9 +145,11 @@
     <Compile Include="Utility\TextBoxService.cs" />
     <Compile Include="Validations\MaxLengthRule.cs" />
     <Compile Include="Validations\StringNotEmptyRule.cs" />
+    <Compile Include="Viewmodel\Area\AreaViewModel.cs" />
     <Compile Include="Viewmodel\Base\BindableBase.cs" />
     <Compile Include="Viewmodel\Base\CommandHelper.cs" />
     <Compile Include="Viewmodel\Base\ICustomDialog.cs" />
+    <Compile Include="Viewmodel\Area\AreaAddOrUpdateViewModel.cs" />
     <Compile Include="Viewmodel\Categorys\CategoryViewModel.cs" />
     <Compile Include="Viewmodel\Categorys\CateroryAddOrUpdateViewModel.cs" />
     <Compile Include="Viewmodel\ConfirmViewmodel.cs" />
@@ -158,6 +161,12 @@
     <Compile Include="Viewmodel\PagingViewmodel.cs" />
     <Compile Include="Viewmodel\User\AddOrUpdateUserViewModel.cs" />
     <Compile Include="Viewmodel\User\UserViewModel.cs" />
+    <Compile Include="View\Area\AreaAddOrUpdateUC.xaml.cs">
+      <DependentUpon>AreaAddOrUpdateUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Area\AreaUC.xaml.cs">
+      <DependentUpon>AreaUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Categorys\CategoryAddOrUpdateUC.xaml.cs">
       <DependentUpon>CategoryAddOrUpdateUC.xaml</DependentUpon>
     </Compile>
@@ -217,6 +226,14 @@
     <Page Include="Style\SizeDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Area\AreaAddOrUpdateUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Area\AreaUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Categorys\CategoryAddOrUpdateUC.xaml">
       <SubType>Designer</SubType>

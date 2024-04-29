@@ -78,9 +78,7 @@ namespace CoffeShop.Viewmodel.User
             IsCanEditUserName = true;
             if (user == null) // Add new
             {
-                CurrentUser = new UserModel();
-                //Em k bt sua lam sao a
-                CurrentUser.Id = int.Parse(Guid.NewGuid().ToString());
+                CurrentUser = new UserModel(); 
                 Permision = PermisionList[0];
             }
             else  // Edit
@@ -97,14 +95,14 @@ namespace CoffeShop.Viewmodel.User
         }
 
         public void Save()
-        {
-            if(String.IsNullOrEmpty(CurrentUser.Password) || String.IsNullOrEmpty(CurrentUser.UserName))
+        { 
+            if (String.IsNullOrEmpty(CurrentUser.Password) || String.IsNullOrEmpty(CurrentUser.UserName))
             {
                 MessageBox.Show("Vui Lòng Nhập Đầy Đủ Thông Tin!");
                 return;
             }
 
-            if (CurrentUser.UserName.ToLower().Contains("admin") || CurrentUser.UserName.Contains(" "))
+            if (CurrentUser.UserName.ToLower().Contains("admin") || CurrentUser.UserName.Contains(" ") || CurrentUser.UserName.Any(char.IsUpper))
             {
                 MessageBox.Show("Tên Tài Khoản Không Hợp Lệ!");
                 return;

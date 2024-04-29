@@ -1,9 +1,12 @@
-﻿using CoffeShop.Viewmodel.Base;
+﻿using CoffeShop.DAO.Model;
+using CoffeShop.Viewmodel.Base;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using static CoffeShop.Enums.ALL_ENUM;
 
@@ -11,71 +14,104 @@ namespace CoffeShop.Model
 {
    public class FoodModel : BindableBase
    {
-        private Guid _id;
-        private Guid _idCategory;
-        private String _name;
-        private bool _isOutOfStock;
-        private double _price;
-        private String _note;
-        private TYPE_FOOD _type;
-        private String _catName;
-        private String _imageData;
+        public FOOD Data { get; set; } = new FOOD();
 
-
-
-        public Guid Id 
+        public int Id 
         {
-            get { return _id; }
-            set { _id = value; OnPropertyChanged(); }
+            get { return Data.ID; }
+            set { Data.ID = value; OnPropertyChanged(); }
         }
-        public Guid CategoryId
+        public int CategoryId
         {
-            get { return _idCategory; }
-            set { _idCategory = value; OnPropertyChanged(); }
+            get { return Data.ID_Catelogy; }
+            set { Data.ID_Catelogy = value; OnPropertyChanged(); }
         }
+
         public String Name
         {
-            get { return _name; }
-            set { _name = value; OnPropertyChanged(); }
+            get { return Data.Food_Name; }
+            set { Data.Food_Name = value; OnPropertyChanged(); }
         }
-        public bool IsOutOfStock
+        
+        public int Price
         {
-            get { return _isOutOfStock; }
-            set { _isOutOfStock = value; OnPropertyChanged(); }
+            get { return Data.Unit_Cost; }
+            set { Data.Unit_Cost = value; OnPropertyChanged(); }
         }
-        public double Price
+
+        public int Discount
         {
-            get { return _price; }
-            set { _price = value; OnPropertyChanged(); }
+            get { return Data.Discount; }
+            set { Data.Discount = value; OnPropertyChanged(); }
         }
-        public String Note
-        {
-            get { return _note; }
-            set { _note = value; OnPropertyChanged(); }
-        }
-        public TYPE_FOOD Type
-        {
-            get { return _type; }
-            set { _type = value; OnPropertyChanged(); }
-        }
+
+        private string _catName;
         public String CategoryName
         {
             get { return _catName; }
             set { _catName = value; OnPropertyChanged(); }
         }
+
         public String ImageData
         {
-            get { return _imageData; }
-            set { _imageData = value; OnPropertyChanged(); }
+            get { return Data.Base64_Image; }
+            set { Data.Base64_Image = value; OnPropertyChanged(); }
         }
 
-        public FoodModel()
+        public static FoodModel ParseFood(DataTable dt)
         {
-            this.Id = Guid.NewGuid();
-            this.CategoryId = Guid.Empty;
-            this.Name = String.Empty;
-            this.Note = String.Empty;
-            this.CategoryName = String.Empty;
+            try
+            {
+                FoodModel food = null;
+                if (dt != null)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        food = new FoodModel();
+                        food.Id = int.Parse(dt.Rows[i]["ID_Food"].ToString());
+                        food.Name = dt.Rows[i]["Food_Name"].ToString();
+                        food.Price = int.Parse(dt.Rows[i]["Unit_Cost"].ToString());
+                        food.Discount = int.Parse(dt.Rows[i]["Discount"].ToString());
+                        food.CategoryId = int.Parse(dt.Rows[i]["ID_Catelogy"].ToString());
+                        food.ImageData = dt.Rows[i]["Base64_Image"].ToString();
+                    }
+                    return food;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return null;
+            }
+        }
+
+        public static List<FoodModel> ParseFoods(DataTable dt)
+        {
+            try
+            {
+                var foods = new List<FoodModel>();
+                if (dt != null)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        FoodModel food = new FoodModel();
+                        food.Id = int.Parse(dt.Rows[i]["ID_Food"].ToString());
+                        food.Name = dt.Rows[i]["Food_Name"].ToString();
+                        food.Price = int.Parse(dt.Rows[i]["Unit_Cost"].ToString());
+                        food.Discount = int.Parse(dt.Rows[i]["Discount"].ToString());
+                        food.CategoryId = int.Parse(dt.Rows[i]["ID_Catelogy"].ToString());
+                        food.ImageData = dt.Rows[i]["Base64_Image"].ToString();
+                        foods.Add(food);
+                    }
+                }
+                return foods;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return new List<FoodModel>();
+            }
         }
    }
 }

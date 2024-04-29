@@ -55,6 +55,8 @@ namespace CoffeShop.Model
             set { Data.CCCD = value; OnPropertyChanged(); }
         }
 
+        public bool IsAdminType => this.UserName == "admin";
+
         public static UserModel ParseUser(DataTable dt)
         {
             UserModel user = null;

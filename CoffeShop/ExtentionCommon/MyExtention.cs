@@ -60,14 +60,29 @@ namespace CoffeShop.ExtentionCommon
         }
         public static BitmapImage Base64ToImageSource(string dataBase64)
         {
-            byte[] binaryData = Convert.FromBase64String(dataBase64);
-            BitmapImage bi = new BitmapImage();
-            bi.BeginInit();
-            bi.StreamSource = new MemoryStream(binaryData);
-            bi.EndInit();
-            return bi;
+            try
+            {
+                byte[] imageBytes = Convert.FromBase64String(dataBase64);
+
+                using (MemoryStream ms = new MemoryStream(imageBytes))
+                {
+                    BitmapImage bitmapImage = new BitmapImage();
+                    bitmapImage.BeginInit();
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmapImage.StreamSource = ms;
+                    bitmapImage.EndInit();
+                    bitmapImage.Freeze(); // Tùy chọn để tăng hiệu suất khi sử dụng đa luồng
+                    return bitmapImage;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
         }
     }
+
 
     public static class ObjectCopier
     {
