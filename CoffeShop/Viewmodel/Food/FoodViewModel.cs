@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CoffeShop.Viewmodel.Food
 {
@@ -30,7 +31,11 @@ namespace CoffeShop.Viewmodel.Food
         public string SearchFoodContent
         {
             get { return _searchFoodContent; }
-            set { _searchFoodContent = value; OnPropertyChanged(); }
+            set { 
+                _searchFoodContent = value;
+                SearchFoods();
+                OnPropertyChanged();
+            }
         }
         public PagingViewmodel PagingViewmodel
         {
@@ -47,41 +52,48 @@ namespace CoffeShop.Viewmodel.Food
             get { return _isOpenDialog; }
             set { _isOpenDialog = value; OnPropertyChanged(); }
         }
-        #endregion
-        #region [Collection]
-        private List<FoodModel> _foodList;
-        private List<CategoryModel> _categoryList;
-        private List<Guid> _categoryFilterList;
 
-
-        public List<Guid> CategoryFilterList
+        private CategoryModel _catogorySelected;
+        public CategoryModel CatogorySelected
         {
-            get { return _categoryFilterList; }
-            set { _categoryFilterList = value; OnPropertyChanged(); }
+            get { return _catogorySelected; }
+            set
+            {
+                _catogorySelected = value;
+                SearchFoods();
+                OnPropertyChanged();
+            }
         }
+        #endregion
+
+        #region [Collection]
+
+        private List<CategoryModel> _categoryList;          
         public List<CategoryModel> CategoryList
         {
             get { return _categoryList; }
             set { _categoryList = value; OnPropertyChanged(); }
         }
+
+        private List<FoodModel> _foodList;
         public List<FoodModel> FoodList
         {
             get { return _foodList; }
             set { _foodList = value; OnPropertyChanged(); }
         }
+
+        public List<FoodModel> FoodListMaster { get; set; } = new List<FoodModel>();
         #endregion
+
         #region [Command]
         public ICommand AddNewCMD { get { return new CommandHelper(AddNew); } }
         public ICommand EditCMD { get { return new CommandHelper<FoodModel>((f) => { return f != null; }, Edit); } }
         public ICommand DeleteCMD { get { return new CommandHelper<FoodModel>((f) => { return f != null; }, Delete); } }
-        public ICommand SearchCMD { get { return new CommandHelper<CategoryModel>((c) => { return c != null; }, LoadFoodAsync); } }
-        public ICommand CheckedCategoryTagCMD { get { return new CommandHelper<CategoryModel>((c) => { return c != null; }, CheckedCategoryTag); } }
-        public ICommand UnCheckedCategoryTagCMD { get { return new CommandHelper<CategoryModel>((c) => { return c != null; }, UnCheckedCategoryTag); } }
         #endregion
 
-        public FoodViewModel()
+        public FoodViewModel()  
         {
-            SearchFoodContent = string.Empty;
+            LoadCategory();
             LoadFoodAsync();
         }
 
@@ -102,25 +114,55 @@ namespace CoffeShop.Viewmodel.Food
             IsOpenDialog = false;
         }
 
-        public void LoadFoodAsync(CategoryModel category = null)
+        public async void LoadFoodAsync()
         {
             OpenDialog(new WaitingDialogUc());
 
-            Task.Delay(400);
-            Task.Run(() =>
+            await Task.Delay(400);
+            var rest = Task<List<FOOD>>.Factory.StartNew(() =>
             {
-                if(CategoryList == null)
-                {
-                    var dtCat = TM_CATELOGY_DAO.Instance.GetAll();
-                    var cats = CategoryModel.ParseCategoryList(dtCat);
-                    CategoryList = new List<CategoryModel>(cats);
-                }
-
                 var dtFood = TM_FOOD_DAO.Instance.Get_All();
-                var foods = (category == null) ? FoodModel.ParseFoods(dtFood) : FoodModel.ParseFoods(dtFood)?.Where(f => f.CategoryId == category.Id);
-                FoodList = new List<FoodModel>(foods);
-                CloseDialog();
+                var foods = FoodModel.ParseFoods(dtFood);
+                return foods;
             });
+
+
+            //var dtFood = TM_FOOD_DAO.Instance.Get_All();
+            //var foods = FoodModel.ParseFoods(dtFood);
+            var foods = await rest;
+
+            foreach (var item in foods)
+            {
+                FoodListMaster.Add(new FoodModel() { Data = item });
+            }
+
+            var filterFoodsBycat = CatogorySelected.IsDefault ? FoodListMaster
+                : FoodListMaster.Where(f => f.CategoryId == CatogorySelected.Id)?.ToList();
+
+            var filterFoodsSearchName = String.IsNullOrEmpty(SearchFoodContent) ? filterFoodsBycat
+                : filterFoodsBycat?.Where(f => f.Name.ToLower().Contains(SearchFoodContent));
+            FoodList = new List<FoodModel>(filterFoodsSearchName);
+            CloseDialog();
+        }
+
+        public void SearchFoods()
+        { 
+            var filterFoodsBycat = (bool)(CatogorySelected?.IsDefault) ? FoodListMaster
+               : FoodListMaster.Where(f => f.CategoryId == CatogorySelected.Id)?.ToList();
+
+            var filterFoodsSearchName = String.IsNullOrEmpty(SearchFoodContent) ? filterFoodsBycat
+                : filterFoodsBycat?.Where(f => f.Name.ToLower().Contains(SearchFoodContent.ToLower()));
+            FoodList = new List<FoodModel>(filterFoodsSearchName); 
+        }
+
+        public void LoadCategory()
+        {
+            var dtCat = TM_CATELOGY_DAO.Instance.GetAll();
+            var cats = CategoryModel.ParseCategoryList(dtCat);
+            cats.Add(new CategoryModel() { Name = "Tất Cả", IsDefault = true });
+
+            CategoryList = new List<CategoryModel>(cats);
+            CatogorySelected = CategoryList?.Where(c => c.IsDefault == true)?.FirstOrDefault();
         }
         
         public void Edit(FoodModel foodModel)
@@ -130,10 +172,10 @@ namespace CoffeShop.Viewmodel.Food
 
         public void Delete(FoodModel foodModel)
         {
-            OpenDialog(new ConfirmUC($@"Bạn có muốn xóa [{foodModel.Name}] không?", () =>
+            OpenDialog(new ConfirmUC($@"Bạn có muốn xóa [{foodModel.Name}] không?", async () =>
             {
-                TM_FOOD_DAO.Instance.Delete(foodModel.Data);
-                LoadFoodAsync();
+                TM_FOOD_DAO.Instance.Delete(foodModel.Data); 
+               LoadFoodAsync();
             }, CloseDialog));
         }
 
@@ -149,13 +191,7 @@ namespace CoffeShop.Viewmodel.Food
                 TM_FOOD_DAO.Instance.Insert(food.Data);
             }
 
-            LoadFoodAsync();
+           LoadFoodAsync();
         }
-
-
-        public void CheckedCategoryTag(CategoryModel category) => LoadFoodAsync(category);
-
-        public void UnCheckedCategoryTag(CategoryModel category) => LoadFoodAsync(category);
-
     }
 }

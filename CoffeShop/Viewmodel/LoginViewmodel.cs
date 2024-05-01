@@ -69,10 +69,15 @@ namespace CoffeShop.Viewmodel
         #endregion
 
 
-        public LoginViewmodel()
+        public event EventHandler<LoggedEventArgs> Logged;
+         
+        protected virtual void OnRaiseCustomEvent(LoggedEventArgs e)
         {
-            CurrentUser = new UserModel();
+            EventHandler<LoggedEventArgs> raiseEvent = Logged;
+            raiseEvent?.Invoke(this, e);
         }
+
+        public LoginViewmodel() => CurrentUser = new UserModel();
 
         public void CloseDialog() => IsOpenDialog = false;
 
@@ -128,6 +133,7 @@ namespace CoffeShop.Viewmodel
 
                 CSGlobal.Instance.CurrentUser = CurrentUser;
                 if (IsRemember) SaveRememberData();
+                OnRaiseCustomEvent(new LoggedEventArgs(CurrentUser));
                 CSGlobal.Instance.MainViewmodel.CurrentUserNameLogin = CurrentUser.UserName;
             } 
         } 
@@ -165,5 +171,12 @@ namespace CoffeShop.Viewmodel
             string finalText = userName + Environment.NewLine + password;
             File.WriteAllText("config", finalText);
         }
+    }
+
+
+    public class LoggedEventArgs : EventArgs
+    {
+        public LoggedEventArgs(UserModel user) => UserModel = user;
+        public UserModel UserModel { get; set; }
     }
 }

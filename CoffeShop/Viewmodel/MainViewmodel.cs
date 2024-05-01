@@ -13,6 +13,7 @@ using CoffeShop.View.Setting;
 using CoffeShop.View.Dialog;
 using CoffeShop.View.FoodsTable;
 using CoffeShop.View.Area;
+using CoffeShop.Viewmodel.Food;
 
 namespace CoffeShop.Viewmodel
 {
@@ -76,6 +77,12 @@ namespace CoffeShop.Viewmodel
             CurrenView = new FoodsTableUC();
             StateWindow = WindowState.Normal;
         }
+        
+        public FoodsUC FoodsUC { get; set; }
+        public AreaUC AreaUC { get; set; }
+        public CategoryUC CategoryUC { get; set; }
+        public StatisticsUC StatisticsUC { get; set; }
+        public UserUC UserUC { get; set; } 
 
         public void NavigateToView(ItemNavigate itemNavigate)
         {
@@ -87,22 +94,19 @@ namespace CoffeShop.Viewmodel
                     CurrenView = new FoodsTableUC();
                     break;
                 case TYPE_VIEW.FOODS:
-                    CurrenView = new FoodsUC();
+                    CurrenView = new FoodsUC(); 
                     break;
                 case TYPE_VIEW.AREA:
-                    CurrenView = new AreaUC();
+                    CurrenView = AreaUC == null ? AreaUC = new AreaUC() : AreaUC;
                     break;
                 case TYPE_VIEW.CATEGORY:
-                    CurrenView = new CategoryUC();
+                    CurrenView = CategoryUC == null ? CategoryUC = new CategoryUC() : CategoryUC;
                     break;
                 case TYPE_VIEW.STATISTICS:
-                    CurrenView = new StatisticsUC();
+                    CurrenView = StatisticsUC == null ? StatisticsUC = new StatisticsUC() : StatisticsUC;
                     break;
                 case TYPE_VIEW.USER:
-                    CurrenView = new UserUC();
-                    break;
-                case TYPE_VIEW.SETTING:
-                    CurrenView = new SettingsUC();
+                    CurrenView = UserUC == null ? UserUC = new UserUC() : UserUC;
                     break;
                 default:
                     break;

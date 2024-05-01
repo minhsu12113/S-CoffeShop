@@ -13,49 +13,8 @@
              TextElement.FontWeight="Regular"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <Style x:Key="Stl_btn_common" TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionMiniButton}">
-            <Setter Property="Background" Value="Transparent"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#13548A"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="Stl_packicon_edit" TargetType="materialDesign:PackIcon">
-            <Setter Property="Margin" Value="7"/>
-            <Setter Property="Width" Value="Auto"/>
-            <Setter Property="Height" Value="Auto"/>
-            <Setter Property="Kind" Value="Pencil"/>
-            <Setter Property="Foreground" Value="#13548A"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=btn_Edit,Path=IsMouseOver}" Value="True">
-                    <Setter Property="Foreground" Value="White"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="Stl_packicon_swich_table" TargetType="materialDesign:PackIcon">
-            <Setter Property="Margin" Value="7"/>
-            <Setter Property="Width" Value="Auto"/>
-            <Setter Property="Height" Value="Auto"/>
-            <Setter Property="Kind" Value="TableSync"/>
-            <Setter Property="Foreground" Value="#13548A"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=btn_Swich_Table,Path=IsMouseOver}" Value="True">
-                    <Setter Property="Foreground" Value="White"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="Stl_packicon_payment" TargetType="materialDesign:PackIcon">
-            <Setter Property="Margin" Value="7"/>
-            <Setter Property="Width" Value="Auto"/>
-            <Setter Property="Height" Value="Auto"/>
-            <Setter Property="Kind" Value="Payment"/>
-            <Setter Property="Foreground" Value="#13548A"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=bnt_Payment,Path=IsMouseOver}" Value="True">
-                    <Setter Property="Foreground" Value="White"/>
-                </DataTrigger>
-            </Style.Triggers>
+        <Style x:Key="Stl_btn_common" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+           
         </Style>
     </UserControl.Resources>
     <materialDesign:DialogHost IsOpen="{Binding IsOpenDialog}" DialogContent="{Binding DialogContent}" OverlayBackground="Transparent">
@@ -75,9 +34,10 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>    
                 </Grid.ColumnDefinitions>
 
-                <ComboBox Grid.Column="5" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" 
+                <ComboBox Grid.Column="4" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" 
                           FontSize="16" 
                           Margin="0 0 25 5" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                     <materialDesign:HintAssist.Hint>
@@ -90,7 +50,21 @@
                     <ComboBoxItem Content="Bàn Trống"/>
                     <ComboBoxItem Content="Tất Cả"/>
                 </ComboBox>
-                <TextBox Grid.Column="4" FontSize="16" Text="{Binding NameSearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
+                <ComboBox Grid.Column="5" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom"
+                          ItemsSource="{Binding AreaList}"
+                          VerticalAlignment="Stretch"  FontSize="16" Margin="0 0 25 5" 
+                          SelectedItem="{Binding AreaSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          DisplayMemberPath="Name"
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Khu Vực" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="Sort" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5 3 0 0"/>
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint> 
+                </ComboBox>
+                <TextBox Grid.Column="6" FontSize="16" Text="{Binding NameSearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
                          HorizontalAlignment="Stretch" VerticalContentAlignment="Center" Margin="5">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding SearchCMD}"/>
@@ -104,6 +78,7 @@
                 </TextBox>
             </Grid>
             <!--#endregion-->
+            
             <!--#region [Talbe List] -->
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
                 <ItemsControl ItemsSource="{Binding TableList}" VerticalAlignment="Top" HorizontalAlignment="Left">
@@ -119,7 +94,8 @@
                                     <materialDesign:TransitionEffect Kind="FadeIn"/>
                                     <materialDesign:TransitionEffect Kind="ExpandIn"/>
                                 </materialDesign:TransitioningContent.OpeningEffects>
-                                <materialDesign:Card Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" Height="210" UniformCornerRadius="10">
+                                <materialDesign:Card Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left"
+                                                     Width="200" Height="210" UniformCornerRadius="8">
                                     <materialDesign:Card.Style>
                                         <Style TargetType="materialDesign:Card">
                                             <Style.Triggers >
@@ -134,7 +110,7 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="*"/>
-                                            <RowDefinition Height="0.4*"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock FontSize="18" Foreground="#13548A" Margin="2" FontWeight="SemiBold" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
@@ -146,19 +122,34 @@
                                             <materialDesign:PackIcon Kind="Food" Margin="5" Width="49" Height="49" Foreground="Gray"/>
                                         </WrapPanel>
 
-                                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <Button Margin="5" Name="btn_Edit" Style="{StaticResource Stl_btn_common}" Command="{Binding Path=DataContext.AddOrEditFoodTabelCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" 
-                                                                               CommandParameter="{Binding}">
-                                                <materialDesign:PackIcon Style="{StaticResource Stl_packicon_edit}" />
-                                            </Button>
-                                            <Button Margin="5" Name="btn_Swich_Table" Style="{StaticResource Stl_btn_common}">
-                                                <materialDesign:PackIcon Style="{StaticResource Stl_packicon_swich_table}"/>
-                                            </Button>
-                                            <Button Name="bnt_Payment" Margin="5" Style="{StaticResource Stl_btn_common}">
-                                                <materialDesign:PackIcon Style="{StaticResource Stl_packicon_payment}"/>
-                                            </Button>
-                                        </StackPanel>
+                                        <Border Grid.Row="2" BorderThickness="0 1 0 0" BorderBrush="WhiteSmoke">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Button Grid.Column="0" Margin="8" Name="btn_Edit" Style="{StaticResource Stl_btn_common}" 
+                                                    Command="{Binding Path=DataContext.AddOrEditFoodTabelCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" 
+                                                    CommandParameter="{Binding}">
+                                                    <materialDesign:PackIcon Kind="Pencil"  />
+                                                </Button>
 
+                                                <Border Grid.Column="1" BorderThickness="1 0 0 0" BorderBrush="WhiteSmoke"/>
+
+                                                <Button Grid.Column="1" Margin="8" Name="btn_Swich_Table" Style="{StaticResource Stl_btn_common}">
+                                                    <materialDesign:PackIcon Kind="TableSync"/>
+                                                </Button>
+
+
+                                                <Border Grid.Column="2" BorderThickness="1 0 0 0" BorderBrush="WhiteSmoke"/>
+
+                                                <Button Grid.Column="2" Name="bnt_Payment" Margin="8" Style="{StaticResource Stl_btn_common}">
+                                                    <materialDesign:PackIcon Kind="Payment" />
+                                                </Button>
+                                            </Grid>
+                                        </Border>
+                                        
                                     </Grid>
                                 </materialDesign:Card>
                             </materialDesign:TransitioningContent>
@@ -167,12 +158,7 @@
                 </ItemsControl>
             </ScrollViewer>
             <!--#endregion-->
-            <!--#region [Paging] -->
-            <Grid Grid.Row="2">
-                <paginguc:PagingUC DataContext="{Binding PagingViewmodel}"/>
-            </Grid>
-            <!--#endregion-->
-
+           
         </Grid>
     </materialDesign:DialogHost>
 </UserControl>

@@ -12,8 +12,16 @@ namespace CoffeShop.Viewmodel.Base
 {
     public class BindableBase : INotifyPropertyChanged
     {
+
+        public BindableBase() 
+        {
+            var LoginViewModel = CSGlobal.Instance.LoginWindow?.DataContext as LoginViewmodel;
+            if(LoginViewModel != null) LoginViewModel.Logged += UserViewModel_Logged; 
+        }
+
         [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;       
+
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -24,6 +32,11 @@ namespace CoffeShop.Viewmodel.Base
         {
             member = val;
             OnPropertyChanged(propertyName);
+        } 
+
+        private void UserViewModel_Logged(object sender, LoggedEventArgs e)
+        {
+            OnPropertyChanged("IsAdmin");
         }
 
         private bool _isAdmin;
@@ -33,4 +46,5 @@ namespace CoffeShop.Viewmodel.Base
             set { _isAdmin = CSGlobal.Instance.CurrentUser.IsAdminType; OnPropertyChanged(); }
         }
     }
+
 }

@@ -29,7 +29,8 @@
         <FrameworkElement x:Name="dummyElement" Visibility="Hidden"/>
 
         <TextBox  Grid.Row="1" FontSize="16" Name="tbx_Name" VerticalContentAlignment="Bottom" 
-                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="8">            
+                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="16 8 16 8"
+                  Text="{Binding CurrentArea.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">            
             <materialDesign:HintAssist.Hint>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Nhập tên khu vực" VerticalAlignment="Center" HorizontalAlignment="Center"/>                     
@@ -46,12 +47,13 @@
             </StackPanel>
         </Button>
 
-        <Grid Grid.Row="3" Margin="8">
+        <Grid Grid.Row="3" Margin="16 8 16 8">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding TableList}" VerticalAlignment="Top">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                            <WrapPanel Orientation="Vertical" VerticalAlignment="Stretch" 
+                                       HorizontalAlignment="Stretch"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
@@ -61,25 +63,16 @@
                                     <ColumnDefinition Width="*"/> 
                                 </Grid.ColumnDefinitions>
                                 
-                                <TextBox IsEnabled="False" Grid.Column="0" FontSize="16"  Text="{Binding .}" HorizontalAlignment="Stretch" 
+                                <TextBox Grid.Column="0" FontSize="16" Loaded="TextBox_Loaded"
+                                         Text="{Binding Name}" HorizontalAlignment="Stretch" 
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
 
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Button  Style="{StaticResource MaterialDesignFlatButton}"
-                                            VerticalAlignment="Bottom"  
-                                            HorizontalAlignment="Right" Margin="0 0 0 4">
-                                        <materialDesign:PackIcon Kind="EditOutline"/>
-                                    </Button>
-
-                                    <Button  Style="{StaticResource MaterialDesignFlatButton}"
-                                             VerticalAlignment="Bottom"  
-                                             HorizontalAlignment="Right" Margin="0 0 0 4">
-                                        <materialDesign:PackIcon Kind="RemoveCircle"/>
-                                    </Button>
-                                </StackPanel>
-
-                               
-
+                                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        VerticalAlignment="Bottom"  Loaded="Button_Loaded"
+                                        Click="RemoveTable_Click"
+                                        HorizontalAlignment="Right" Margin="0 0 0 4">
+                                    <materialDesign:PackIcon Kind="RemoveCircle"/>
+                                </Button>
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -90,7 +83,7 @@
 
         <StackPanel Grid.Row="4" Margin="5" Orientation="Horizontal" VerticalAlignment="Center" 
                     HorizontalAlignment="Right">
-            <Button Margin="5" Content="Lưu" Width="79" Command="{Binding SaveCMD}">
+            <Button Margin="5" Content="Lưu" Width="79" Command="{Binding SaveAreaCMD}">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">
                         <Setter Property="IsEnabled" Value="False"/>

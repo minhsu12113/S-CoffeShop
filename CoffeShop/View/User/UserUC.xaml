@@ -45,7 +45,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Visibility="{Binding IsAdmin , Converter={StaticResource BooleanToVisibilityConverter}}" materialDesign:ButtonAssist.CornerRadius="5" Command="{Binding AddNewCMD}" Margin="15 5 10 0" HorizontalContentAlignment="Stretch" VerticalAlignment="Bottom">
+                    <Button Grid.Column="0" Visibility="{Binding IsAdmin ,Converter={StaticResource BooleanToVisibilityConverter}}" materialDesign:ButtonAssist.CornerRadius="5" Command="{Binding AddNewCMD}" Margin="15 5 10 0" HorizontalContentAlignment="Stretch" VerticalAlignment="Bottom">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -56,11 +56,10 @@
                         </Grid>
                     </Button>
 
-                    <TextBox Visibility="{Binding IsAdmin , Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="4" FontSize="16" Text="{Binding NameSearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
-                  HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Top" Margin="15 5 20 0">
-                        <TextBox.InputBindings>
-                            <KeyBinding Key="Enter" Command="{Binding SearchCMD}"/>
-                        </TextBox.InputBindings>
+                    <TextBox Visibility="{Binding IsAdmin , Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="4" FontSize="16"
+                             Text="{Binding NameSearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
+                              HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Top" Margin="15 5 20 0">
+                        
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Tìm Kiếm" VerticalAlignment="Center" HorizontalAlignment="Center"/>

@@ -80,13 +80,14 @@ namespace CoffeShop.Viewmodel.User
             LoadUser();
         }
 
+
         private void LoadUser()
         {
             try
             {
                 UserModelMasterList.Clear();
                 var dt = AccountDAO.Instance.Get_All();
-                var user = CSGlobal.Instance.CurrentUser.IsAdmin ? UserModel.ParseUsers(dt) 
+                var user = this.IsAdmin ? UserModel.ParseUsers(dt) 
                     : UserModel.ParseUsers(dt)?.Where(u => u.UserName == CSGlobal.Instance.CurrentUser.UserName);
                 UserModelMasterList.AddRange(user);
                 UserModelList = new ObservableCollection<UserModel>(UserModelMasterList);

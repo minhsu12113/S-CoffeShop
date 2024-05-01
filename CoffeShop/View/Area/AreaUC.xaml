@@ -41,7 +41,10 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" materialDesign:ButtonAssist.CornerRadius="5" Command="{Binding AddNewCMD}" Margin="15 5 10 0" HorizontalContentAlignment="Stretch" VerticalAlignment="Bottom">
+                    <Button Grid.Column="0" materialDesign:ButtonAssist.CornerRadius="5" 
+                            Command="{Binding AddNewCMD}" Margin="15 5 10 0" HorizontalContentAlignment="Stretch" 
+                            VerticalAlignment="Bottom" 
+                            Visibility="{Binding IsAdmin,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -69,7 +72,7 @@
                 </Grid>
 
                 <materialDesign:Card Grid.Row="1" UniformCornerRadius="20" Margin="10 10 10 10">
-                    <ListView ItemsSource="{Binding CategoryList}" FontSize="16">
+                    <ListView ItemsSource="{Binding AreaList}" FontSize="16">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignGridViewItem}">
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -77,13 +80,13 @@
                             </Style>
                         </ListView.ItemContainerStyle>
                         <ListView.View>
-                            <GridView>
+                            <GridView >
                                 <GridViewColumn Header="STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource CountItemListView}}"/>
                                 <GridViewColumn Header="Tên Khu Vực" DisplayMemberBinding="{Binding Name}"/>
                                 <GridViewColumn>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
+                                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsAdmin,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}">
                                                 <materialDesign:PackIcon Kind="PencilBox" Style="{StaticResource CumtomStylePack}" Margin="5" Foreground="Gray" HorizontalAlignment="Center" Width="Auto" Height="Auto">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonDown">

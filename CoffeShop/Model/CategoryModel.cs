@@ -55,6 +55,8 @@ namespace CoffeShop.Model
             return null;
         }
 
+        public bool IsDefault { get; set; }
+
         public static List<CategoryModel> ParseCategoryList(DataTable dt)
         {
             var users = new List<CategoryModel>();

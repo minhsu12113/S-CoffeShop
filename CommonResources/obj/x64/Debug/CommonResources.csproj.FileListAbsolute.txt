@@ -5,3 +5,10 @@ F:\Study\CoffeShop\CommonResources\obj\x64\Debug\CommonResources.csproj.CoreComp
 F:\Study\CoffeShop\CommonResources\obj\x64\Debug\CommonResources.dll
 F:\Study\CoffeShop\CommonResources\obj\x64\Debug\CommonResources.pdb
 F:\Study\CoffeShop\CommonResources\obj\x64\Debug\CommonResources.csprojAssemblyReference.cache
+E:\Codes\mentor\S-CoffeShop\CommonResources\bin\x64\Debug\CommonResources.dll
+E:\Codes\mentor\S-CoffeShop\CommonResources\bin\x64\Debug\CommonResources.pdb
+E:\Codes\mentor\S-CoffeShop\CommonResources\obj\x64\Debug\CommonResources.csproj.AssemblyReference.cache
+E:\Codes\mentor\S-CoffeShop\CommonResources\obj\x64\Debug\CommonResources.g.resources
+E:\Codes\mentor\S-CoffeShop\CommonResources\obj\x64\Debug\CommonResources.csproj.CoreCompileInputs.cache
+E:\Codes\mentor\S-CoffeShop\CommonResources\obj\x64\Debug\CommonResources.dll
+E:\Codes\mentor\S-CoffeShop\CommonResources\obj\x64\Debug\CommonResources.pdb

@@ -1,9 +1,13 @@
-﻿using CoffeShop.ExtentionCommon;
+﻿using CoffeShop.DAO;
+using CoffeShop.DAO.Model;
+using CoffeShop.ExtentionCommon;
 using CoffeShop.Model;
 using CoffeShop.View.Dialog;
 using CoffeShop.View.FoodsTable;
 using CoffeShop.Viewmodel.Base;
+using CoffeShop.Viewmodel.Categorys;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,26 +35,41 @@ namespace CoffeShop.Viewmodel.DashBoard
             get { return _isOpenDialog; }
             set { _isOpenDialog = value; OnPropertyChanged(); }
         }
-        public PagingViewmodel PagingViewmodel
-        {
-            get { return _pagingViewmodel; }
-            set { _pagingViewmodel = value; OnPropertyChanged(); }
-        }
         public string NameSearch
         {
             get { return _nameSearch; }
             set { _nameSearch = value; OnPropertyChanged(); }
         }
+
+        private AreaModel _areaSelected;
+        public AreaModel AreaSelected
+        {
+            get { return _areaSelected; }
+            set 
+            { 
+                _areaSelected = value;
+                LoadTable(_areaSelected.Id);
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
+
         #region [Command]
-        public ICommand SearchCMD { get { return new CommandHelper(LoadTable); } }
+        public ICommand SearchCMD { get { return new CommandHelper(SearchTable); } }
         public ICommand AddOrEditFoodTabelCMD { get { return new CommandHelper<TableModel>((t) => { return t != null; }, AddOrUpdateFoodTabel); } }
         #endregion
+
         #region [Collection]
-        private List<TableModel> _tableList;
+        private List<AreaModel> _areaList;
+        public List<AreaModel> AreaList
+        {
+            get { return _areaList; }
+            set { _areaList = value; OnPropertyChanged(); }
+        }
 
-
-        public List<TableModel> TableList
+        private List<TableViewModel> _tableList;
+        public List<TableViewModel> TableList
         {
             get { return _tableList; }
             set { _tableList = value; OnPropertyChanged(); }
@@ -59,43 +78,41 @@ namespace CoffeShop.Viewmodel.DashBoard
 
         public FoodsTebleViewModel()
         {
-            NameSearch = String.Empty;
-            PagingViewmodel = new PagingViewmodel(SearchTable,18);
-            //LoadTable();            
+            LoadArea();
         }
-        public async void LoadTable()
+
+        public  void LoadTable(int areaId)
         {
-            PagingViewmodel.TotalCountItem = await LoadTotalCount();            
+            var dt = TM_TABLE_DAO.Instance.Get_Table(areaId);
+            var tables = TableViewModel.ParseTableList(dt);
+            TableList = new List<TableViewModel>(tables);
         }
-        public async Task<int> LoadTotalCount()
+
+        public void SearchTable()
         {
-            int count = 0;
-            await Task.Delay(500);
-            await Task.Run(() =>
-            {
-              
-            });
-            return count;
+
         }
-        public async void SearchTable(int pageIndex, int pageSize)
+
+        private void LoadArea()
         {
-            OpenDialog(new WaitingDialogUc());
-            await Task.Delay(500);
-            await Task.Run(() => 
-            {
-                
-            });           
+            var dt = TM_AREA_DAO.Instance.Get_Area();
+            var areas = AreaModel.ParseAreaList(dt);
+            AreaList = new List<AreaModel>(areas);
+            AreaSelected = AreaList[0];
         }
+
         public void OpenDialog(object uc = null)
         {
             if (uc != null)
                 DialogContent = uc;
             IsOpenDialog = true;
         }
+
         public void CloseDialog()
         {
             IsOpenDialog = false;
         }
+
         public void AddOrUpdateFoodTabel(TableModel table)
         {
             OpenDialog(new AddOrUpdateFoodTabelUC());

@@ -25,7 +25,7 @@ namespace CoffeShop.Viewmodel.Base
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null ? true : _canExecute((T)parameter);
+            return true;
         }
 
         public void Execute(object parameter)

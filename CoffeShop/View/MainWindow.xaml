@@ -31,14 +31,14 @@
         <converter:BoolToVisibilityConverter x:Key="BooleanToVisibility"/>
     </Window.Resources>
     <materialDesign:DialogHost Background="Transparent" OverlayBackground="Transparent"  IsOpen="{Binding IsOpenDialog}" DialogContent="{Binding DialogContent}" >
-        <materialDesign:Card UniformCornerRadius="29" Margin="1" Background="#F0F2F5">
+        <materialDesign:Card UniformCornerRadius="16" Margin="1" Background="#F0F2F5">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1.7*"/>
                     <ColumnDefinition Width="7*"/>
                 </Grid.ColumnDefinitions>
 
-                <materialDesign:Card Grid.Column="0" UniformCornerRadius="29" Margin="15" Background="#3326AE">
+                <materialDesign:Card Grid.Column="0" UniformCornerRadius="24" Margin="16" Background="#3326AE">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonDown">
                             <i:InvokeCommandAction Command="{Binding DragmoveWindowCMD}" CommandParameter="{Binding ElementName=Main_Window}"/>
@@ -77,9 +77,9 @@
                                                                  Height="{Binding HeightIconNavigate,Source={StaticResource SizeManager}}"/>
                                             <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Content}" Foreground="{Binding ForegroundItem}"  VerticalAlignment="Center" HorizontalAlignment="Left" 
                                                    FontSize="{Binding FontSize16,Source={StaticResource SizeManager}}"/>
-                                            <materialDesign:TransitioningContent HorizontalAlignment="Left" Visibility="{Binding StatePointer}" OpeningEffect="{materialDesign:TransitionEffect SlideInFromTop, Duration=0:0:0.5}">
+                                            <!--<materialDesign:TransitioningContent HorizontalAlignment="Left" Visibility="{Binding StatePointer}" OpeningEffect="{materialDesign:TransitionEffect SlideInFromTop, Duration=0:0:0.5}">
                                                 <Border Width="5" Background="#3326AE" CornerRadius="4"/>
-                                            </materialDesign:TransitioningContent>
+                                            </materialDesign:TransitioningContent>-->
                                         </Grid>
                                     </Button>
                                 </DataTemplate>
@@ -121,7 +121,7 @@
                     </Grid>
                     <!--#endregion [End Header]-->
 
-                    <ContentControl Grid.Row="1" Margin="5 5 15 20" Content="{Binding CurrenView}" />
+                    <ContentControl Grid.Row="1" Margin="5 5 15 8" Content="{Binding CurrenView}" />
                    
                 </Grid>
                 <ProgressBar Height="9" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Bottom" IsIndeterminate="True" Foreground="Wheat"

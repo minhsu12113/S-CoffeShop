@@ -1,4 +1,5 @@
-﻿using CoffeShop.DAO.Model;
+﻿using CoffeShop.DAO;
+using CoffeShop.DAO.Model;
 using CoffeShop.Viewmodel.Base;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,12 @@ namespace CoffeShop.Model
 {
    public class FoodModel : BindableBase
    {
+        public FoodModel() { }
+        public FoodModel(FOOD fOOD) 
+        {
+            this.Data = fOOD;
+        }
+
         public FOOD Data { get; set; } = new FOOD();
 
         public int Id 
@@ -86,22 +93,22 @@ namespace CoffeShop.Model
             }
         }
 
-        public static List<FoodModel> ParseFoods(DataTable dt)
+        public static List<FOOD> ParseFoods(DataTable dt)
         {
             try
             {
-                var foods = new List<FoodModel>();
+                var foods = new List<FOOD>();
                 if (dt != null)
                 {
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        FoodModel food = new FoodModel();
-                        food.Id = int.Parse(dt.Rows[i]["ID_Food"].ToString());
-                        food.Name = dt.Rows[i]["Food_Name"].ToString();
-                        food.Price = int.Parse(dt.Rows[i]["Unit_Cost"].ToString());
+                        FOOD food = new FOOD();
+                        food.ID = int.Parse(dt.Rows[i]["ID_Food"].ToString());
+                        food.Food_Name = dt.Rows[i]["Food_Name"].ToString();
+                        food.Unit_Cost = int.Parse(dt.Rows[i]["Unit_Cost"].ToString());
                         food.Discount = int.Parse(dt.Rows[i]["Discount"].ToString());
-                        food.CategoryId = int.Parse(dt.Rows[i]["ID_Catelogy"].ToString());
-                        food.ImageData = dt.Rows[i]["Base64_Image"].ToString();
+                        food.ID_Catelogy = int.Parse(dt.Rows[i]["ID_Catelogy"].ToString());
+                        food.Base64_Image = dt.Rows[i]["Base64_Image"].ToString();
                         foods.Add(food);
                     }
                 }
@@ -110,8 +117,8 @@ namespace CoffeShop.Model
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
-                return new List<FoodModel>();
+                return new List<FOOD>();
             }
-        }
+        } 
    }
 }

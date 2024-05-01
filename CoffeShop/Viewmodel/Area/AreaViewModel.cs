@@ -1,4 +1,5 @@
-﻿using CoffeShop.Internationalization;
+﻿using CoffeShop.DAO;
+using CoffeShop.Internationalization;
 using CoffeShop.Model;
 using CoffeShop.View.Area;
 using CoffeShop.View.Categorys;
@@ -11,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace CoffeShop.Viewmodel.Area
@@ -30,7 +32,7 @@ namespace CoffeShop.Viewmodel.Area
             {
                 _nameSearch = value;
                 OnPropertyChanged();
-                SearchCategory();
+                SearchArea();
             }
         }
 
@@ -47,8 +49,8 @@ namespace CoffeShop.Viewmodel.Area
         #endregion
 
         #region [Collection]
-        private ObservableCollection<AreaModel> _areaList;
-        public ObservableCollection<AreaModel> AreaList
+        private List<AreaModel> _areaList;
+        public List<AreaModel> AreaList
         {
             get { return _areaList; }
             set { _areaList = value; OnPropertyChanged(); }
@@ -60,30 +62,26 @@ namespace CoffeShop.Viewmodel.Area
         #region [Command]
         public ICommand AddNewCMD { get { return new CommandHelper(OpenDialogAddNew); } }
         public ICommand EditCMD { get { return new CommandHelper<AreaModel>((c) => { return c != null; }, OpenDialogEdit); } }
-        public ICommand DeleteCMD { get { return new CommandHelper<AreaModel>((c) => { return c != null; }, DeleteCategory); } }
-        public ICommand SearchCMD { get { return new CommandHelper(LoadCategory); } }
+        public ICommand DeleteCMD { get { return new CommandHelper<AreaModel>((c) => { return c != null; }, DeleteArea); } }
+        public ICommand SearchCMD { get { return new CommandHelper(LoadArea); } }
         #endregion
 
         public AreaViewModel()
         {
-            AreaList = new ObservableCollection<AreaModel>();
+            AreaList = new List<AreaModel>();
             MastetAreaList = new List<AreaModel>();
+            LoadArea();
         }
 
-        public int LoadTotalCount()
-        {
-            return 0;
-        }
-
-        public void SearchCategory()
+        public void SearchArea()
         {
             if (String.IsNullOrEmpty(NameSearch))
             {
-                AreaList = new ObservableCollection<AreaModel>(MastetAreaList);
+                AreaList = new List<AreaModel>(MastetAreaList);
                 return;
             }
             var searchData = MastetAreaList.Where(c => c.Name.ToLower().Contains(NameSearch.ToLower())).ToList();
-            AreaList = new ObservableCollection<AreaModel>(searchData);
+            AreaList = new List<AreaModel>(searchData);
         }
 
         public void OpenDialogAddNew()
@@ -93,39 +91,97 @@ namespace CoffeShop.Viewmodel.Area
 
         public void OpenDialogEdit(AreaModel area)
         {
-            OpenDialog(new AreaAddOrUpdateUC(new AreaAddOrUpdateViewModel(AddAreaOrEdit, CloseDialog)));
+            var dt = TM_TABLE_DAO.Instance.Get_Table(area.Id);
+            var tables = TableViewModel.ParseTableList(dt);
+            tables?.ForEach(t => t.IsUpdateFromDb = true);
+            OpenDialog(new AreaAddOrUpdateUC(new AreaAddOrUpdateViewModel(AddAreaOrEdit, CloseDialog, tables, area)));
         }
 
-        public void DeleteCategory(AreaModel area)
+        public void DeleteArea(AreaModel area)
         {
+
+            var dt = TM_TABLE_DAO.Instance.Get_Table(area.Id);
+            var tables = TableViewModel.ParseTableList(dt);
+
+            var isCannotDelete = tables?.Where(t => t.Status == "ON").FirstOrDefault() != null;
+            if(isCannotDelete)
+            {
+                MessageBox.Show("Không thể xoá khu vực này vì có bàn chưa thanh toán!");
+                return;
+            }
+
             string question = String.Format(StringResources.Find("CATEGORY_CONFIRM_DELETE"), area.Name);
             OpenDialog(new ConfirmUC(question,
                 () =>
-                {
-                    MastetAreaList.Remove(area);
-                    LoadCategory();
+                { 
+                    TM_AREA_DAO.Instance.Delete(area.Data);
+                    LoadArea();
                     CloseDialog();
 
                 }, CloseDialog));
 
         }
 
-        public void AddAreaOrEdit(AreaModel area)
+        public void AddAreaOrEdit(AreaModel area, List<TableViewModel> tables)
         {
+
+            if (String.IsNullOrEmpty(area.Name))
+            {
+                MessageBox.Show("Tên khu vực không được để trống!");
+                return;
+            }
+
+
+            var isEmptyTableName = tables.Where(t => String.IsNullOrEmpty(t.Name) == true).FirstOrDefault() != null;
+            if (isEmptyTableName)
+            {
+                MessageBox.Show("Tên bàn không được để trống!");
+                return;
+            }
+
             var addOrUpdateObj = MastetAreaList.Where(c => c.Id == area.Id)?.FirstOrDefault();
             if (addOrUpdateObj != null)
             {
-                MastetAreaList.Remove(addOrUpdateObj);
-                MastetAreaList.Add(area);
+                TM_AREA_DAO.Instance.Update(area.Data);
             }
             else
-                MastetAreaList.Add(area);
-            LoadCategory();
+            {
+                var isSameName = MastetAreaList.Where(a => a.Name.ToLower() == area.Name.ToLower()).FirstOrDefault() != null;
+                if (isSameName)
+                {
+                    MessageBox.Show("Tên khu vực đã tồn tại!");
+                    return;
+                }
+
+                TM_AREA_DAO.Instance.Insert(area.Data);
+                var td = TM_AREA_DAO.Instance.Get_Area();
+                area = AreaModel.ParseAreaList(td).Where(a => a.Name == area.Name).FirstOrDefault(); 
+            }
+
+            foreach (var table in tables)
+            { 
+                table.AreaId = area.Id;
+                if(table.IsDelete)
+                {
+                    TM_TABLE_DAO.Instance.Delete(table.Data);
+                    continue;
+                }
+
+                if (table.IsUpdateFromDb)
+                    TM_TABLE_DAO.Instance.Update(table.Data);
+                else
+                    TM_TABLE_DAO.Instance.Insert(table.Data);
+            }
+            CloseDialog();
+            LoadArea();
         }
 
-        private void LoadCategory()
+        private void LoadArea()
         {
-            AreaList = new ObservableCollection<AreaModel>(MastetAreaList);
+            var dt = TM_AREA_DAO.Instance.Get_Area();
+            var areas = AreaModel.ParseAreaList(dt);
+            MastetAreaList = new List<AreaModel>(areas);
+            AreaList = new List<AreaModel>(MastetAreaList);
         }
 
         public void OpenDialog(object uc = null)
@@ -139,5 +195,7 @@ namespace CoffeShop.Viewmodel.Area
         {
             IsOpenDialog = false;
         }
+
+        public int GetNextIdArea() => MastetAreaList.Count == 0 ? 1 : MastetAreaList.Max(c => c.Id);
     }
 }
