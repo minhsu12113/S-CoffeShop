@@ -129,6 +129,7 @@ namespace CoffeShop.Viewmodel.Food
 
             //var dtFood = TM_FOOD_DAO.Instance.Get_All();
             //var foods = FoodModel.ParseFoods(dtFood);
+            FoodListMaster.Clear();
             var foods = await rest;
 
             foreach (var item in foods)

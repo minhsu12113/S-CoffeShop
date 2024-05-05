@@ -48,7 +48,7 @@ namespace CoffeShop.Viewmodel.DashBoard
             set 
             { 
                 _areaSelected = value;
-                LoadTable(_areaSelected.Id);
+                LoadTable(_areaSelected == null ? -1 :_areaSelected.Id);
                 OnPropertyChanged();
             }
         }
@@ -57,7 +57,6 @@ namespace CoffeShop.Viewmodel.DashBoard
 
         #region [Command]
         public ICommand SearchCMD { get { return new CommandHelper(SearchTable); } }
-        public ICommand AddOrEditFoodTabelCMD { get { return new CommandHelper<TableModel>((t) => { return t != null; }, AddOrUpdateFoodTabel); } }
         #endregion
 
         #region [Collection]
@@ -83,9 +82,12 @@ namespace CoffeShop.Viewmodel.DashBoard
 
         public  void LoadTable(int areaId)
         {
-            var dt = TM_TABLE_DAO.Instance.Get_Table(areaId);
-            var tables = TableViewModel.ParseTableList(dt);
-            TableList = new List<TableViewModel>(tables);
+            if(areaId != -1)
+            {
+                var dt = TM_TABLE_DAO.Instance.Get_Table(areaId);
+                var tables = TableViewModel.ParseTableList(dt);
+                TableList = new List<TableViewModel>(tables);
+            }
         }
 
         public void SearchTable()
@@ -98,7 +100,7 @@ namespace CoffeShop.Viewmodel.DashBoard
             var dt = TM_AREA_DAO.Instance.Get_Area();
             var areas = AreaModel.ParseAreaList(dt);
             AreaList = new List<AreaModel>(areas);
-            AreaSelected = AreaList[0];
+            AreaSelected = AreaList?.FirstOrDefault();
         }
 
         public void OpenDialog(object uc = null)
@@ -113,9 +115,9 @@ namespace CoffeShop.Viewmodel.DashBoard
             IsOpenDialog = false;
         }
 
-        public void AddOrUpdateFoodTabel(TableModel table)
+        public void AddOrUpdateFoodTabel(TableViewModel table)
         {
-            OpenDialog(new AddOrUpdateFoodTabelUC());
+            OpenDialog(new AddOrUpdateFoodTabelUC(CloseDialog));
         }
     }
 }

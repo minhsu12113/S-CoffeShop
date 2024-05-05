@@ -1,4 +1,5 @@
-﻿using CoffeShop.Viewmodel.DashBoard;
+﻿using CoffeShop.Viewmodel.Categorys;
+using CoffeShop.Viewmodel.DashBoard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,16 @@ namespace CoffeShop.View.FoodsTable
     /// </summary>
     public partial class FoodsTableUC : UserControl
     {
+        public FoodsTebleViewModel ViewModel { get; set; }
         public FoodsTableUC()
         {
             InitializeComponent();
-            DataContext = new FoodsTebleViewModel();
+            DataContext = ViewModel = new FoodsTebleViewModel();
+        }
+
+        private void btn_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AddOrUpdateFoodTabel((sender as Button).DataContext as TableViewModel);
         }
     }
 }

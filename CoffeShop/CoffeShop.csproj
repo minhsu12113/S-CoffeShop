@@ -153,6 +153,7 @@
     <Compile Include="Viewmodel\Categorys\CategoryViewModel.cs" />
     <Compile Include="Viewmodel\Categorys\CateroryAddOrUpdateViewModel.cs" />
     <Compile Include="Viewmodel\ConfirmViewmodel.cs" />
+    <Compile Include="Viewmodel\FoodsTable\AddOrUpdateFoodsTableViewModel.cs" />
     <Compile Include="Viewmodel\FoodsTable\FoodsTableViewModel.cs" />
     <Compile Include="Viewmodel\ErrorNotifyViewModel.cs" />
     <Compile Include="Viewmodel\Food\FoodsAddOrUpdateViewModel.cs" />

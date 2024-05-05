@@ -11,11 +11,228 @@
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto" 
              TextElement.FontWeight="Regular">
-    <Grid Width="1320" Height="880">
+
+    <UserControl.Resources>
+        <Style x:Key="Stl_packicon_close" TargetType="materialDesign:PackIcon">
+            <Setter Property="Kind" Value="WindowClose"/>
+            <Setter Property="Foreground" Value="OrangeRed"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=btn_Close,Path=IsMouseOver}" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="Stl_btn_close" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatLightBgButton}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Content">
+                <Setter.Value>
+                    <materialDesign:PackIcon Style="{StaticResource Stl_packicon_close}"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="OrangeRed" 
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.2"/>
+                            <ColorAnimation To="OrangeRed" 
+                                    Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.25"/>
+
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="Transparent" 
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.2"/>
+                            <ColorAnimation To="Transparent" 
+                                    Storyboard.TargetProperty="(Button.BorderBrush).(SolidColorBrush.Color)" 
+                                    FillBehavior="HoldEnd" 
+                                    Duration="0:0:0.25"/>
+
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+
+            </Style.Triggers>
+        </Style> 
+    </UserControl.Resources>
+
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height=".7*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>        
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid> 
+            <TextBlock FontSize="18" Foreground="#13548A" Margin="8" FontWeight="SemiBold" 
+            Text="Ban 1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Button x:Name="btn_Close" Command="{Binding CloseDialogParentCMD}"
+                    HorizontalAlignment="Right" Margin="0 0 0 8" Click="Close_Dialog_Click"
+                    materialDesign:ButtonAssist.CornerRadius="1" Style="{StaticResource Stl_btn_close}"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" BorderThickness="0 1 0 0" Opacity=".5" VerticalAlignment="Center" BorderBrush="Gray"/>
+                <TextBlock  Grid.Column="1"  Foreground="#13548A" FontWeight="SemiBold"
+                            Text="Thức ăn đã oder" Margin="8"/>
+                <Border Grid.Column="2" BorderThickness="0 1 0 0" Opacity=".5" VerticalAlignment="Center" BorderBrush="Gray"/>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <ScrollViewer Grid.Row="0" Margin="12 0 0 0" HorizontalAlignment="Stretch">
+                    <ItemsControl ItemsSource="{Binding FoodListInTable}" VerticalAlignment="Top"  >
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" IsItemsHost="True"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="4" Padding="8" CornerRadius="4" BorderThickness="1" 
+                        BorderBrush="Gray" HorizontalAlignment="Stretch">
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                            <TextBlock  Text="{Binding Name}" Foreground="#13548A" FontWeight="SemiBold"/>
+                                            <TextBlock Text=" ("/>
+                                            <TextBlock Text="{Binding Count}"/>
+                                            <TextBlock Text=") "/>
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1"  HorizontalAlignment="Right" 
+                                   Text="{Binding TotalPrice,StringFormat={}{0:0,000 (VND)}}" Foreground="Green"/>
+
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" >
+                                            <Button  Width="25" Height="25" Click="Decrease_Food_InTable_Click" Style="{StaticResource MaterialDesignIconButton}">
+                                                <materialDesign:PackIcon Kind="Remove" Width="15" Height="15" />
+                                            </Button>
+                                            <Button  Width="25" Height="25" Click="Remove_Food_Click" Style="{StaticResource MaterialDesignIconButton}">
+                                                <materialDesign:PackIcon Kind="Delete" Width="15" Height="15" />
+                                            </Button>
+                                        </StackPanel>
+
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+
+                <Grid Grid.Row="1" Margin="24 4 24 4" 
+                      Visibility="{Binding IsShowTotalPriceInBill,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Foreground="#13548A" FontWeight="SemiBold" Text="Tổng Tiền" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="1" Text="{Binding TotalPriceInBill,StringFormat={}{0:0,000 (VND)}}" 
+                               HorizontalAlignment="Right"/> 
+                </Grid>
+            </Grid> 
+        </Grid>
+
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" BorderThickness="0 1 0 0" Opacity=".5" VerticalAlignment="Center" BorderBrush="Gray"/>
+                <TextBlock  Grid.Column="1"  Foreground="#13548A" FontWeight="SemiBold"
+                Text="Thức ăn có sẵn" Margin="8"/>
+                <Border Grid.Column="2" BorderThickness="0 1 0 0" Opacity=".5" VerticalAlignment="Center" BorderBrush="Gray"/>
+            </Grid>
+
+
+            <TextBox Grid.Row="1" Text="{Binding SearchFoodContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+             Margin="16 0 16 0" materialDesign:HintAssist.Hint="Nhập để tìm thức ăn"/>
+
+            <ScrollViewer Grid.Row="2" Margin="12" HorizontalAlignment="Stretch">
+                <ItemsControl ItemsSource="{Binding FoodList}" VerticalAlignment="Top"  >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="4" Padding="8" CornerRadius="4" BorderThickness="1" 
+                            BorderBrush="Gray" HorizontalAlignment="Stretch">
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock VerticalAlignment="Center"  
+                                               Grid.Column="0" Text="{Binding Name}" Foreground="#13548A" FontWeight="SemiBold"/>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
+                                               Grid.Column="1" Text="{Binding Price,StringFormat={}{0:0,000 (VND)}}"
+                                                Foreground="Green"/>
+
+                                    <Button Grid.Column="2" Width="25" Height="25" HorizontalAlignment="Right" Click="Add_Food_To_Table_Click"
+                                            Style="{StaticResource MaterialDesignIconButton}">
+                                        <materialDesign:PackIcon Kind="TableAdd" Width="15" Height="15" />
+                                    </Button>
+
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+
+        <Button Grid.Row="3" Width="89" Content="Lưu" Margin="8"/>
+
     </Grid>
 </UserControl>

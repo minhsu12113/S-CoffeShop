@@ -46,6 +46,13 @@ namespace CoffeShop.Model
             set { Data.Unit_Cost = value; OnPropertyChanged(); }
         }
 
+        private int _totalPrice;
+        public int TotalPrice
+        {
+            get { return _totalPrice; }
+            set { _totalPrice = value; OnPropertyChanged(); }
+        }
+
         public int Discount
         {
             get { return Data.Discount; }
@@ -63,6 +70,12 @@ namespace CoffeShop.Model
         {
             get { return Data.Base64_Image; }
             set { Data.Base64_Image = value; OnPropertyChanged(); }
+        }
+        private int _count;
+        public int Count
+        {
+            get { return _count; }
+            set { _count = value; OnPropertyChanged(); }
         }
 
         public static FoodModel ParseFood(DataTable dt)

@@ -17,7 +17,7 @@
            
         </Style>
     </UserControl.Resources>
-    <materialDesign:DialogHost IsOpen="{Binding IsOpenDialog}" DialogContent="{Binding DialogContent}" OverlayBackground="Transparent">
+    <materialDesign:DialogHost IsOpen="{Binding IsOpenDialog}" DialogContent="{Binding DialogContent}" >
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.08*"/>
@@ -95,7 +95,7 @@
                                     <materialDesign:TransitionEffect Kind="ExpandIn"/>
                                 </materialDesign:TransitioningContent.OpeningEffects>
                                 <materialDesign:Card Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left"
-                                                     Width="200" Height="210" UniformCornerRadius="8">
+                                                     Width="190" Height="210" UniformCornerRadius="8">
                                     <materialDesign:Card.Style>
                                         <Style TargetType="materialDesign:Card">
                                             <Style.Triggers >
@@ -112,14 +112,12 @@
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock FontSize="18" Foreground="#13548A" Margin="2" FontWeight="SemiBold" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <TextBlock FontSize="18" Foreground="#13548A" Margin="8" FontWeight="SemiBold" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-                                        <WrapPanel Grid.Row="1">
-                                            <materialDesign:PackIcon Kind="Food" Margin="5" Width="49" Height="49" Foreground="Gray"/>
-                                            <materialDesign:PackIcon Kind="Food" Margin="5" Width="49" Height="49" Foreground="Gray"/>
-                                            <materialDesign:PackIcon Kind="Food" Margin="5" Width="49" Height="49" Foreground="Gray"/>
-                                            <materialDesign:PackIcon Kind="Food" Margin="5" Width="49" Height="49" Foreground="Gray"/>
-                                            <materialDesign:PackIcon Kind="Food" Margin="5" Width="49" Height="49" Foreground="Gray"/>
+                                        <WrapPanel Grid.Row="1" Orientation="Vertical"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <materialDesign:PackIcon Kind="Food" Margin="5" Width="36" Height="36"  Foreground="Green"/>
+                                            <TextBlock Text="Có Người" Foreground="Green"/>
                                         </WrapPanel>
 
                                         <Border Grid.Row="2" BorderThickness="0 1 0 0" BorderBrush="WhiteSmoke">
@@ -129,9 +127,8 @@
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
-                                                <Button Grid.Column="0" Margin="8" Name="btn_Edit" Style="{StaticResource Stl_btn_common}" 
-                                                    Command="{Binding Path=DataContext.AddOrEditFoodTabelCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" 
-                                                    CommandParameter="{Binding}">
+                                                <Button Grid.Column="0" Margin="8" Name="btn_Edit" 
+                                                        Click="btn_Edit_Click" Style="{StaticResource Stl_btn_common}">
                                                     <materialDesign:PackIcon Kind="Pencil"  />
                                                 </Button>
 
