@@ -30,13 +30,13 @@ namespace CoffeShop.DAO
 		}
 		public int Insert(AREA area)
 		{
-			string query = $"EXEC TM_AREA_Insert '{area.Area_Name}'";
+			string query = $"EXEC TM_AREA_Insert N'{area.Area_Name}'";
 			int data=DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}
 		public int Update(AREA area)
 		{
-			string query = $"EXEC TM_AREA_Update '{area.ID_Area}','{area.Area_Name}'";
+			string query = $"EXEC TM_AREA_Update '{area.ID_Area}', N'{area.Area_Name}'";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}

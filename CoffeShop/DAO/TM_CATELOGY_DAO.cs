@@ -37,13 +37,13 @@ namespace CoffeShop.DAO
 		}
 		public int Insert(CATELOGY catelogy)
 		{
-			string query = $"EXEC TM_CATELOGY_Insert '{catelogy.Catelogy_Name}'";
+			string query = $"EXEC TM_CATELOGY_Insert N'{catelogy.Catelogy_Name}'";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}
 		public int Update(CATELOGY catelogy)
 		{
-			string query = $"EXEC TM_CATELOGY_Update '{catelogy.ID_Catelogy}' ,'{catelogy.Catelogy_Name}'";
+			string query = $"EXEC TM_CATELOGY_Update '{catelogy.ID_Catelogy}' , N'{catelogy.Catelogy_Name}'";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}

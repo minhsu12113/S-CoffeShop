@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoffeShop.Viewmodel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,13 @@ namespace CoffeShop.View.Statistics
     /// </summary>
     public partial class StatisticsUC : UserControl
     {
+        public ReportViewModel  ViewModel { get; set; }
         public StatisticsUC()
         {
             InitializeComponent();
+            this.DataContext = ViewModel = new ReportViewModel();
         }
+
+        private void btn_report_click(object sender, RoutedEventArgs e) => ViewModel.LoadReport();  
     }
 }

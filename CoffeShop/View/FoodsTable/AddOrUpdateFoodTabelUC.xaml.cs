@@ -1,5 +1,6 @@
 ﻿using CoffeShop.Model;
 using CoffeShop.Utility;
+using CoffeShop.Viewmodel.Categorys;
 using CoffeShop.Viewmodel.FoodsTable;
 using System;
 using System.Collections.Generic;
@@ -24,12 +25,12 @@ namespace CoffeShop.View.FoodsTable
     public partial class AddOrUpdateFoodTabelUC : UserControl
     {
         public AddOrUpdateFoodsTableViewModel ViewModel { get; set; }
-        public Action CloseDialogCallback { get; set; }
-        public AddOrUpdateFoodTabelUC(Action closeDialog)
+        public Action<bool> CloseDialogCallback { get; set; }
+        public AddOrUpdateFoodTabelUC(Action<bool> closeDialog, TableViewModel tableModel)
         {
             InitializeComponent();
             this.Loaded += AddOrUpdateFoodTabelUC_Loaded;
-            this.DataContext = ViewModel = new AddOrUpdateFoodsTableViewModel();
+            this.DataContext = ViewModel = new AddOrUpdateFoodsTableViewModel(tableModel);
             this.CloseDialogCallback = closeDialog;
         }
 
@@ -39,12 +40,18 @@ namespace CoffeShop.View.FoodsTable
             this.Height = CSGlobal.Instance.MainWindow.Height * 0.87;
         }
 
-        private void Close_Dialog_Click(object sender, RoutedEventArgs e) => CloseDialogCallback?.Invoke();
+        private void Close_Dialog_Click(object sender, RoutedEventArgs e) => CloseDialogCallback?.Invoke(false);
 
         private void Add_Food_To_Table_Click(object sender, RoutedEventArgs e) => ViewModel.AddFoodToTable((sender as Button).DataContext as FoodModel);
 
         private void Remove_Food_Click(object sender, RoutedEventArgs e) => ViewModel.RemoveFoodInTable((sender as Button).DataContext as FoodModel);
 
         private void Decrease_Food_InTable_Click(object sender, RoutedEventArgs e) => ViewModel.DecreaseFoodInTable((sender as Button).DataContext as FoodModel);
+
+        private void Btn_save_click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Save();
+            CloseDialogCallback?.Invoke(true);
+        }
     }
 }

@@ -105,9 +105,15 @@ namespace CoffeShop.Viewmodel.Categorys
             set { Data.Status = value; OnPropertyChanged(); }
         }
 
+        public int IdBill
+        {
+            get { return Data.ID_Bill; }
+            set { Data.ID_Bill = value; OnPropertyChanged(); }
+        }
         public bool IsUpdateFromDb { get; set; } = false;
         public bool IsDelete { get; set; } = false;
-        
+        public bool IsActive => Status == "ON";
+        public bool IsEmpty => !IsActive;
 
         public static TableViewModel ParseTable(DataTable dt)
         {
@@ -121,6 +127,7 @@ namespace CoffeShop.Viewmodel.Categorys
                     table.AreaId = int.Parse(dt.Rows[i]["ID_Area"].ToString());
                     table.Name = dt.Rows[i]["Table_Name"].ToString();
                     table.Status = dt.Rows[i]["Table_Status"].ToString();
+                    table.IdBill = int.Parse(dt.Rows[i]["ID_Bill"].ToString());
                 }
             }
             return table;
@@ -137,6 +144,15 @@ namespace CoffeShop.Viewmodel.Categorys
                     var table = new TableViewModel();
                     table.Id = int.Parse(dt.Rows[i]["ID_Table"].ToString());
                     table.AreaId = int.Parse(dt.Rows[i]["ID_Area"].ToString());
+
+                    var IDBill = dt.Rows[i]["ID_Bill"].ToString();
+                    if (IDBill != null)
+                    {
+                        int id;
+                        var resParse = int.TryParse(IDBill, out id);
+                        table.IdBill = resParse ? id : -1;
+                    }
+
                     table.Name = dt.Rows[i]["Table_Name"].ToString();
                     table.Status = dt.Rows[i]["Table_Status"].ToString();
                     tables.Add(table);

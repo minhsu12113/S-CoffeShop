@@ -100,7 +100,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Margin="5" Text="{DynamicResource CATEGORY_ADD_NEW}" FontWeight="SemiBold" FontSize="{Binding FontSize18,Source={StaticResource SizeManager}}"
+        <TextBlock Margin="5" Text="{DynamicResource CATEGORY_ADD_NEW}" 
+                   FontWeight="SemiBold" FontSize="{Binding FontSize18,Source={StaticResource SizeManager}}"
                    VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
         <Button x:Name="btn_Close" Command="{Binding CloseDialogParentCMD}" Grid.Row="0" Grid.Column="1" materialDesign:ButtonAssist.CornerRadius="1" Style="{StaticResource Stl_btn_close}"/>
 

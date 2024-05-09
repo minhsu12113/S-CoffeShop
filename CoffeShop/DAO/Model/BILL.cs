@@ -1,34 +1,50 @@
-﻿using System;
+﻿using CoffeShop.Viewmodel.Categorys;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CoffeShop.DAO.Model
 {
-	internal class BILL
+	public class BILL
 	{
 		public int ID_HoaDon {  get; set; }
 		public int Total {  get; set; }
 		public string Table_Status {  get; set; }
-		public DateTime Day_Create { get; set; }
-		public DateTime Hour_Create { get; set; }
-		public DateTime Hour_Export { get; set; }
-		public int ID_Area { get; set; }
+        public string PaymentTime { get; set; }
+        public int ID_Area { get; set; }
 		public int ID_Table { get; set; }
 		public int ID_User {  get; set; }
-		BILL(int iD_HoaDon, int total, string table_Status, DateTime day_Create, DateTime hour_Create, DateTime hour_Export, int iD_Area, int iD_Table, int iD_User)
+		BILL(int iD_HoaDon, int total, string table_Status, int iD_Area, int iD_Table, int iD_User)
 		{
 			ID_HoaDon = iD_HoaDon;
 			Total = total;
-			Table_Status = table_Status;
-			Day_Create = day_Create;
-			Hour_Create = hour_Create;
-			Hour_Export = hour_Export;
+			Table_Status = table_Status; 
 			ID_Area = iD_Area;
 			ID_Table = iD_Table;
 			ID_User = iD_User;
 		}
-		BILL() { }
+		public BILL() { }
+
+		public static List<BILL> ParseDataTable(DataTable dt)
+		{
+            List<BILL> bill = null;
+            if (dt != null)
+            {
+                bill = new List<BILL>();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    var table = new BILL();
+                    table.ID_HoaDon = int.Parse(dt.Rows[i]["ID_Bill"].ToString()); 
+                    table.ID_Table = int.Parse(dt.Rows[i]["ID_Table"].ToString()); 
+                    table.Total = int.Parse(dt.Rows[i]["Total"].ToString()); 
+                    table.PaymentTime = dt.Rows[i]["PaymentTime"].ToString(); 
+                    bill.Add(table);
+                }
+            }
+            return bill; 
+		}
 	}
 }

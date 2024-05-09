@@ -1,22 +1,20 @@
 ﻿using CoffeShop.DAO.Model;
 using CoffeShop.DAO;
 using CoffeShop.Model;
-using CoffeShop.View.Dialog;
 using CoffeShop.Viewmodel.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using CoffeShop.ExtentionCommon;
-using Newtonsoft.Json.Linq;
+using CoffeShop.Viewmodel.Categorys;
 
 namespace CoffeShop.Viewmodel.FoodsTable
 {
     public class AddOrUpdateFoodsTableViewModel : BindableBase
     {
-
+        public TableViewModel CurrentTable { get; set; }
         public List<FoodModel> FoodListMaster { get; set; } = new List<FoodModel>();
         private List<FoodModel> _foodList;
         public List<FoodModel> FoodList
@@ -37,6 +35,7 @@ namespace CoffeShop.Viewmodel.FoodsTable
             }
         }
 
+        public int CurrentBillId { get; set; }
         private int _totalPriceInBill;
         public int TotalPriceInBill
         {
@@ -63,10 +62,11 @@ namespace CoffeShop.Viewmodel.FoodsTable
             }
         }
 
-        public AddOrUpdateFoodsTableViewModel()
+        public AddOrUpdateFoodsTableViewModel(TableViewModel currentTable)
         {
             LoadFoodAsync();
             FoodListInTable = new ObservableCollection<FoodModel>();
+            CurrentTable = currentTable;
         }
 
         public async void LoadFoodAsync()
@@ -78,19 +78,14 @@ namespace CoffeShop.Viewmodel.FoodsTable
                 var dtFood = TM_FOOD_DAO.Instance.Get_All();
                 var foods = FoodModel.ParseFoods(dtFood);
                 return foods;
-            });
-
-
-            //var dtFood = TM_FOOD_DAO.Instance.Get_All();
-            //var foods = FoodModel.ParseFoods(dtFood);
+            }); 
             var foods = await rest;
 
             foreach (var item in foods)
-            {
                 FoodListMaster.Add(new FoodModel() { Data = item });
-            }
 
             SearchFood();
+            LoadFoodFromBill();
         }
 
         public void AddFoodToTable(FoodModel food)
@@ -144,6 +139,76 @@ namespace CoffeShop.Viewmodel.FoodsTable
             var filterFoodsSearchName = String.IsNullOrEmpty(SearchFoodContent) ? FoodListMaster
                 : FoodListMaster?.Where(f => f.Name.ToLower().Contains(SearchFoodContent.ToLower()));
             FoodList = new List<FoodModel>(filterFoodsSearchName);
+        }
+
+        public void Save()
+        {
+            // Delelet
+            TM_BILL_DAO.Instance.Delete(CurrentBillId);
+
+            if(FoodListInTable.Count > 0)
+            { 
+                // Insert
+                var bill = new BILL()
+                {
+                    ID_Area = CurrentTable.AreaId,
+                    ID_Table = CurrentTable.Id,
+                    ID_User = 1,
+                    Table_Status = "ON"
+                };
+                TM_BILL_DAO.Instance.Insert(bill);
+                CurrentTable.Data.Status = "ON";
+                CurrentTable.Data.ID_Bill = GetBillIdAfterInsert();
+                TM_TABLE_DAO.Instance.Update(CurrentTable.Data);
+                foreach (var food in FoodListInTable)
+                    TM_BILL_FOOD.Instance.Insert(CurrentTable.Data.ID_Bill, food.Id, food.Count);
+            } 
+        }
+
+        private int GetBillIdAfterInsert()
+        {
+            int id = 0;
+            var tb = TM_BILL_DAO.Instance.GetAll();
+            var bills = BILL.ParseDataTable(tb);
+
+            foreach (var bill in bills)
+            {
+                if (String.IsNullOrEmpty(bill.PaymentTime) && CurrentTable.Id == bill.ID_Table)
+                {
+                    id = bill.ID_HoaDon;
+                    break;
+                }
+            }
+            return id;
+        }
+
+        private void LoadFoodFromBill()
+        {
+            var tbBill = TM_BILL_DAO.Instance.GetAll();
+            var bills = BILL.ParseDataTable(tbBill);
+            var tbBillFood = TM_BILL_FOOD.Instance.GetAll();
+            var billsFood = BILL_FOOD.ParseDataTable(tbBillFood);
+
+            foreach (var bill in bills)
+            {
+                if (bill.ID_HoaDon == CurrentTable.IdBill && String.IsNullOrEmpty(bill.PaymentTime))
+                {
+                    CurrentBillId = bill.ID_HoaDon;
+                    foreach (var foodBill in billsFood)
+                    {
+                        var food = FoodListMaster.Where(f => f.Id == foodBill.IdFood).FirstOrDefault();
+                        if(food != null && foodBill.IDBill == CurrentTable.IdBill)
+                        {
+                            var fClone = MyExtention.CloneData<FoodModel>(food);
+                            fClone.Count = foodBill.Quantity;
+                            fClone.TotalPrice = fClone.Count * fClone.Price;
+                            FoodListInTable.Add(fClone);
+                        }
+                    }
+                    break;
+                }
+            }
+            CalculateTotalPriceInBill();
         }
     }
 }

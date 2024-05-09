@@ -29,7 +29,7 @@ namespace CoffeShop.DAO
 		}
 		public int Insert(TABLE table)
 		{
-			string query = $"EXEC TM_TABLE_Insert '{table.Table_Name}','{table.Status}','{table.ID_Area}'";
+			string query = $"EXEC TM_TABLE_Insert N'{table.Table_Name}','{table.Status}','{table.ID_Area}'";
 			int data=DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}
@@ -42,7 +42,7 @@ namespace CoffeShop.DAO
 		}
 		public int Update(TABLE table)
 		{
-			string query = $"EXEC TM_TABLE_Update '{table.ID_Table}','{table.Table_Name}','{table.Status}','{table.ID_Area}'";
+			string query = $"EXEC TM_TABLE_Update '{table.ID_Table}', N'{table.Table_Name}','{table.Status}','{table.ID_Area}','{table.ID_Bill}'";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}

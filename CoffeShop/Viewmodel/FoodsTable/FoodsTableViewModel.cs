@@ -1,18 +1,11 @@
 ﻿using CoffeShop.DAO;
-using CoffeShop.DAO.Model;
-using CoffeShop.ExtentionCommon;
 using CoffeShop.Model;
-using CoffeShop.View.Dialog;
 using CoffeShop.View.FoodsTable;
 using CoffeShop.Viewmodel.Base;
 using CoffeShop.Viewmodel.Categorys;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace CoffeShop.Viewmodel.DashBoard
 {
@@ -38,7 +31,12 @@ namespace CoffeShop.Viewmodel.DashBoard
         public string NameSearch
         {
             get { return _nameSearch; }
-            set { _nameSearch = value; OnPropertyChanged(); }
+            set 
+            {
+                _nameSearch = value; 
+                OnPropertyChanged();
+                SearchTable();
+            }
         }
 
         private AreaModel _areaSelected;
@@ -53,11 +51,7 @@ namespace CoffeShop.Viewmodel.DashBoard
             }
         }
 
-        #endregion
-
-        #region [Command]
-        public ICommand SearchCMD { get { return new CommandHelper(SearchTable); } }
-        #endregion
+        #endregion       
 
         #region [Collection]
         private List<AreaModel> _areaList;
@@ -73,6 +67,13 @@ namespace CoffeShop.Viewmodel.DashBoard
             get { return _tableList; }
             set { _tableList = value; OnPropertyChanged(); }
         }
+
+        private List<TableViewModel> _tableListMaster;
+        public List<TableViewModel> TableListMaster
+        {
+            get { return _tableListMaster; }
+            set { _tableListMaster = value; OnPropertyChanged(); }
+        }
         #endregion
 
         public FoodsTebleViewModel()
@@ -82,17 +83,20 @@ namespace CoffeShop.Viewmodel.DashBoard
 
         public  void LoadTable(int areaId)
         {
-            if(areaId != -1)
+            if(areaId != -1) // -1 mean there is no area
             {
                 var dt = TM_TABLE_DAO.Instance.Get_Table(areaId);
                 var tables = TableViewModel.ParseTableList(dt);
-                TableList = new List<TableViewModel>(tables);
+                TableListMaster = new List<TableViewModel>(tables);
+                TableList = new List<TableViewModel>(TableListMaster);
             }
         }
 
         public void SearchTable()
         {
-
+            var filterFoodsSearchName = String.IsNullOrEmpty(NameSearch) ? TableListMaster
+                : TableListMaster?.Where(f => f.Name.ToLower().Contains(NameSearch));
+            TableList = new List<TableViewModel>(filterFoodsSearchName);
         }
 
         private void LoadArea()
@@ -115,9 +119,16 @@ namespace CoffeShop.Viewmodel.DashBoard
             IsOpenDialog = false;
         }
 
+        public void CloseDialog(bool isReload)
+        {
+            IsOpenDialog = false;
+            if(isReload)
+                LoadTable(AreaSelected.Id);
+        }
+
         public void AddOrUpdateFoodTabel(TableViewModel table)
         {
-            OpenDialog(new AddOrUpdateFoodTabelUC(CloseDialog));
+            OpenDialog(new AddOrUpdateFoodTabelUC(CloseDialog, table));
         }
     }
 }

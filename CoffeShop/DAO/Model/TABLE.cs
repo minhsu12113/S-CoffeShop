@@ -12,6 +12,7 @@ namespace CoffeShop.DAO
 		public string Table_Name {  get; set; }
 		public string Status {  get; set; }
 		public int ID_Area {  get; set; }
+		public int ID_Bill {  get; set; }
 		public TABLE(int iD_Table, string table_Name, string status, int iD_Area)
 		{
 			ID_Table = iD_Table;

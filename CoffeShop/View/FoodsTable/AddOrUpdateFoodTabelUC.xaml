@@ -232,7 +232,7 @@
             </ScrollViewer>
         </Grid>
 
-        <Button Grid.Row="3" Width="89" Content="Lưu" Margin="8"/>
+        <Button Grid.Row="3" Width="89" Content="Lưu" Margin="8" Click="Btn_save_click"/>
 
     </Grid>
 </UserControl>

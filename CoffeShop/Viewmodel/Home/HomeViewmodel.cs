@@ -12,10 +12,10 @@ namespace CoffeShop.Viewmodel.Home
     public class HomeViewmodel : BindableBase
     {
         public SeriesCollection SeriesCollectionTop10 { get; set; }
-        public SeriesCollection SeriesCollectionRevanuByWeek { get; set; }
-        public string[] LabelsTop10 { get; set; }
-        public string[] LabelsRevanuByWeek { get; set; }
         public Func<double, string> FormatterTop10 { get; set; }
+        public string[] LabelsTop10 { get; set; }
+        public SeriesCollection SeriesCollectionRevanuByWeek { get; set; }
+        public string[] LabelsRevanuByWeek { get; set; }
         public Func<double, string> FormatterRevanuByWeek { get; set; }
         public List<PayMentHistory> PayMentHistory { get; set; }
         public Func<ChartPoint, string> PointLabel { get; set; }
@@ -31,8 +31,10 @@ namespace CoffeShop.Viewmodel.Home
                     Title = "Phần/Cái"
                 }
             };
+
             FormatterTop10 = value => value.ToString("N0");
-            LabelsTop10 = new string[] { "Capuchino", "Matcha", "Caramen", "Coffee", "Bánh Ngọt 1", "Bánh Flan", "Americano", " Coffe Sữa", "Capuchino Nóng", "Chocolate" };
+            LabelsTop10 = new string[] { "Capuchino", "Matcha", "Caramen", "Coffee", "Bánh Ngọt 1", 
+                "Bánh Flan", "Americano", " Coffe Sữa", "Capuchino Nóng", "Chocolate" };
 
 
             SeriesCollectionRevanuByWeek = new SeriesCollection
@@ -45,6 +47,7 @@ namespace CoffeShop.Viewmodel.Home
                     LineSmoothness = 0
                 }
             };
+
             LabelsRevanuByWeek = GetListDateInWeekly(DateTime.Today).ToArray();
             FormatterRevanuByWeek = value => string.Format("{0} {1}",value.ToString("N0"), "(VND)");
 
@@ -59,6 +62,7 @@ namespace CoffeShop.Viewmodel.Home
             };
             PointLabel = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
         }
+
         public List<string> GetListDateInWeekly(DateTime dateTime)
         {
             DateTime startDate = dateTime.Date.AddDays(-(int)DateTime.Today.DayOfWeek);
@@ -66,7 +70,6 @@ namespace CoffeShop.Viewmodel.Home
 
             for (int i = 1; i < 8; i++)
                 listDate.Add(startDate.AddDays(i).ToString("dd/MM/yyyy"));
-
             return listDate;
         }
     }

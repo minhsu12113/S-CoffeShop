@@ -38,13 +38,13 @@ namespace CoffeShop.DAO
 		//int id, string food_Name, int unit_Cost, int discount, string id_Catelogy, string base64_Image
 		public int Update(FOOD food)
 		{
-			string query = $"EXEC TM_FOOD_Update '{food.ID}', '{food.Food_Name}','{food.Unit_Cost}','{food.Discount}','{food.ID_Catelogy}','{food.Base64_Image}'";
+			string query = $"EXEC TM_FOOD_Update '{food.ID}', N'{food.Food_Name}','{food.Unit_Cost}','{food.Discount}','{food.ID_Catelogy}','{food.Base64_Image}'";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return (int)data;
 		}
 		public int Insert(FOOD food)
 		{
-			string query = $"EXEC TM_FOOD_Insert '{food.Food_Name}','{food.Unit_Cost}','{food.Discount}','{food.ID_Catelogy}','{food.Base64_Image}' ";
+			string query = $"EXEC TM_FOOD_Insert N'{food.Food_Name}','{food.Unit_Cost}','{food.Discount}','{food.ID_Catelogy}','{food.Base64_Image}' ";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return (int)data;
 		}

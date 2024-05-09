@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoffeShop.DAO.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -25,8 +26,17 @@ namespace CoffeShop.DAO
 		public DataTable GetAll()
 		{
 			string query = $"EXEC TM_BILL_FOOD_GetAll";
-			DataTable dataTable =DataProvider.Instance.ExecuteQuery(query);
+			DataTable dataTable = DataProvider.Instance.ExecuteQuery(query);
 			return dataTable;
 		}
-	}
+
+        public int Insert(int billId ,int foodId, int foodQuantity)
+        {
+            string query = $"EXEC TM_BILL_FOOD_Insert '{billId}', {foodId}, {foodQuantity} ";
+            int res = DataProvider.Instance.ExecuteNonQuery(query);
+            return res;
+        }
+
+		
+    }
 }

@@ -128,7 +128,9 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="{DynamicResource SALES_REVENUE_THIS_WEEK}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 10 25 0" FontSize="{Binding FontSize16, Source={StaticResource SizeManager}}" FontWeight="SemiBold"/>
+                        <TextBlock Text="{DynamicResource SALES_REVENUE_THIS_WEEK}" VerticalAlignment="Center"
+                                   HorizontalAlignment="Right" Margin="0 10 25 0" 
+                                   FontSize="{Binding FontSize16, Source={StaticResource SizeManager}}" FontWeight="SemiBold"/>
 
                         <lvc:CartesianChart Grid.Row="1" Margin="5" Series="{Binding SeriesCollectionRevanuByWeek}" LegendLocation="None" >
                             <lvc:CartesianChart.AxisX>

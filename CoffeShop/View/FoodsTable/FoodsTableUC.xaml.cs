@@ -33,5 +33,15 @@ namespace CoffeShop.View.FoodsTable
         {
             ViewModel.AddOrUpdateFoodTabel((sender as Button).DataContext as TableViewModel);
         }
+
+        private void btn_switch_click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.OpenDialog(new SwitchTableUC(ViewModel.CloseDialog, (sender as Button).DataContext as TableViewModel));
+        }
+
+        private void btn_Payment_click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.OpenDialog(new PaymentUC(ViewModel.CloseDialog, (sender as Button).DataContext as TableViewModel));
+        }
     }
 }

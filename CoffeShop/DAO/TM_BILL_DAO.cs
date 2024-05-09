@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoffeShop.DAO.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -29,5 +30,25 @@ namespace CoffeShop.DAO
 			return dataTable;
 		}
 
-	}
+        public int Insert(BILL bill)
+        {
+            string query = $"EXEC TM_BILL_Insert '{bill.Total}', '{bill.PaymentTime}', '{bill.ID_Area}', '{bill.ID_Table}', '{bill.ID_User}'";
+            int res = DataProvider.Instance.ExecuteNonQuery(query);
+            return res;
+        }
+
+        public int Delete(int billId)
+        {
+            string query = $"EXEC TM_Bill_Delete '{billId}'";
+            int res = DataProvider.Instance.ExecuteNonQuery(query);
+            return res;
+        }
+
+        public int Update(BILL bill) 
+        {
+            string query = $"EXEC [TM_BILL_Update] '{bill.ID_HoaDon}' ,'{bill.Total}', '{bill.PaymentTime}', '{bill.ID_Area}', '{bill.ID_Table}'";
+            int res = DataProvider.Instance.ExecuteNonQuery(query);
+            return res;
+        }
+    }
 }
