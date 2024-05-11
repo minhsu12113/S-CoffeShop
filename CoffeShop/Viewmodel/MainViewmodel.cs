@@ -103,7 +103,7 @@ namespace CoffeShop.Viewmodel
                     CurrenView = CategoryUC == null ? CategoryUC = new CategoryUC() : CategoryUC;
                     break;
                 case TYPE_VIEW.STATISTICS:
-                    CurrenView = StatisticsUC == null ? StatisticsUC = new StatisticsUC() : StatisticsUC;
+                    CurrenView = new StatisticsUC();
                     break;
                 case TYPE_VIEW.USER:
                     CurrenView = UserUC == null ? UserUC = new UserUC() : UserUC;

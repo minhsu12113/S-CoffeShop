@@ -80,8 +80,8 @@ namespace CoffeShop.Viewmodel
             var chartValues = new ChartValues<double>();
             foreach (var item in ArrayDates)
             {
-                DateTime billDate = DateTime.ParseExact(item, strFomat, CultureInfo.InvariantCulture);
-                dicReport.Add(billDate,0);
+                DateTime filterDate = DateTime.ParseExact(item, strFomat, CultureInfo.InvariantCulture);
+                dicReport.Add(filterDate,0);
             }
 
             var dtbills = TM_BILL_DAO.Instance.GetAll();
@@ -93,8 +93,11 @@ namespace CoffeShop.Viewmodel
                 foreach (var bill in bills)
                 {
                     DateTime billDate = DateTime.ParseExact(bill.PaymentTime, "yyyy/MM/dd/ HH:mm:ss", CultureInfo.InvariantCulture);
-                    if(dicReport.ContainsKey(billDate.Date))
-                        dicReport[billDate.Date] += bill.Total;
+                    if(enteredDate.Date == billDate.Date)
+                    {
+                        if (dicReport.ContainsKey(enteredDate.Date))
+                            dicReport[billDate.Date] += bill.Total;
+                    }
                 }
             }
 

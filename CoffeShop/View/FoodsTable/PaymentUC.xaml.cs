@@ -51,8 +51,6 @@ namespace CoffeShop.View.FoodsTable
             btn_payment.Visibility = Visibility.Visible;
             CSGlobal.Instance.MainWindow.Show();
 
-
-
             var bill = GetBillById(ViewModel.CurrentTable.Data.ID_Bill);
             bill.Total = ViewModel.TotalPriceInBill;
             bill.PaymentTime = ViewModel.CurrentTime;
@@ -66,7 +64,6 @@ namespace CoffeShop.View.FoodsTable
 
         private void Print(Visual v)
         {
-
             System.Windows.FrameworkElement e = v as System.Windows.FrameworkElement;
             if (e == null)
                 return;
@@ -104,7 +101,7 @@ namespace CoffeShop.View.FoodsTable
 
                 //apply the original transform.
                 e.LayoutTransform = originalScale;
-            }
+            }            
         }
 
         public BILL GetBillById(int id)
