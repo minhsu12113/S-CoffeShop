@@ -18,6 +18,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Xml.Schema;
+using System.Net.Mail;
+using System.Net;
 
 namespace CoffeShop.Viewmodel
 {
@@ -103,40 +105,59 @@ namespace CoffeShop.Viewmodel
 
         public void Login()
         {
-            bool isAuthenticated = false;
-            bool isAdmin = CurrentUser.UserName == "admin" && CurrentUser.Password == "admin";
-            isAuthenticated = isAdmin;
+            // pass mail: nbbl ywct jmbn qibi
 
-
-            if (!isAdmin)
+            using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
             {
-                var resLogin = AccountDAO.Instance.Login(CurrentUser.UserName, CurrentUser.Password);
-                var user = ParseUser(resLogin);
-                isAuthenticated = user != null;
+                client.EnableSsl = true;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("minhsu12113@gmail.com", "nbbl ywct jmbn qibi");
+
+                var mailObj = new MailMessage();
+                mailObj.To.Add("su7minh@gmail.com");
+                mailObj.From = new MailAddress("minhsu12113@gmail.com");
+                mailObj.Subject = "Payroll Coffee Shop_su7minh";
+                mailObj.Body = "This is your Pay roll link: https://docs.google.com/spreadsheets/d/1HL66QBL7YQbVtmCp-pvbX4uzqhi5magG/edit?usp=sharing&ouid=104706678397712899729&rtpof=true&sd=true";
+                client.Send(mailObj);
             }
 
-            if (!isAuthenticated)
-            {
-                OpenDialog(2, new WarningUC(StringResources.Find("ERROR_LOGIN")));
-                return;
-            }
+            //hoangnguyenba1112@gmail.com
 
-            if (isAuthenticated)
-            {
-                CSGlobal.Instance.LoginWindow.Hide();
+            //bool isAuthenticated = false;
+            //bool isAdmin = CurrentUser.UserName == "admin" && CurrentUser.Password == "admin";
+            //isAuthenticated = isAdmin;
 
-                if(CSGlobal.Instance.MainWindow == null)
-                    CSGlobal.Instance.MainWindow = new MainWindow();
 
-                CSGlobal.Instance.MainWindow.Show();
-                CSGlobal.Instance.MainViewmodel.NavigateToView(ItemNavigate.ListItemNavigate[0]); // Dashborad
+            //if (!isAdmin)
+            //{
+            //    var resLogin = AccountDAO.Instance.Login(CurrentUser.UserName, CurrentUser.Password);
+            //    var user = ParseUser(resLogin);
+            //    isAuthenticated = user != null;
+            //}
 
-                CSGlobal.Instance.CurrentUser = CurrentUser;
-                if (IsRemember) SaveRememberData();
-                OnRaiseCustomEvent(new LoggedEventArgs(CurrentUser));
-                CSGlobal.Instance.MainViewmodel.CurrentUserNameLogin = CurrentUser.UserName;
-            } 
-        } 
+            //if (!isAuthenticated)
+            //{
+            //    OpenDialog(2, new WarningUC(StringResources.Find("ERROR_LOGIN")));
+            //    return;
+            //}
+
+            //if (isAuthenticated)
+            //{
+            //    CSGlobal.Instance.LoginWindow.Hide();
+
+            //    if(CSGlobal.Instance.MainWindow == null)
+            //        CSGlobal.Instance.MainWindow = new MainWindow();
+
+            //    CSGlobal.Instance.MainWindow.Show();
+            //    CSGlobal.Instance.MainViewmodel.NavigateToView(ItemNavigate.ListItemNavigate[0]); // Dashborad
+
+            //    CSGlobal.Instance.CurrentUser = CurrentUser;
+            //    if (IsRemember) SaveRememberData();
+            //    OnRaiseCustomEvent(new LoggedEventArgs(CurrentUser));
+            //    CSGlobal.Instance.MainViewmodel.CurrentUserNameLogin = CurrentUser.UserName;
+            //} 
+        }
 
         public void MiniMizedWindow() => StateWindow = WindowState.Minimized;
 
@@ -157,7 +178,7 @@ namespace CoffeShop.Viewmodel
 
                 CurrentUser.UserName = listData[0];
                 CurrentUser.Password = listData[1];
-                Login();
+                //Login();
             }
             catch { }            
         }
