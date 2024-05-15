@@ -37,14 +37,14 @@ namespace CoffeShop.DAO
 		
 		public int Insert(USER user)
 		{
-			string query = $"EXEC TM_USER_Insert '{user.Pass}','{user.UserName}','{user.Email}','{user.PhoneNumber}','{user.CCCD}','{user.Position}',{user.Working_Days}";
+			string query = $"EXEC TM_USER_Insert '{user.Pass}','{user.UserName}','{user.Email}','{user.PhoneNumber}','{user.CCCD}','{user.Position}',{user.Working_Days},{user.PayrollLink}";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}
 		
 		public int Update(USER user)
 		{
-			string query = $"EXEC TM_USER_Update '{user.ID_User}','{user.Pass}','{user.UserName}','{user.Email}','{user.PhoneNumber}','{user.CCCD}','{user.Position}',{user.Working_Days}";
+			string query = $"EXEC TM_USER_Update '{user.ID_User}','{user.Pass}','{user.UserName}','{user.Email}','{user.PhoneNumber}','{user.CCCD}','{user.Position}',{user.Working_Days},{user.PayrollLink}";
 			int data = DataProvider.Instance.ExecuteNonQuery(query);
 			return data;
 		}

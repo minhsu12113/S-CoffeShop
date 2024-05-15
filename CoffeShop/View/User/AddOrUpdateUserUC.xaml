@@ -22,6 +22,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Margin="0 8 0 8" FontSize="{Binding FontSize24,Source={StaticResource SizeManager}}" FontWeight="SemiBold" Text="Thêm Mới Tài Khoản" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
@@ -46,7 +47,17 @@
             </materialDesign:HintAssist.Hint>
         </TextBox>
 
-        <TextBox Grid.Row="3" util:TextBoxService.IsNumericOnly="True" Text="{Binding CurrentUser.PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+        <TextBox Grid.Row="3" Text="{Binding CurrentUser.PayrollLink, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+         FontSize="16"  VerticalContentAlignment="Bottom" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+         Margin="16 0 16 0">
+            <materialDesign:HintAssist.Hint>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Link Bảng Lương" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </materialDesign:HintAssist.Hint>
+        </TextBox>
+
+        <TextBox Grid.Row="4" util:TextBoxService.IsNumericOnly="True" Text="{Binding CurrentUser.PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                  FontSize="16"  
                  VerticalContentAlignment="Bottom" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                  Margin="16 0 16 0">
@@ -57,7 +68,7 @@
             </materialDesign:HintAssist.Hint>
         </TextBox>
 
-        <TextBox Grid.Row="4" util:TextBoxService.IsNumericOnly="True" Text="{Binding CurrentUser.CCCD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+        <TextBox Grid.Row="5" util:TextBoxService.IsNumericOnly="True" Text="{Binding CurrentUser.CCCD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                   
                  FontSize="16"  VerticalContentAlignment="Bottom" 
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="16 0 16 0">
@@ -68,7 +79,7 @@
             </materialDesign:HintAssist.Hint>
         </TextBox>
 
-        <PasswordBox Grid.Row="5" util:PasswordHelper.Attach="True" 
+        <PasswordBox Grid.Row="6" util:PasswordHelper.Attach="True" 
                      util:PasswordHelper.Password="{Binding CurrentUser.Password,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                   FontSize="16" VerticalContentAlignment="Bottom"  Margin="16 16 0 0">
             <materialDesign:HintAssist.Hint>
@@ -78,7 +89,7 @@
             </materialDesign:HintAssist.Hint>
         </PasswordBox>
 
-        <PasswordBox Grid.Row="6" util:PasswordHelper.Attach="True" util:PasswordHelper.Password="{Binding ReEnterPassord,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+        <PasswordBox Grid.Row="7" util:PasswordHelper.Attach="True" util:PasswordHelper.Password="{Binding ReEnterPassord,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
                   FontSize="16" VerticalContentAlignment="Bottom" Margin="16 16 0 8">
             <materialDesign:HintAssist.Hint>
                 <StackPanel Orientation="Horizontal">
@@ -87,7 +98,7 @@
             </materialDesign:HintAssist.Hint>
         </PasswordBox>
 
-        <ComboBox   Grid.Row="7" SelectedItem="{Binding Permision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PermisionList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" 
+        <ComboBox   Grid.Row="8" SelectedItem="{Binding Permision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PermisionList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" 
           FontSize="16" Margin="16 0 16 0" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
             <materialDesign:HintAssist.Hint>
                 <StackPanel Orientation="Horizontal">
@@ -96,7 +107,7 @@
             </materialDesign:HintAssist.Hint> 
         </ComboBox>
 
-        <StackPanel Grid.Row="8" Margin="8"  Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="9" Margin="8"  Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
             <Button Margin="5" Content="Lưu" Width="79" Command="{Binding SaveCMD}">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">

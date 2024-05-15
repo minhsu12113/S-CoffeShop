@@ -42,7 +42,13 @@ namespace CoffeShop.Model
             get { return Data.Position; }
             set { Data.Position = value; OnPropertyChanged(); }
         }
-        
+
+        public string PayrollLink
+        {
+            get { return Data.PayrollLink; }
+            set { Data.PayrollLink = value; OnPropertyChanged(); }
+        }
+
         public string Email
         {
             get { return Data.Email; }
@@ -67,6 +73,7 @@ namespace CoffeShop.Model
                     user = new UserModel();
                     user.Id = int.Parse(dt.Rows[i]["ID_User"].ToString());
                     user.UserName = dt.Rows[i]["UserName"].ToString();
+                    user.PayrollLink = dt.Rows[i]["PayrollLink"].ToString();
                     user.Password = dt.Rows[i]["Pass"].ToString();
                     user.CCCD = dt.Rows[i]["CCCD"].ToString();
                     user.Email = dt.Rows[i]["Email"].ToString();
@@ -92,6 +99,7 @@ namespace CoffeShop.Model
                     user.Password = dt.Rows[i]["Pass"].ToString();
                     user.CCCD = dt.Rows[i]["CCCD"].ToString();
                     user.Email = dt.Rows[i]["Email"].ToString();
+                    user.PayrollLink = dt.Rows[i]["PayrollLink"].ToString();
                     user.Permission = dt.Rows[i]["Posision"].ToString();
                     user.PhoneNumber = dt.Rows[i]["PhoneNumber"].ToString();
                     users.Add(user);

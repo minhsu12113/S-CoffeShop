@@ -20,6 +20,7 @@ namespace CoffeShop.Viewmodel.User
 
         #region [Command]
         public ICommand AddNewCMD { get { return new CommandHelper(OpenDialogAddNew); } }
+        public ICommand OpenUCSendPayrollCMD { get { return new CommandHelper(OpenUCSendPayroll); } }
         public ICommand EditCMD { get { return new CommandHelper<UserModel>((c) => { return c != null; }, OpenDialogEdit); } }
 
         public ICommand DeleteCMD { get { return new CommandHelper<UserModel>((c) => { return c != null; }, DeleteUser); } }
@@ -55,7 +56,6 @@ namespace CoffeShop.Viewmodel.User
         }
 
         private string _nameSearch;
-
         public string NameSearch
         {
             get { return _nameSearch; }
@@ -147,6 +147,11 @@ namespace CoffeShop.Viewmodel.User
                     CloseDialog();
 
                 }, CloseDialog));
+        }
+
+        public void OpenUCSendPayroll()
+        {
+            OpenDialog(new SendPayrollUC(CloseDialog));
         }
     }
 }
