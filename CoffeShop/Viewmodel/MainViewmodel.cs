@@ -106,7 +106,7 @@ namespace CoffeShop.Viewmodel
                     CurrenView = new StatisticsUC();
                     break;
                 case TYPE_VIEW.USER:
-                    CurrenView = UserUC == null ? UserUC = new UserUC() : UserUC;
+                    CurrenView = new UserUC();
                     break;
                 default:
                     break;

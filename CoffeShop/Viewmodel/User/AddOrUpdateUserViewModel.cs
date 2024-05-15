@@ -3,9 +3,7 @@ using CoffeShop.Model;
 using CoffeShop.Viewmodel.Base;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security;
 using System.Windows;
 using System.Windows.Input;
 
@@ -74,7 +72,7 @@ namespace CoffeShop.Viewmodel.User
 
         public AddOrUpdateUserViewModel(Action<UserModel> addUserOrEditCategoryCallback, Action closeDialog, UserModel user = null)
         {
-            PermisionList = new List<string>() { "Nhân Viên", "Thực Tập" };
+            PermisionList = new List<string>() { "Nhân Viên", "Quản Lý" };
             IsCanEditUserName = true;
             if (user == null) // Add new
             {

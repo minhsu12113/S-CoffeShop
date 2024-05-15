@@ -45,6 +45,13 @@ namespace CoffeShop.Viewmodel.Base
             get { return CSGlobal.Instance.CurrentUser.IsAdminType; }
             set { _isAdmin = CSGlobal.Instance.CurrentUser.IsAdminType; OnPropertyChanged(); }
         }
+
+        private bool _isManager;
+        public bool IsManager
+        {
+            get { return CSGlobal.Instance.CurrentUser.IsManagerType; }
+            set { _isManager = CSGlobal.Instance.CurrentUser.IsManagerType; OnPropertyChanged(); }
+        }
     }
 
 }

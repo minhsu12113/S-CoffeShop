@@ -41,36 +41,44 @@ namespace CoffeShop.View.User
             CallbackCloseDialog?.Invoke();
         }
 
-        private void SendMail_Click(object sender, RoutedEventArgs e)
-        {
-            CallbackCloseDialog?.Invoke();
-        }
+        private void SendMail_Click(object sender, RoutedEventArgs e) => SendMail();
 
         private void SendMail()
         {
             if (ViewModel.UserModelList != null)
             {
-                string passMail = "";
-                string mailMaster = "";
-
-                using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
+                var objSelectFirst = ViewModel.UserModelMasterList.FirstOrDefault(u => u.IsSelected);
+                if(objSelectFirst == null)
                 {
-                    client.EnableSsl = true;
-                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    client.UseDefaultCredentials = false;
-                    client.Credentials = new NetworkCredential(mailMaster, passMail);
-
-                    var mailObj = new MailMessage();
-                    mailObj.From = new MailAddress(mailMaster);
-                    foreach (var user in ViewModel.UserModelList)
-                    {
-                        mailObj.To.Add("su7minh@gmail.com");
-                        mailObj.Subject = "Payroll Coffee Shop_su7minh";
-                        mailObj.Body = "This is your Pay roll link: https://docs.google.com/spreadsheets/d/1HL66QBL7YQbVtmCp-pvbX4uzqhi5magG/edit?usp=sharing&ouid=104706678397712899729&rtpof=true&sd=true";
-                    } 
-                    client.Send(mailObj);
+                    MessageBox.Show("Vui lòng chọn ít nhất một nhân viên!");
+                    return;
                 }
+
+                string passMail = "";
+                string mailMaster = "minhsu12113@gmail.com";
+                foreach (var user in ViewModel.UserModelList)
+                {
+                    if (user.IsSelected)
+                    {
+                        Task.Run(() => {
+                            using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
+                            {
+                                client.EnableSsl = true;
+                                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                                client.UseDefaultCredentials = false;
+                                client.Credentials = new NetworkCredential(mailMaster, passMail);
+                                var mailObj = new MailMessage();
+                                mailObj.From = new MailAddress(mailMaster);
+                                mailObj.To.Add(user.Email);
+                                mailObj.Subject = $"Payroll Coffee Shop_{user.UserName}";
+                                mailObj.Body = $"This is your Pay roll link: {user.PayrollLink}";
+                                client.Send(mailObj);
+                            }
+                        });
+                    }
+                } 
             }
+            CallbackCloseDialog?.Invoke();
         }
     }
 

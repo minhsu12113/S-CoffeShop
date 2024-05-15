@@ -105,8 +105,8 @@ namespace CoffeShop.Viewmodel
 
         public void Login()
         {
-           
 
+            UserModel userLogin = null;
             bool isAuthenticated = false;
             bool isAdmin = CurrentUser.UserName == "admin" && CurrentUser.Password == "admin";
             isAuthenticated = isAdmin;
@@ -115,8 +115,8 @@ namespace CoffeShop.Viewmodel
             if (!isAdmin)
             {
                 var resLogin = AccountDAO.Instance.Login(CurrentUser.UserName, CurrentUser.Password);
-                var user = ParseUser(resLogin);
-                isAuthenticated = user != null;
+                userLogin = ParseUser(resLogin);
+                isAuthenticated = userLogin != null;
             }
 
             if (!isAuthenticated)
@@ -135,7 +135,7 @@ namespace CoffeShop.Viewmodel
                 CSGlobal.Instance.MainWindow.Show();
                 CSGlobal.Instance.MainViewmodel.NavigateToView(ItemNavigate.ListItemNavigate[0]); // Dashborad
 
-                CSGlobal.Instance.CurrentUser = CurrentUser;
+                CSGlobal.Instance.CurrentUser = userLogin;
                 if (IsRemember) SaveRememberData();
                 OnRaiseCustomEvent(new LoggedEventArgs(CurrentUser));
                 CSGlobal.Instance.MainViewmodel.CurrentUserNameLogin = CurrentUser.UserName;

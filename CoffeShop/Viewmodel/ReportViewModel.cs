@@ -92,11 +92,14 @@ namespace CoffeShop.Viewmodel
                 DateTime enteredDate = DateTime.Parse(date);
                 foreach (var bill in bills)
                 {
-                    DateTime billDate = DateTime.ParseExact(bill.PaymentTime, "yyyy/MM/dd/ HH:mm:ss", CultureInfo.InvariantCulture);
-                    if(enteredDate.Date == billDate.Date)
+                    if (!String.IsNullOrEmpty(bill.PaymentTime))
                     {
-                        if (dicReport.ContainsKey(enteredDate.Date))
-                            dicReport[billDate.Date] += bill.Total;
+                        DateTime billDate = DateTime.ParseExact(bill.PaymentTime, "yyyy/MM/dd/ HH:mm:ss", CultureInfo.InvariantCulture);
+                        if (enteredDate.Date == billDate.Date)
+                        {
+                            if (dicReport.ContainsKey(enteredDate.Date))
+                                dicReport[billDate.Date] += bill.Total;
+                        }
                     }
                 }
             }

@@ -61,7 +61,17 @@ namespace CoffeShop.Model
             set { Data.CCCD = value; OnPropertyChanged(); }
         }
 
-        public bool IsAdminType => this.UserName == "admin";
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set { _isSelected = value; OnPropertyChanged(); }
+        }
+
+
+        public bool IsAdminType => this.UserName == "admin" || Permission == "Quản Lý";
+        public bool IsManagerType => this.Permission == "Quản Lý";
 
         public static UserModel ParseUser(DataTable dt)
         {
