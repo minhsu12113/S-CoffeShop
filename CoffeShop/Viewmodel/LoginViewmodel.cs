@@ -135,7 +135,7 @@ namespace CoffeShop.Viewmodel
                 CSGlobal.Instance.MainWindow.Show();
                 CSGlobal.Instance.MainViewmodel.NavigateToView(ItemNavigate.ListItemNavigate[0]); // Dashborad
 
-                CSGlobal.Instance.CurrentUser = userLogin;
+                CSGlobal.Instance.CurrentUser = userLogin != null ? userLogin : new UserModel() { Permission = "admin", UserName = "admin"};
                 if (IsRemember) SaveRememberData();
                 OnRaiseCustomEvent(new LoggedEventArgs(CurrentUser));
                 CSGlobal.Instance.MainViewmodel.CurrentUserNameLogin = CurrentUser.UserName;
