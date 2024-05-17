@@ -77,9 +77,9 @@
                                                                  Height="{Binding HeightIconNavigate,Source={StaticResource SizeManager}}"/>
                                             <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Content}" Foreground="{Binding ForegroundItem}"  VerticalAlignment="Center" HorizontalAlignment="Left" 
                                                    FontSize="{Binding FontSize16,Source={StaticResource SizeManager}}"/>
-                                            <!--<materialDesign:TransitioningContent HorizontalAlignment="Left" Visibility="{Binding StatePointer}" OpeningEffect="{materialDesign:TransitionEffect SlideInFromTop, Duration=0:0:0.5}">
+                                            <materialDesign:TransitioningContent HorizontalAlignment="Left" Visibility="{Binding StatePointer}" OpeningEffect="{materialDesign:TransitionEffect SlideInFromTop, Duration=0:0:0.5}">
                                                 <Border Width="5" Background="#3326AE" CornerRadius="4"/>
-                                            </materialDesign:TransitioningContent>-->
+                                            </materialDesign:TransitioningContent>
                                         </Grid>
                                     </Button>
                                 </DataTemplate>

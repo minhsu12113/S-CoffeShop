@@ -43,16 +43,7 @@
                 </StackPanel>
                
             </materialDesign:HintAssist.Hint>
-        </TextBox>
-
-        <TextBox  Grid.Row="2" Text="{Binding CurrentCategory.Note}" FontSize="16" VerticalContentAlignment="Bottom" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="5">
-            <materialDesign:HintAssist.Hint>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Ghi Chú" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <materialDesign:PackIcon Margin="5 0 0 0" Kind="CardTextOutline" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                </StackPanel>
-            </materialDesign:HintAssist.Hint>
-        </TextBox>
+        </TextBox> 
         
         <StackPanel Grid.Row="3" Margin="5" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
             <Button Margin="5" Content="Lưu" Width="79" Command="{Binding SaveCMD}">

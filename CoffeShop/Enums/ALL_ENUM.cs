@@ -20,6 +20,7 @@ namespace CoffeShop.Enums
             FOODS,
             CATEGORY,
             AREA,
+            CHECK_IN,
             STATISTICS,
             USER,
             SETTING

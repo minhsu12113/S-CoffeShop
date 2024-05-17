@@ -1,18 +1,16 @@
 ﻿using CoffeShop.DAO.Model;
 using CoffeShop.Viewmodel.Base;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoffeShop.Model
 {
    public class UserModel : BindableBase
    {
-        public USER Data { get; set; } = new USER(); 
-            
+        public USER Data { get; set; } = new USER();
+
+        public int STT { get; set; }
+
         public int Id
         {
             get { return Data.ID_User; }
@@ -24,7 +22,13 @@ namespace CoffeShop.Model
             get { return Data.UserName; }
             set { Data.UserName = value; OnPropertyChanged(); }
         }
-         
+
+        public string DateCreate
+        {
+            get { return Data.DateCreate; }
+            set { Data.DateCreate = value; OnPropertyChanged(); }
+        }
+
         public string Password
         {
             get { return Data.Pass; }
@@ -43,10 +47,10 @@ namespace CoffeShop.Model
             set { Data.Position = value; OnPropertyChanged(); }
         }
 
-        public string PayrollLink
+        public string FullName
         {
-            get { return Data.PayrollLink; }
-            set { Data.PayrollLink = value; OnPropertyChanged(); }
+            get { return Data.FullName; }
+            set { Data.FullName = value; OnPropertyChanged(); }
         }
 
         public string Email
@@ -83,7 +87,8 @@ namespace CoffeShop.Model
                     user = new UserModel();
                     user.Id = int.Parse(dt.Rows[i]["ID_User"].ToString());
                     user.UserName = dt.Rows[i]["UserName"].ToString();
-                    user.PayrollLink = dt.Rows[i]["PayrollLink"].ToString();
+                    user.FullName = dt.Rows[i]["FullName"].ToString();
+                    user.DateCreate = dt.Rows[i]["DateCreate"].ToString();
                     user.Password = dt.Rows[i]["Pass"].ToString();
                     user.CCCD = dt.Rows[i]["CCCD"].ToString();
                     user.Email = dt.Rows[i]["Email"].ToString();
@@ -109,9 +114,10 @@ namespace CoffeShop.Model
                     user.Password = dt.Rows[i]["Pass"].ToString();
                     user.CCCD = dt.Rows[i]["CCCD"].ToString();
                     user.Email = dt.Rows[i]["Email"].ToString();
-                    user.PayrollLink = dt.Rows[i]["PayrollLink"].ToString();
+                    user.FullName = dt.Rows[i]["FullName"].ToString();
                     user.Permission = dt.Rows[i]["Posision"].ToString();
                     user.PhoneNumber = dt.Rows[i]["PhoneNumber"].ToString();
+                    user.DateCreate = dt.Rows[i]["DateCreate"].ToString();
                     users.Add(user);
                 } 
             }

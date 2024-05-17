@@ -47,12 +47,12 @@
             </materialDesign:HintAssist.Hint>
         </TextBox>
 
-        <TextBox Grid.Row="3" Text="{Binding CurrentUser.PayrollLink, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+        <TextBox Grid.Row="3" Text="{Binding CurrentUser.FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
          FontSize="16"  VerticalContentAlignment="Bottom" Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
          Margin="16 0 16 0">
             <materialDesign:HintAssist.Hint>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Link Bảng Lương" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Họ Tên" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </StackPanel>
             </materialDesign:HintAssist.Hint>
         </TextBox>

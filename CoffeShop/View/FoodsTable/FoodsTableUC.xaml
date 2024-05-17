@@ -49,9 +49,6 @@
                 <TextBox Grid.Column="6" FontSize="16" Text="{Binding NameSearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
                          HorizontalAlignment="Stretch" VerticalContentAlignment="Center" Margin="5">
-                    <TextBox.InputBindings>
-                        <KeyBinding Key="Enter" Command="{Binding SearchCMD}"/>
-                    </TextBox.InputBindings>
                     <materialDesign:HintAssist.Hint>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Tìm Kiếm" VerticalAlignment="Center" HorizontalAlignment="Center"/>

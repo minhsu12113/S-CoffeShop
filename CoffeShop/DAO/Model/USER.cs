@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Infragistics.Controls.DataSource;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,8 +16,9 @@ namespace CoffeShop.DAO.Model
 		public string PhoneNumber { get; set; }
 		public string CCCD { get; set; }
 		public string Position { get; set; }
-		public string PayrollLink { get; set; }
-		public int Working_Days { get; set; }
+		public string FullName { get; set; }
+		public string DateCreate { get; set; } = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
+        public int Working_Days { get; set; }
 		
 		public USER() { }
 		USER(int iD_User, string pass, string userName, string email, string phoneNumber, string cCCD, string position, int working_Days)

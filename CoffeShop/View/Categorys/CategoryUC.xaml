@@ -89,7 +89,6 @@
                             <GridView>
                                 <GridViewColumn Header="STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource CountItemListView}}"/>
                                 <GridViewColumn Header="Tên" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="Ghi Chú" DisplayMemberBinding="{Binding Note}"/>
                                 <GridViewColumn>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>

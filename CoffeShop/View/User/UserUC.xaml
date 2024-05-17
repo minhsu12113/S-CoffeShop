@@ -98,13 +98,12 @@
                             <GridView>
                                 <GridViewColumn Header="STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource CountItemListView}}"/>
                                 <GridViewColumn Header="Tên Tài Khoản" DisplayMemberBinding="{Binding UserName}"/>
-                                <GridViewColumn Header="Chức Danh" DisplayMemberBinding="{Binding Permission}"/>
-                                <GridViewColumn Header="Ghi Chú" DisplayMemberBinding="{Binding Note}"/>
+                                <GridViewColumn Header="Chức Danh" DisplayMemberBinding="{Binding Permission}"/> 
                                 <GridViewColumn>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon Kind="PencilBox" Style="{StaticResource CumtomStylePack}" Margin="5" Foreground="Gray" HorizontalAlignment="Center" Width="Auto" Height="Auto">
+                                                <materialDesign:PackIcon Kind="PencilBox" Background="Transparent" Style="{StaticResource CumtomStylePack}" Margin="5" Foreground="Gray" HorizontalAlignment="Center" Width="Auto" Height="Auto">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonDown">
                                                             <i:InvokeCommandAction Command="{Binding Path=DataContext.EditCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" 
@@ -112,7 +111,7 @@
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                 </materialDesign:PackIcon>
-                                                <materialDesign:PackIcon Kind="CloseBox" Visibility="{Binding Path=DataContext.IsAdmin, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                                <materialDesign:PackIcon Kind="CloseBox" Background="Transparent" Visibility="{Binding Path=DataContext.IsAdmin, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Converter={StaticResource BooleanToVisibilityConverter}}" 
                                                                          Style="{StaticResource CumtomStylePack}" Margin="5" Foreground="DarkRed" HorizontalAlignment="Center" Width="Auto" Height="Auto">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonDown">

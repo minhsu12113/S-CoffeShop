@@ -14,6 +14,7 @@ using CoffeShop.View.Dialog;
 using CoffeShop.View.FoodsTable;
 using CoffeShop.View.Area;
 using CoffeShop.Viewmodel.Food;
+using CoffeShop.View.CheckIn;
 
 namespace CoffeShop.Viewmodel
 {
@@ -104,6 +105,9 @@ namespace CoffeShop.Viewmodel
                     break;
                 case TYPE_VIEW.STATISTICS:
                     CurrenView = new StatisticsUC();
+                    break;
+                case TYPE_VIEW.CHECK_IN:
+                    CurrenView = new CheckInUC();
                     break;
                 case TYPE_VIEW.USER:
                     CurrenView = new UserUC();

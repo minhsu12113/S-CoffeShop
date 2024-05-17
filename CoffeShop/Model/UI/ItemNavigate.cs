@@ -92,6 +92,15 @@ namespace CoffeShop.Model.UI
                 },
                 new ItemNavigate()
                 {
+                    TypeView = TYPE_VIEW.CHECK_IN,
+                    Content = "Chấm Công",
+                    Icon = PackIconKind.NotebookCheckOutline,
+                    BackgoundItem = new SolidColorBrush(Colors.Transparent),
+                    ForegroundItem = new SolidColorBrush(Color.FromRgb(255,255,255)),
+                    StatePointer = Visibility.Collapsed
+                },
+                new ItemNavigate()
+                {
                     TypeView = TYPE_VIEW.STATISTICS,
                     Content = StringResources.Find("STATISTICS"),
                     Icon = PackIconKind.ChartBoxOutline,

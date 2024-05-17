@@ -54,7 +54,7 @@ namespace CoffeShop.View.User
                     return;
                 }
 
-                string passMail = "";
+                string passMail = "nbbl ywct jmbn qibi";
                 string mailMaster = "minhsu12113@gmail.com";
                 foreach (var user in ViewModel.UserModelList)
                 {
@@ -71,7 +71,7 @@ namespace CoffeShop.View.User
                                 mailObj.From = new MailAddress(mailMaster);
                                 mailObj.To.Add(user.Email);
                                 mailObj.Subject = $"Payroll Coffee Shop_{user.UserName}";
-                                mailObj.Body = $"This is your Pay roll link: {user.PayrollLink}";
+                                mailObj.Body = $"This is your Pay roll link: {user.FullName}";
                                 client.Send(mailObj);
                             }
                         });
