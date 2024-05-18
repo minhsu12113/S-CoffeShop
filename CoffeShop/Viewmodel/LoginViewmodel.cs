@@ -139,6 +139,14 @@ namespace CoffeShop.Viewmodel
                 if (IsRemember) SaveRememberData();
                 OnRaiseCustomEvent(new LoggedEventArgs(CurrentUser));
                 CSGlobal.Instance.MainViewmodel.CurrentUserNameLogin = CurrentUser.UserName;
+
+                foreach (var item in ItemNavigate.ListItemNavigate)
+                {
+                    if (item.TypeView == Enums.ALL_ENUM.TYPE_VIEW.CHECK_IN)
+                    {
+                        item.CanShow = IsAdmin;
+                    }
+                }
             }
         }
 

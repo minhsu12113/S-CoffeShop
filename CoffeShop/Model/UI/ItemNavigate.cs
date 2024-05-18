@@ -1,4 +1,5 @@
 ﻿using CoffeShop.Internationalization;
+using CoffeShop.Utility;
 using CoffeShop.Viewmodel.Base;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -52,6 +53,14 @@ namespace CoffeShop.Model.UI
             set { _content = value; OnPropertyChanged(); }
         }
 
+        private bool _canShow = true;
+        public bool CanShow
+        {
+            get { return _canShow; }
+            set { _canShow = value; OnPropertyChanged(); }
+        }
+
+
         public static List<ItemNavigate> ListItemNavigate = new List<ItemNavigate>()
         {
                 new ItemNavigate()
@@ -92,21 +101,21 @@ namespace CoffeShop.Model.UI
                 },
                 new ItemNavigate()
                 {
-                    TypeView = TYPE_VIEW.CHECK_IN,
-                    Content = "Chấm Công",
-                    Icon = PackIconKind.NotebookCheckOutline,
-                    BackgoundItem = new SolidColorBrush(Colors.Transparent),
-                    ForegroundItem = new SolidColorBrush(Color.FromRgb(255,255,255)),
-                    StatePointer = Visibility.Collapsed
-                },
-                new ItemNavigate()
-                {
                     TypeView = TYPE_VIEW.STATISTICS,
                     Content = StringResources.Find("STATISTICS"),
                     Icon = PackIconKind.ChartBoxOutline,
                     BackgoundItem = new SolidColorBrush(Colors.Transparent),
                     ForegroundItem = new SolidColorBrush(Color.FromRgb(255,255,255)),
                     StatePointer = Visibility.Collapsed
+                },
+                new ItemNavigate()
+                {
+                    TypeView = TYPE_VIEW.CHECK_IN,
+                    Content = "Chấm Công",
+                    Icon = PackIconKind.NotebookCheckOutline,
+                    BackgoundItem = new SolidColorBrush(Colors.Transparent),
+                    ForegroundItem = new SolidColorBrush(Color.FromRgb(255,255,255)),
+                    StatePointer = Visibility.Collapsed,
                 },
                 new ItemNavigate()
                 {

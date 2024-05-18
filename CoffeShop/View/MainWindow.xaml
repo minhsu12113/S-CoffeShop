@@ -60,7 +60,8 @@
                                       ItemsSource="{Binding Source={x:Static model:ItemNavigate.ListItemNavigate}}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Margin="17 5 17 5" Command="{Binding Path=DataContext.NavigateToViewCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                    <Button Visibility="{Binding CanShow,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                        Margin="17 5 17 5" Command="{Binding Path=DataContext.NavigateToViewCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
                                         CommandParameter="{Binding}" materialDesign:ButtonAssist.CornerRadius="17"
                                         Foreground="{Binding ForegroundItem}" BorderBrush="{Binding BackgoundItem}" 
                                         Background="{Binding BackgoundItem}" HorizontalContentAlignment="Stretch" 
