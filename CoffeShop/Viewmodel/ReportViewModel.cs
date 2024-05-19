@@ -131,7 +131,7 @@ namespace CoffeShop.Viewmodel
             }
 
             var dtbills = TM_BILL_DAO.Instance.GetAll();
-            var bills = BILL.ParseDataTable(dtbills);
+            var bills = BILL.ParseDataTable(dtbills)?.Where(b => !String.IsNullOrEmpty(b.PaymentTime)).ToList(); ;
 
             foreach (var date in listDate)
             {
@@ -210,7 +210,7 @@ namespace CoffeShop.Viewmodel
         public void LoadReportPaymentBillRecently()
         {
             var dtBills = TM_BILL_DAO.Instance.GetAll();
-            var bills = BILL.ParseDataTable(dtBills);
+            var bills = BILL.ParseDataTable(dtBills)?.Where(b => !String.IsNullOrEmpty(b.PaymentTime)).ToList();
 
             int count = 1;
             var tempList = new List<RecentlyPaymentBill>();
