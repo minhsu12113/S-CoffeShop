@@ -46,6 +46,9 @@ namespace CoffeShop.Model
             set { Data.Unit_Cost = value; OnPropertyChanged(); }
         }
 
+        public int PriceAfterDiscount => Price - Discount;
+
+
         private int _totalPrice;
         public int TotalPrice
         {

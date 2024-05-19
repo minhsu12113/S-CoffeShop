@@ -153,7 +153,10 @@
             </ComboBox>
             <TextBox Grid.Row="2" Text="{Binding FoodCurrent.Price ,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:0,000}}"  util:TextBoxService.IsNumericOnly="True" 
                      materialDesign:HintAssist.Hint="{DynamicResource PRICE}" Style="{StaticResource Stl_textbox_common}">               
-            </TextBox> 
+            </TextBox>
+            <TextBox Grid.Row="3" Text="{Binding FoodCurrent.Discount ,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:0,000}}"  util:TextBoxService.IsNumericOnly="True" 
+                     materialDesign:HintAssist.Hint="Giảm Giá" Style="{StaticResource Stl_textbox_common}">
+            </TextBox>
             <Button Grid.Row="4" Command="{Binding SaveCMD}" Content="Lưu" Width="109" Height="29" HorizontalAlignment="Center" Margin="10">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">

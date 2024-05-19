@@ -81,8 +81,7 @@
         <Grid> 
             <TextBlock FontSize="18" Foreground="#13548A" Margin="8" FontWeight="SemiBold" 
             Text="Ban 1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Button x:Name="btn_Close" Command="{Binding CloseDialogParentCMD}"
-                    HorizontalAlignment="Right" Margin="0 0 0 8" Click="Close_Dialog_Click"
+            <Button x:Name="btn_Close" HorizontalAlignment="Right" Margin="0 0 0 8" Click="Close_Dialog_Click"
                     materialDesign:ButtonAssist.CornerRadius="1" Style="{StaticResource Stl_btn_close}"/>
         </Grid>
 
@@ -215,7 +214,7 @@
                                     <TextBlock VerticalAlignment="Center"  
                                                Grid.Column="0" Text="{Binding Name}" Foreground="#13548A" FontWeight="SemiBold"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
-                                               Grid.Column="1" Text="{Binding Price,StringFormat={}{0:0,000 (VND)}}"
+                                               Grid.Column="1" Text="{Binding PriceAfterDiscount,StringFormat={}{0:0,000 (VND)}}"
                                                 Foreground="Green"/>
 
                                     <Button Grid.Column="2" Width="25" Height="25" HorizontalAlignment="Right" Click="Add_Food_To_Table_Click"

@@ -23,7 +23,7 @@
             </Grid.RowDefinitions>
             <!--#region [Header] -->
             <Border Grid.Row="0" Background="#3326AE">
-                <TextBlock Text="Thông Báo" FontSize="{Binding FontSizeContentConfirmUC,Source={StaticResource SizeManager}}" FontWeight="SemiBold" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Text="Thông Báo" FontSize="18" FontWeight="SemiBold" Foreground="WhiteSmoke" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Border>
             <!--#endregion [End Header]-->
             <!--#region [Content] -->

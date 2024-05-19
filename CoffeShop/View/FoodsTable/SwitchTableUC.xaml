@@ -79,7 +79,7 @@
             <TextBlock Grid.Row="0" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="4"
                         FontSize="18" Foreground="#13548A" Text="Chuyển Bàn"/>
 
-            <Button Grid.Row="0" x:Name="btn_Close" Command="{Binding CloseDialogParentCMD}"
+            <Button Grid.Row="0" x:Name="btn_Close"
             HorizontalAlignment="Right" Margin="0 0 0 8" Click="Close_Dialog_Click"
             materialDesign:ButtonAssist.CornerRadius="1" Style="{StaticResource Stl_btn_close}"/>
 

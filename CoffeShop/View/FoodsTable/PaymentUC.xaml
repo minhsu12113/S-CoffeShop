@@ -92,7 +92,7 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
                             <ItemsControl ItemsSource="{Binding FoodModels}" VerticalAlignment="Top"  >
@@ -140,10 +140,10 @@
                             </ItemsControl>
 
 
-                            <Border Grid.Row="1" Margin="8" Padding="0 8 0 8"  BorderThickness="0 1 0 0"   HorizontalAlignment="Stretch">
-                                 
+                            <Border Grid.Row="1" Margin="8" Padding="0 8 0 8"  BorderThickness="0 1 0 0"   HorizontalAlignment="Stretch">                                 
                                 <Grid>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
@@ -177,6 +177,9 @@
                                         <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="{Binding TotalPriceInBill,StringFormat={}{0:0,000 (VND)}}"/>
                                     </Grid>
 
+
+                                    <Image Stretch="Uniform" Height="200" Grid.Row="3" Source="../../../qr_payment.jpg"/>
+
                                 </Grid>
                             </Border>
                         </Grid>
@@ -184,7 +187,6 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-
-        <Button x:Name="btn_payment" Grid.Row="3" Content="Thanh Toán"  Margin="16" Click="Payment_Click"/>
+        <Button x:Name="btn_payment" Grid.Row="4" Content="Thanh Toán"  Margin="16" Click="Payment_Click"/>
     </Grid>
 </UserControl>

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CoffeShop.ExtentionCommon;
 using CoffeShop.DAO;
+using CoffeShop.DAO.Model;
 
 namespace CoffeShop.Viewmodel.Food
 {
@@ -94,6 +95,18 @@ namespace CoffeShop.Viewmodel.Food
 
         public void Save()
         {
+            if (FoodCurrent.Price <= 0)
+            {
+                MessageBox.Show("Giá tiền món ăn không hợp lệ!");
+                return;
+            }
+
+            if (FoodCurrent.Discount > FoodCurrent.Price)
+            {
+                MessageBox.Show("Số tiền giảm giá không hợp lệ!");
+                return;
+            }
+
             CallbackAddFood(FoodCurrent);
             CloseDialogParent();
         }

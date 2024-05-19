@@ -7,63 +7,159 @@
             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:converter="clr-namespace:CoffeShop.Converters"
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto" 
              TextElement.FontWeight="Regular"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:Base64ToImageSourceConverter x:Key="Base64ToImageSource"/>
+        <converter:ListViewIndexConvert x:Key="CountItemListView"/>
+    </UserControl.Resources>
     <materialDesign:TransitioningContent>
         <materialDesign:TransitioningContent.OpeningEffects >
             <materialDesign:TransitionEffect Kind="SlideInFromRight"/>
         </materialDesign:TransitioningContent.OpeningEffects>
 
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <materialDesign:Card UniformCornerRadius="20">
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="6*"/>
+                </Grid.ColumnDefinitions>
 
-                <Grid Margin="16">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Thống Kê Doanh Thu" HorizontalAlignment="Left"
-                               FontWeight="SemiBold" FontSize="{Binding FontSize24,Source={StaticResource SizeManager}}"/>
+                <materialDesign:Card Grid.Column="0" UniformCornerRadius="20" Margin="0 0 0 16">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Margin="16" VerticalAlignment="Center" Text="Món Bán Chạy" HorizontalAlignment="Left"
+                                    FontWeight="SemiBold" FontSize="{Binding FontSize24,Source={StaticResource SizeManager}}"/>
 
-                    <Grid Grid.Column="1" HorizontalAlignment="Right">
+                        <StackPanel Grid.Row="0" Grid.RowSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon  Kind="BoxVariant" Width="200" Height="200" Foreground="Gray"/>
+                            <TextBlock FontWeight="SemiBold" Text="Không có dữ liệu" HorizontalAlignment="Center" Foreground="Gray"/>
+                        </StackPanel> 
+
+                        <Border Grid.Row="1" Visibility="{Binding IsShowReportTopSallOfWeek, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Border.Background>
+                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding TopSellInWeek.Base64Img,Converter={StaticResource Base64ToImageSource}}"/>
+                            </Border.Background>
+                        </Border>
+
+                        <StackPanel Visibility="{Binding IsShowReportTopSallOfWeek, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal" Margin="16">
+                            <TextBlock Text="{Binding TopSellInWeek.Name}" FontWeight="SemiBold" FontSize="{Binding FontSize16,Source={StaticResource SizeManager}}"/>
+                            <TextBlock Text=" (" FontWeight="SemiBold" FontSize="{Binding FontSize16,Source={StaticResource SizeManager}}"/>
+                            <TextBlock Text="{Binding TopSellInWeek.Count}" FontWeight="SemiBold" FontSize="{Binding FontSize16,Source={StaticResource SizeManager}}"/>
+                            <TextBlock Text=")" FontWeight="SemiBold" FontSize="{Binding FontSize16,Source={StaticResource SizeManager}}"/>
+                        </StackPanel>
+
+                    </Grid>
+                </materialDesign:Card>                
+                
+                <materialDesign:Card Grid.Column="1" UniformCornerRadius="20" Margin="16 0 0 16">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Margin="16" VerticalAlignment="Center" Text="Lịch Sử Thanh Toán" HorizontalAlignment="Left"
+                                   FontWeight="SemiBold" FontSize="{Binding FontSize24,Source={StaticResource SizeManager}}"/>
+
+                        <ListView Grid.Row="1" ItemsSource="{Binding RecentlyPaymentBills}"  FontSize="16" 
+                                  Visibility="{Binding IsShowPaymentRecently, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignGridViewItem}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource CountItemListView}}"/>
+                                    <GridViewColumn Header="Tổng Tiền" DisplayMemberBinding="{Binding TotalPrice,StringFormat={}{0:0,000 (VND)}}"/>
+                                    <GridViewColumn Header="Thời Gian Thanh Toán" DisplayMemberBinding="{Binding PaymentTime}"/>
+                                    <GridViewColumn Header="Nhân Viên Thanh Toán" DisplayMemberBinding="{Binding AccountCheckout}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                        <StackPanel Grid.Row="0" Grid.RowSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    Visibility="{Binding IsShowEmptyPaymentRecently, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <materialDesign:PackIcon  Kind="BoxVariant" Width="200" Height="200" Foreground="Gray"/>
+                            <TextBlock FontWeight="SemiBold" Text="Không có dữ liệu" HorizontalAlignment="Center" Foreground="Gray"/>
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:Card>
+
+            </Grid>
+            
+            
+            <materialDesign:Card Grid.Row="1" UniformCornerRadius="20" Margin="0 0 0 8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Margin="16">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Thống Kê Doanh Thu" HorizontalAlignment="Left"
+                       FontWeight="SemiBold" FontSize="{Binding FontSize24,Source={StaticResource SizeManager}}"/>
 
-                        <DatePicker Grid.Column="0" materialDesign:HintAssist.Hint="Ngày bắt đầu" IsTodayHighlighted="True" 
-                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="8"
-                                    SelectedDate="{Binding StartDate}"/>
-                        <DatePicker Grid.Column="1" materialDesign:HintAssist.Hint="Ngày kết thúc" IsTodayHighlighted="True" 
-                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="8"
-                                    SelectedDate="{Binding EndDate}"/>
-                        <Button Grid.Column="2" Content="Thống Kê" Margin="8" VerticalAlignment="Bottom" 
-                                Click="btn_report_click"/>
+                        <Grid Grid.Column="1" HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <DatePicker Grid.Column="0" materialDesign:HintAssist.Hint="Ngày bắt đầu" IsTodayHighlighted="True" 
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="8"
+                            SelectedDate="{Binding StartDate}"/>
+                            <DatePicker Grid.Column="1" materialDesign:HintAssist.Hint="Ngày kết thúc" IsTodayHighlighted="True" 
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="8"
+                            SelectedDate="{Binding EndDate}"/>
+                            <Button Grid.Column="2" Content="Thống Kê" Margin="8" VerticalAlignment="Bottom" 
+                        Click="btn_report_click"/>
+                        </Grid>
                     </Grid>
-                </Grid>
 
-                <lvc:CartesianChart Grid.Row="1" Margin="5" Series="{Binding SeriesCollection}" LegendLocation="None" >
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Ngày" Labels="{Binding ArrayDates}" LabelsRotation="45">
-                            <lvc:Axis.Separator>
-                                <lvc:Separator Step="1"/>
-                            </lvc:Axis.Separator>
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Doanh Thu" LabelFormatter="{Binding FormatterTop10}"/>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
-            </Grid>
-        </materialDesign:Card>
+                    <StackPanel Grid.Row="0" Grid.RowSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                Visibility="{Binding IsShowEmptyCustomReport, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <materialDesign:PackIcon  Kind="BoxVariant" Width="200" Height="200" Foreground="Gray"/>
+                        <TextBlock FontWeight="SemiBold" Text="Không có dữ liệu" HorizontalAlignment="Center" Foreground="Gray"/>
+                    </StackPanel>
+
+                    <lvc:CartesianChart Grid.Row="1" Margin="5" Series="{Binding SeriesCollection}" LegendLocation="None" 
+                                        Visibility="{Binding IsShowCustomReport, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Ngày" Labels="{Binding ArrayDates}" LabelsRotation="45">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator Step="1"/>
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Doanh Thu" LabelFormatter="{Binding FormatterTop10}"/>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+
+        
     </materialDesign:TransitioningContent>
 </UserControl>

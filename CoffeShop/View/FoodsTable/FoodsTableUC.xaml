@@ -92,7 +92,8 @@
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock FontSize="18" Foreground="#13548A" Margin="8" FontWeight="SemiBold" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <TextBlock FontSize="18" Foreground="#13548A" Margin="8" FontWeight="SemiBold" Text="{Binding Name}" 
+                                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
                                         <WrapPanel Grid.Row="1" Orientation="Vertical"
                                                    Visibility="{Binding IsActive, Converter={StaticResource BooleanToVisibilityConverter}}"

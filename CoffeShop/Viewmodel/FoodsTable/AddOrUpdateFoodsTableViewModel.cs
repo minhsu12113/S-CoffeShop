@@ -97,13 +97,13 @@ namespace CoffeShop.Viewmodel.FoodsTable
             if(f == null)
             {
                 fClone.Count = 1;
-                fClone.TotalPrice = fClone.Count * fClone.Price;
+                fClone.TotalPrice = (fClone.Count * fClone.Price) - (fClone.Count *  food.Discount); 
                 FoodListInTable.Add(fClone);
             }
             else
             {
                 f.Count += 1;
-                f.TotalPrice = f.Count * f.Price;
+                f.TotalPrice = (f.Count * f.Price) - (f.Discount * f.Count);
             }
             CalculateTotalPriceInBill();
         }
@@ -120,7 +120,7 @@ namespace CoffeShop.Viewmodel.FoodsTable
             if(food.Count == 0)
                 FoodListInTable.Remove(food);
             else
-                food.TotalPrice = food.Count * food.Price;
+                food.TotalPrice = (food.Count * food.Price) - food.Discount;
             CalculateTotalPriceInBill();
         }
 
@@ -201,7 +201,7 @@ namespace CoffeShop.Viewmodel.FoodsTable
                         {
                             var fClone = MyExtention.CloneData<FoodModel>(food);
                             fClone.Count = foodBill.Quantity;
-                            fClone.TotalPrice = fClone.Count * fClone.Price;
+                            fClone.TotalPrice = (fClone.Count * fClone.Price) - (fClone.Discount * fClone.Count);
                             FoodListInTable.Add(fClone);
                         }
                     }
