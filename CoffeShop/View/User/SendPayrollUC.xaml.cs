@@ -5,20 +5,13 @@ using CoffeShop.Viewmodel.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CoffeShop.View.User
 {
@@ -54,8 +47,9 @@ namespace CoffeShop.View.User
                     return;
                 }
 
-                string passMail = "nbbl ywct jmbn qibi";
+                string passMail = "dvep izbm wknc iplx";
                 string mailMaster = "minhsu12113@gmail.com";
+
                 foreach (var user in ViewModel.UserModelList)
                 {
                     if (user.IsSelected)
@@ -63,6 +57,7 @@ namespace CoffeShop.View.User
                         Task.Run(() => {
                             using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
                             {
+                                var pathCheckinFile = "BangChamCong.xlsx";
                                 client.EnableSsl = true;
                                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                                 client.UseDefaultCredentials = false;
@@ -70,8 +65,14 @@ namespace CoffeShop.View.User
                                 var mailObj = new MailMessage();
                                 mailObj.From = new MailAddress(mailMaster);
                                 mailObj.To.Add(user.Email);
-                                mailObj.Subject = $"Payroll Coffee Shop_{user.UserName}";
-                                mailObj.Body = $"This is your Pay roll link: {user.FullName}";
+                                mailObj.Subject = $"Payroll Coffee Shop_{user.FullName}";
+                                mailObj.Body = $"Hi {user.FullName} bên dưới là file bảng lương của bạn, mọi thắc mắc xin liên hệ {mailMaster}";
+                                var isFileExits = File.Exists(pathCheckinFile);
+                                if (isFileExits)
+                                {
+                                    var file = Path.GetFullPath(pathCheckinFile);
+                                    mailObj.Attachments.Add(new Attachment(file));
+                                }    
                                 client.Send(mailObj);
                             }
                         });
