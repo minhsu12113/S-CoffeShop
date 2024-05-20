@@ -88,7 +88,7 @@
                                     <GridViewColumn Header="STT" DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource CountItemListView}}"/>
                                     <GridViewColumn Header="Tổng Tiền" DisplayMemberBinding="{Binding TotalPrice,StringFormat={}{0:0,000 (VND)}}"/>
                                     <GridViewColumn Header="Thời Gian Thanh Toán" DisplayMemberBinding="{Binding PaymentTime}"/>
-                                    <GridViewColumn Header="Nhân Viên Thanh Toán" DisplayMemberBinding="{Binding AccountCheckout}"/>
+                                    <!--<GridViewColumn Header="Nhân Viên Thanh Toán" DisplayMemberBinding="{Binding AccountCheckout}"/>-->
                                 </GridView>
                             </ListView.View>
                         </ListView>

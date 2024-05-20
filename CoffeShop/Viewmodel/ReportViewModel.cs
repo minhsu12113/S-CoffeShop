@@ -89,18 +89,18 @@ namespace CoffeShop.Viewmodel
         }
 
         public Func<double, string> FormatterTop10 { get; set; } 
-        public ReportViewModel() 
+        public ReportViewModel()
         {
+            FormatterTop10 = value => value.ToString("N0");
+            StartDate = DateTime.Now.AddDays(-7);
+            EndDate = DateTime.Now;
             LoadReport();
             LoadReportTopSellInWeek();
             LoadReportPaymentBillRecently();
         }
 
         public void LoadReport()
-        {
-            FormatterTop10 = value => value.ToString("N0");
-            StartDate = DateTime.Now.AddDays(-7);
-            EndDate = DateTime.Now;
+        { 
 
             if (StartDate > EndDate)
             {
