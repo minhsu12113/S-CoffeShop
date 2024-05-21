@@ -80,19 +80,7 @@
   <PropertyGroup>
     <ApplicationIcon>burger_logo_preview__g33_icon.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup />
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>D8573461FC98C57CF467EE3B857CB1557D1DDB17</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>CoffeShop_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>true</SignManifests>
-  </PropertyGroup>
+  <PropertyGroup /> 
   <ItemGroup>
     <Reference Include="InfragisticsWPF, Version=23.2.20232.157, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
       <HintPath>..\packages\Infragistics.WPF.Trial.23.2.157\lib\net40\InfragisticsWPF.dll</HintPath>
