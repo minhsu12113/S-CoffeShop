@@ -177,8 +177,23 @@ namespace CoffeShop.Viewmodel
              
             var dtBillFoods = TM_BILL_FOOD.Instance.GetAll();
             var billFoods = BILL_FOOD.ParseDataTable(dtBillFoods);
+            var billFoodsInWeek = new List<BILL_FOOD>();
 
-            foreach (var billFood in billFoods)
+            var dtBills = TM_BILL_DAO.Instance.GetAll();
+            var bills = BILL.ParseDataTable(dtBills); 
+
+            var timeBackToOneWeek = DateTime.ParseExact(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd/ HH:mm:ss"), "yyyy/MM/dd/ HH:mm:ss", CultureInfo.InvariantCulture);
+            foreach (var bill in bills)
+            {
+                var payTime = DateTime.ParseExact(bill.PaymentTime, "yyyy/MM/dd/ HH:mm:ss", CultureInfo.InvariantCulture);
+                if(payTime >= timeBackToOneWeek)
+                {
+                    var billFood = billFoods.Where(bf => bf.IDBill == bill.ID_HoaDon);
+                    billFoodsInWeek.AddRange(billFood);
+                }
+            }
+
+            foreach (var billFood in billFoodsInWeek)
             {
                 foodDict[billFood.IdFood] += billFood.Quantity;
             }
