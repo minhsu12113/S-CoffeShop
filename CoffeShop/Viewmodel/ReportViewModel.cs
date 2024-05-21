@@ -185,12 +185,16 @@ namespace CoffeShop.Viewmodel
             var timeBackToOneWeek = DateTime.ParseExact(DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd/ HH:mm:ss"), "yyyy/MM/dd/ HH:mm:ss", CultureInfo.InvariantCulture);
             foreach (var bill in bills)
             {
-                var payTime = DateTime.ParseExact(bill.PaymentTime, "yyyy/MM/dd/ HH:mm:ss", CultureInfo.InvariantCulture);
-                if(payTime >= timeBackToOneWeek)
+                if (!String.IsNullOrEmpty(bill.PaymentTime))
                 {
-                    var billFood = billFoods.Where(bf => bf.IDBill == bill.ID_HoaDon);
-                    billFoodsInWeek.AddRange(billFood);
+                    var payTime = DateTime.ParseExact(bill.PaymentTime, "yyyy/MM/dd/ HH:mm:ss", CultureInfo.InvariantCulture);
+                    if (payTime >= timeBackToOneWeek)
+                    {
+                        var billFood = billFoods.Where(bf => bf.IDBill == bill.ID_HoaDon);
+                        billFoodsInWeek.AddRange(billFood);
+                    }
                 }
+                
             }
 
             foreach (var billFood in billFoodsInWeek)
