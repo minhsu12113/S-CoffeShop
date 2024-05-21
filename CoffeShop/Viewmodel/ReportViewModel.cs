@@ -210,7 +210,9 @@ namespace CoffeShop.Viewmodel
         public void LoadReportPaymentBillRecently()
         {
             var dtBills = TM_BILL_DAO.Instance.GetAll();
-            var bills = BILL.ParseDataTable(dtBills)?.Where(b => !String.IsNullOrEmpty(b.PaymentTime))?.ToList().OrderBy(b => b.PaymentTime);
+            var bills = BILL.ParseDataTable(dtBills)?.Where(b => 
+            !String.IsNullOrEmpty(b.PaymentTime))?.
+            ToList().OrderBy(b => DateTime.ParseExact(b.PaymentTime, "yyyy/MM/dd/ HH:mm:ss", CultureInfo.InvariantCulture));
              
 
             int count = 1;
