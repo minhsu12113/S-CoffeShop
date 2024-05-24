@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Documents;
 using System.Collections.Generic;
 using CoffeShop.DAO;
+using CoffeShop.Utility;
 
 namespace CoffeShop.Viewmodel.Categorys
 {
@@ -110,10 +111,12 @@ namespace CoffeShop.Viewmodel.Categorys
             if(addOrUpdateObj != null)
             {
                 TM_CATELOGY_DAO.Instance.Update(category.Data);
+                CSGlobal.Instance.MainWindow.Notify("Cập Nhật Danh Mục Thành Công");
             }
             else
             {
                 TM_CATELOGY_DAO.Instance.Insert(category.Data);
+                CSGlobal.Instance.MainWindow.Notify("Thêm Mới Danh Mục Thành Công");
             }
             LoadCategory();
         }

@@ -24,7 +24,8 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Margin="0 8 0 8" FontSize="{Binding FontSize24,Source={StaticResource SizeManager}}" FontWeight="SemiBold" Text="Thêm Mới Tài Khoản" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="0" Margin="0 8 0 8" FontSize="{Binding FontSize24,Source={StaticResource SizeManager}}"
+                   FontWeight="SemiBold" Text="{Binding Header}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
         <TextBox Grid.Row="1" Text="{Binding CurrentUser.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                  IsEnabled="{Binding IsCanEditUserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  

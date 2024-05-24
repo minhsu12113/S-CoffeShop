@@ -125,6 +125,8 @@
                     <ContentControl Grid.Row="1" Margin="5 5 15 8" Content="{Binding CurrenView}" />
                    
                 </Grid>
+                <materialDesign:Snackbar Grid.Column="0" Grid.ColumnSpan="3" Name="notiSnack"  
+                                         Background="Green" HorizontalAlignment="Right" Margin="36"/>
                 <ProgressBar Height="9" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Bottom" IsIndeterminate="True" Foreground="Wheat"
                              Visibility="{Binding IsLoadSomeThing,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibility}}"/>
             </Grid>

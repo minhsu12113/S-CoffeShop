@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Margin=" 0 8 0 16"  FontSize="{Binding FontSize24,Source={StaticResource SizeManager}}" 
-                   FontWeight="SemiBold" Text="Thêm Mới Khu Vực Và Bàn" VerticalAlignment="Center" 
+                   FontWeight="SemiBold" Text="{Binding Header}" VerticalAlignment="Center" 
                    HorizontalAlignment="Center"/>
         <Separator Grid.Row="0" Margin=" 0 8 0 8" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
                    BorderBrush="Silver" BorderThickness="0.7"/>

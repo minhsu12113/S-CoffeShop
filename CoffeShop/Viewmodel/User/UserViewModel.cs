@@ -60,7 +60,8 @@ namespace CoffeShop.Viewmodel.User
         {
             get { return _nameSearch; }
             set { _nameSearch = value; OnPropertyChanged(); SearchCategory(); }
-        }
+        } 
+
 
         #endregion
 
@@ -121,10 +122,12 @@ namespace CoffeShop.Viewmodel.User
             if (addOrUpdateObj != null)
             { 
                 AccountDAO.Instance.Update(model.Data);
+                CSGlobal.Instance.MainWindow.Notify("Cập Nhật Khoản Thành Công");
             }
             else
             {
                 AccountDAO.Instance.Insert(model.Data);
+                CSGlobal.Instance.MainWindow.Notify("Thêm Tài Khoản Thành Công");
             }    
 
             LoadUser();

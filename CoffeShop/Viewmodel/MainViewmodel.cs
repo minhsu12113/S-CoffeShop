@@ -15,6 +15,8 @@ using CoffeShop.View.FoodsTable;
 using CoffeShop.View.Area;
 using CoffeShop.Viewmodel.Food;
 using CoffeShop.View.CheckIn;
+using MaterialDesignThemes.Wpf;
+using System;
 
 namespace CoffeShop.Viewmodel
 {
@@ -76,9 +78,8 @@ namespace CoffeShop.Viewmodel
         {
             StringResources.ApplyLanguage(Enums.ALL_ENUM.LANGUAGE.VN);
             CurrenView = new FoodsTableUC();
-            StateWindow = WindowState.Normal;
-        }
-        
+            StateWindow = WindowState.Normal; 
+        } 
         public FoodsUC FoodsUC { get; set; }
         public AreaUC AreaUC { get; set; }
         public CategoryUC CategoryUC { get; set; }

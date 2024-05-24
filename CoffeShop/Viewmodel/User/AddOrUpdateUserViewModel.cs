@@ -49,6 +49,13 @@ namespace CoffeShop.Viewmodel.User
             set { _permison = value; OnPropertyChanged(); }
         }
 
+        private string _header;
+        public string Header
+        {
+            get { return _header; }
+            set { _header = value; OnPropertyChanged(); }
+        }
+
         #endregion
 
         #region [Action]
@@ -78,6 +85,7 @@ namespace CoffeShop.Viewmodel.User
             {
                 CurrentUser = new UserModel(); 
                 Permision = PermisionList[0];
+                Header = "Thêm Mới Tài Khoản";
             }
             else  // Edit
             {
@@ -86,6 +94,7 @@ namespace CoffeShop.Viewmodel.User
                 var temper = PermisionList.Where(p => p == CurrentUser.Permission).FirstOrDefault();
                 Permision = String.IsNullOrEmpty(temper) ? PermisionList[0] : temper;
                 IsCanEditUserName = false;
+                Header = "Chỉnh Sửa Tài Khoản";
             }
              
             AddCategoryOrEditCategoryCallback = addUserOrEditCategoryCallback;

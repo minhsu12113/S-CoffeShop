@@ -1,6 +1,7 @@
 ﻿using CoffeShop.DAO;
 using CoffeShop.DAO.Model;
 using CoffeShop.Model;
+using CoffeShop.Utility;
 using CoffeShop.View.Dialog;
 using CoffeShop.View.Foods;
 using CoffeShop.Viewmodel.Base;
@@ -187,10 +188,12 @@ namespace CoffeShop.Viewmodel.Food
             if(objEdit != null)
             {
                 TM_FOOD_DAO.Instance.Update(food.Data);
+                CSGlobal.Instance.MainWindow.Notify("Cập Nhật Thức Ăn Thành Công");
             }
             else
             {
                 TM_FOOD_DAO.Instance.Insert(food.Data);
+                CSGlobal.Instance.MainWindow.Notify("Thêm Mới Thức Ăn Thành Công");
             }
 
            LoadFoodAsync();

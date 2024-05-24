@@ -1,6 +1,7 @@
 ﻿using CoffeShop.Utility;
 using CoffeShop.View.Dialog;
 using CoffeShop.Viewmodel;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,12 @@ namespace CoffeShop
             InitializeComponent();
             CSGlobal.Instance.MainWindow = this;
             CSGlobal.Instance.MainViewmodel = this.DataContext as MainViewmodel;
+            this.Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        { 
+            notiSnack.MessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)
@@ -43,5 +50,7 @@ namespace CoffeShop
                 CSGlobal.Instance.LoginWindow.Show();
             }, CSGlobal.Instance.MainViewmodel.CloseDialog));
         }
+
+        public void Notify(string mess) => notiSnack.MessageQueue.Enqueue(mess);
     }
 }

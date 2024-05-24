@@ -26,11 +26,20 @@ namespace CoffeShop.Viewmodel.Categorys
             get { return _currentCategory; }
             set { _currentCategory = value; OnPropertyChanged(); }
         }
+
+        private string _header;
+        public string Header
+        {
+            get { return _header; }
+            set { _header = value; OnPropertyChanged(); }
+        }
         #endregion
+
         #region [Action]
         public Action<CategoryModel> AddCategoryOrEditCategoryCallback { get; set; }
         public Action CloseDialogParent { get; set; }
         #endregion
+
         #region [Command]
         public ICommand CloseDialogCMD { get { return new CommandHelper(CloseDialogParent); } }
         public ICommand SaveCMD { get { return new CommandHelper(Save); } }
@@ -40,12 +49,14 @@ namespace CoffeShop.Viewmodel.Categorys
         {
             if (category == null) // Add new
             {
-                CurrentCategory = new CategoryModel(); 
+                CurrentCategory = new CategoryModel();
+                Header = "Thêm Mới Danh Mục";
             }                
             else  // Edit
             {
                 CurrentCategory = category.Clone();
                 _isEdit = true;
+                Header = "Chỉnh Sửa Danh Mục";
             } 
 
             MaxLengthName = CurrentCategory.GetAttributeFrom<MaxLengthAttribute>(nameof(CurrentCategory.Name)).Length;

@@ -26,6 +26,12 @@ namespace CoffeShop.Viewmodel.Categorys
             set { _currentArea = value; OnPropertyChanged(); }
         }
 
+        private string _header;
+        public string Header
+        {
+            get { return _header; }
+            set { _header = value; OnPropertyChanged(); }
+        }
 
         public List<TableViewModel> TableListMaster { get; set; } = new List<TableViewModel>();
         private ObservableCollection<TableViewModel> _tableList;
@@ -42,6 +48,7 @@ namespace CoffeShop.Viewmodel.Categorys
             CloseDialogParent = closeDialog;
             if (area == null)
             {
+                Header = "Thêm Mới Khu Vực";
                 TableListMaster = new List<TableViewModel>() 
                 { 
                     new TableViewModel() { Name = "Ban 1"},
@@ -54,6 +61,7 @@ namespace CoffeShop.Viewmodel.Categorys
 
             if(area != null)
             {
+                Header = "Chỉnh Sửa Khu Vực";
                 CurrentArea = MyExtention.CloneData<AreaModel>(area);
                 var tablesClone = ObjectCopier.Clone<List<TableViewModel>>(tables);
                 TableListMaster = new List<TableViewModel>(tablesClone);

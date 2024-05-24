@@ -1,6 +1,7 @@
 ﻿using CoffeShop.DAO;
 using CoffeShop.Internationalization;
 using CoffeShop.Model;
+using CoffeShop.Utility;
 using CoffeShop.View.Area;
 using CoffeShop.View.Categorys;
 using CoffeShop.View.Dialog;
@@ -142,7 +143,8 @@ namespace CoffeShop.Viewmodel.Area
             var addOrUpdateObj = MastetAreaList.Where(c => c.Id == area.Id)?.FirstOrDefault();
             if (addOrUpdateObj != null)
             {
-                TM_AREA_DAO.Instance.Update(area.Data);
+                TM_AREA_DAO.Instance.Update(area.Data); 
+                CSGlobal.Instance.MainWindow.Notify("Cập Nhật Khu Vực Thành Công");
             }
             else
             {
@@ -155,7 +157,8 @@ namespace CoffeShop.Viewmodel.Area
 
                 TM_AREA_DAO.Instance.Insert(area.Data);
                 var td = TM_AREA_DAO.Instance.Get_Area();
-                area = AreaModel.ParseAreaList(td).Where(a => a.Name == area.Name).FirstOrDefault(); 
+                area = AreaModel.ParseAreaList(td).Where(a => a.Name == area.Name).FirstOrDefault();
+                CSGlobal.Instance.MainWindow.Notify("Thêm Khu Vực Thành Công");
             }
 
             foreach (var table in tables)

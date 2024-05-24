@@ -61,6 +61,7 @@ namespace CoffeShop.DAO
 			catch (Exception ex)
 			{
                 MessageBox.Show(ex.Message);
+                Environment.Exit(-1);
                 return null;
 			}
 		}
@@ -96,6 +97,7 @@ namespace CoffeShop.DAO
 			catch (Exception ex)
 			{
                 MessageBox.Show(ex.Message);
+                Environment.Exit(-1);
                 return -1;
             }
 			

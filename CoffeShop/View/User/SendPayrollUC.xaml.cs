@@ -79,6 +79,8 @@ namespace CoffeShop.View.User
                     }
                 } 
             }
+
+            CSGlobal.Instance.MainWindow.Notify("Đã Gửi Yêu Cầu Gửi Mail!");
             CallbackCloseDialog?.Invoke();
         }
     }

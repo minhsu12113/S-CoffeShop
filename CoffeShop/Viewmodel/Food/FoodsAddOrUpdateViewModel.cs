@@ -36,6 +36,13 @@ namespace CoffeShop.Viewmodel.Food
             get { return _foodCurrent; }
             set { _foodCurrent = value; }
         }
+
+        private string _header;
+        public string Header
+        {
+            get { return _header; }
+            set { _header = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region [Collection]
@@ -69,10 +76,14 @@ namespace CoffeShop.Viewmodel.Food
             {
                 FoodCurrent = foodModel.Clone();
                 CategoryCurrent = CategoryList?.Where(c => c.Id == foodModel.CategoryId).FirstOrDefault();
-                
+                Header = "Chỉnh Sửa Thức Ăn";
+
             }
             else
+            {
                 FoodCurrent = new FoodModel();
+                Header = "Thêm Mới Thức Ăn";
+            }    
 
             CloseDialogParent = closeDialog;
             CallbackAddFood = callbackAddFood;            
