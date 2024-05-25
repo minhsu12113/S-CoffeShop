@@ -51,6 +51,18 @@ namespace CoffeShop
             }, CSGlobal.Instance.MainViewmodel.CloseDialog));
         }
 
+        public void Logout()
+        {
+            var dataContext = CSGlobal.Instance.LoginWindow.DataContext as LoginViewmodel;
+            dataContext.CurrentUser.UserName = "";
+            dataContext.CurrentUser.Password = "";
+            dataContext.IsRemember = false;
+            dataContext.SaveRememberData();
+            CSGlobal.Instance.MainViewmodel.CloseDialog();
+            this.Hide();
+            CSGlobal.Instance.LoginWindow.Show();
+        }
+
         public void Notify(string mess) => notiSnack.MessageQueue.Enqueue(mess);
     }
 }

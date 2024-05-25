@@ -111,6 +111,14 @@
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                 </materialDesign:PackIcon>
+                                                <materialDesign:PackIcon Kind="PasswordReset" Background="Transparent" Style="{StaticResource CumtomStylePack}" Margin="5" Foreground="Gray" HorizontalAlignment="Center" Width="Auto" Height="Auto">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                            <i:InvokeCommandAction Command="{Binding Path=DataContext.ChangePasswordCMD, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" 
+                                                                        CommandParameter="{Binding}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </materialDesign:PackIcon>
                                                 <materialDesign:PackIcon Kind="CloseBox" Background="Transparent" Visibility="{Binding Path=DataContext.IsAdmin, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Converter={StaticResource BooleanToVisibilityConverter}}" 
                                                                          Style="{StaticResource CumtomStylePack}" Margin="5" Foreground="DarkRed" HorizontalAlignment="Center" Width="Auto" Height="Auto">
                                                     <i:Interaction.Triggers>

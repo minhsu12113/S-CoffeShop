@@ -13,27 +13,44 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/> 
             </Grid.RowDefinitions>
 
-            <Button HorizontalAlignment="Right" materialDesign:ButtonAssist.CornerRadius="5" Click="Save_Check_In_Click"
-                     Visibility="{Binding IsAdmin,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"
-                    Margin="15 5 10 16" HorizontalContentAlignment="Stretch" VerticalAlignment="Bottom">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <materialDesign:PackIcon Grid.Column="0" Kind="ContentSave" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto"/>
-                    <TextBlock Grid.Column="1" Margin="5 0 0 0" Text="Lưu Bảng Chấm Công" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Grid>
-            </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding IsShowFunc, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Button HorizontalAlignment="Right" materialDesign:ButtonAssist.CornerRadius="5" Click="Export_Click"
+                        Visibility="{Binding IsAdmin,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Margin="15 5 10 16" HorizontalContentAlignment="Stretch" VerticalAlignment="Bottom">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="FileExcel" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto"/>
+                        <TextBlock Grid.Column="1" Margin="5 0 0 0" Text="Export Bảng Chấm Công" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Grid>
+                </Button>
 
-            <Grid Grid.Row="1">
+                <Button HorizontalAlignment="Right" materialDesign:ButtonAssist.CornerRadius="5" Click="Save_Check_In_Click"
+                        Visibility="{Binding IsAdmin,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Margin="15 5 10 16" HorizontalContentAlignment="Stretch" VerticalAlignment="Bottom">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="ContentSave" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto"/>
+                        <TextBlock Grid.Column="1" Margin="5 0 0 0" Text="Lưu Bảng Chấm Công" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Grid>
+                </Button>
+            </StackPanel>
+
+           
+
+            <Grid Grid.Row="2">
                 <TextBlock Text="Mở file chấm công thất bại, vui vòng đóng file excel chấm công nếu đang mở, hoặc chắc rằng file chấm công có tồn tại!" 
-           Visibility="{Binding IsShowError, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-           VerticalAlignment="Center" HorizontalAlignment="Center" 
-           FontSize="{Binding FontSize18,Source={StaticResource SizeManager}}" FontWeight="SemiBold"/>
+                    Visibility="{Binding IsShowError, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" 
+                    FontSize="{Binding FontSize18,Source={StaticResource SizeManager}}" FontWeight="SemiBold"/>
                 <exc:XamSpreadsheet Visibility="{Binding IsShowExcel,Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                     Name="excelControl" Margin="0 0 0 16"></exc:XamSpreadsheet>
             </Grid>

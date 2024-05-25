@@ -80,7 +80,7 @@
   <PropertyGroup>
     <ApplicationIcon>burger_logo_preview__g33_icon.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup /> 
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="InfragisticsWPF, Version=23.2.20232.157, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
       <HintPath>..\packages\Infragistics.WPF.Trial.23.2.157\lib\net40\InfragisticsWPF.dll</HintPath>
@@ -207,6 +207,7 @@
     <Compile Include="Viewmodel\PagingViewmodel.cs" />
     <Compile Include="Viewmodel\ReportViewModel.cs" />
     <Compile Include="Viewmodel\User\AddOrUpdateUserViewModel.cs" />
+    <Compile Include="Viewmodel\User\ChangePassworldUCViewModel.cs" />
     <Compile Include="Viewmodel\User\UserViewModel.cs" />
     <Compile Include="View\Area\AreaAddOrUpdateUC.xaml.cs">
       <DependentUpon>AreaAddOrUpdateUC.xaml</DependentUpon>
@@ -255,6 +256,9 @@
     </Compile>
     <Compile Include="View\User\AddOrUpdateUserUC.xaml.cs">
       <DependentUpon>AddOrUpdateUserUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\User\ChangePasswordUC.xaml.cs">
+      <DependentUpon>ChangePasswordUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\User\SendPayrollUC.xaml.cs">
       <DependentUpon>SendPayrollUC.xaml</DependentUpon>
@@ -412,6 +416,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\User\AddOrUpdateUserUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\User\ChangePasswordUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

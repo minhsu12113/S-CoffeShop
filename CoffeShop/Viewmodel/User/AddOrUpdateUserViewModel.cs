@@ -1,5 +1,6 @@
 ﻿using CoffeShop.ExtentionCommon;
 using CoffeShop.Model;
+using CoffeShop.Utility;
 using CoffeShop.Viewmodel.Base;
 using System;
 using System.Collections.Generic;
@@ -56,11 +57,19 @@ namespace CoffeShop.Viewmodel.User
             set { _header = value; OnPropertyChanged(); }
         }
 
+        private bool _isShowPasswordSection;
+        public bool IsShowPasswordSection
+        {
+            get { return _isShowPasswordSection; }
+            set { _isShowPasswordSection = value; OnPropertyChanged(); }
+        }
+
         #endregion
 
         #region [Action]
-        public Action<UserModel> AddCategoryOrEditCategoryCallback { get; set; }
+        public Action<UserModel, bool> AddCategoryOrEditCategoryCallback { get; set; }
         public Action CloseDialogParent { get; set; }
+        public bool IsEdit { get; set; }
         #endregion
 
         #region [Command]
@@ -77,7 +86,7 @@ namespace CoffeShop.Viewmodel.User
         }
         #endregion
 
-        public AddOrUpdateUserViewModel(Action<UserModel> addUserOrEditCategoryCallback, Action closeDialog, UserModel user = null)
+        public AddOrUpdateUserViewModel(Action<UserModel, bool> addUserOrEditCategoryCallback, Action closeDialog, UserModel user = null)
         {
             PermisionList = new List<string>() { "Nhân Viên", "Quản Lý" };
             IsCanEditUserName = true;
@@ -90,11 +99,13 @@ namespace CoffeShop.Viewmodel.User
             else  // Edit
             {
                 CurrentUser = user.Clone();
-                CurrentUser.Password = "";
+                ReEnterPassord = CurrentUser.Password;
                 var temper = PermisionList.Where(p => p == CurrentUser.Permission).FirstOrDefault();
                 Permision = String.IsNullOrEmpty(temper) ? PermisionList[0] : temper;
                 IsCanEditUserName = false;
                 Header = "Chỉnh Sửa Tài Khoản";
+                IsShowPasswordSection = false;
+                IsEdit = true;
             }
              
             AddCategoryOrEditCategoryCallback = addUserOrEditCategoryCallback;
@@ -102,12 +113,16 @@ namespace CoffeShop.Viewmodel.User
         }
 
         public void Save()
-        { 
-            if (String.IsNullOrEmpty(CurrentUser.Password) || String.IsNullOrEmpty(CurrentUser.UserName))
+        {
+            if (!IsEdit)
             {
-                MessageBox.Show("Vui Lòng Nhập Đầy Đủ Thông Tin!");
-                return;
+                if (String.IsNullOrEmpty(CurrentUser.Password) || String.IsNullOrEmpty(CurrentUser.UserName))
+                {
+                    MessageBox.Show("Vui Lòng Nhập Đầy Đủ Thông Tin!");
+                    return;
+                }
             }
+            
 
             if (CurrentUser.UserName.ToLower().Contains("admin") || CurrentUser.UserName.Contains(" ") || CurrentUser.UserName.Any(char.IsUpper))
             {
@@ -126,9 +141,9 @@ namespace CoffeShop.Viewmodel.User
                 MessageBox.Show("Mật khẩu không khớp!");
                 return;
             }
-
+            bool isChangRole = CurrentUser.Permission != Permision && IsEdit && CSGlobal.Instance.CurrentUser.UserName == CurrentUser.UserName;
             CurrentUser.Permission = Permision;
-            AddCategoryOrEditCategoryCallback(CurrentUser);
+            AddCategoryOrEditCategoryCallback(CurrentUser, isChangRole);
             CloseDialogParent();
         }
     }

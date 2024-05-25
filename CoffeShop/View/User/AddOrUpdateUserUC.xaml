@@ -80,7 +80,7 @@
             </materialDesign:HintAssist.Hint>
         </TextBox>
 
-        <PasswordBox Grid.Row="6" util:PasswordHelper.Attach="True" 
+        <PasswordBox Visibility="{Binding IsShowPasswordSection, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="6" util:PasswordHelper.Attach="True" 
                      util:PasswordHelper.Password="{Binding CurrentUser.Password,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                   FontSize="16" VerticalContentAlignment="Bottom"  Margin="16 16 0 0">
             <materialDesign:HintAssist.Hint>
@@ -91,7 +91,8 @@
         </PasswordBox>
 
         <PasswordBox Grid.Row="7" util:PasswordHelper.Attach="True" util:PasswordHelper.Password="{Binding ReEnterPassord,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
-                  FontSize="16" VerticalContentAlignment="Bottom" Margin="16 16 0 8">
+                  FontSize="16" VerticalContentAlignment="Bottom" Margin="16 16 0 8"
+                     Visibility="{Binding IsShowPasswordSection, Converter={StaticResource BooleanToVisibilityConverter}}">
             <materialDesign:HintAssist.Hint>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Nhập Lại Mật Khẩu" VerticalAlignment="Center" HorizontalAlignment="Center"/> 
@@ -100,7 +101,8 @@
         </PasswordBox>
 
         <ComboBox   Grid.Row="8" SelectedItem="{Binding Permision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PermisionList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" 
-          FontSize="16" Margin="16 0 16 0" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+          FontSize="16" Margin="16 0 16 0" Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    IsEnabled="{Binding IsAdmin}">
             <materialDesign:HintAssist.Hint>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Chức Danh" VerticalAlignment="Center" HorizontalAlignment="Center"/>

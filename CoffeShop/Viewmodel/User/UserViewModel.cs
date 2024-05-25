@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CoffeShop.Viewmodel.User
@@ -22,7 +23,7 @@ namespace CoffeShop.Viewmodel.User
         public ICommand AddNewCMD { get { return new CommandHelper(OpenDialogAddNew); } }
         public ICommand OpenUCSendPayrollCMD { get { return new CommandHelper(OpenUCSendPayroll); } }
         public ICommand EditCMD { get { return new CommandHelper<UserModel>((c) => { return c != null; }, OpenDialogEdit); } }
-
+        public ICommand ChangePasswordCMD { get { return new CommandHelper<UserModel>((c) => { return c != null; }, OpenDialogChangePassword); } }
         public ICommand DeleteCMD { get { return new CommandHelper<UserModel>((c) => { return c != null; }, DeleteUser); } }
 
         public ICommand SearchCMD { get { return new CommandHelper(LoadUser); } }
@@ -49,11 +50,20 @@ namespace CoffeShop.Viewmodel.User
                 DialogContent = uc;
             IsOpenDialog = true;
         }
-
         public void CloseDialog()
         {
             IsOpenDialog = false;
         }
+
+        public void CloseDialog(bool isReload)
+        {
+            IsOpenDialog = false;
+            if(isReload)
+                LoadUser();
+
+        }
+
+       
 
         private string _nameSearch;
         public string NameSearch
@@ -115,14 +125,21 @@ namespace CoffeShop.Viewmodel.User
 
         }
 
-        private void AddUserOrEdit(UserModel model)
-        {
-            
+        private void AddUserOrEdit(UserModel model, bool isLogOut = false)
+        { 
             var addOrUpdateObj = UserModelMasterList.Where(u => u.Id == model.Id)?.FirstOrDefault();
             if (addOrUpdateObj != null)
             { 
                 AccountDAO.Instance.Update(model.Data);
                 CSGlobal.Instance.MainWindow.Notify("Cập Nhật Khoản Thành Công");
+
+                if (isLogOut)
+                {
+                    var mess = "Có Sự Thay Đổi Về Phân Quyên, Vui Lòng Đăng Xuất Và Đăng Nhập Lại";
+                    MessageBox.Show(mess, "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    CSGlobal.Instance.MainWindow.Logout();
+                    return;
+                }
             }
             else
             {
@@ -151,9 +168,8 @@ namespace CoffeShop.Viewmodel.User
                 }, CloseDialog));
         }
 
-        public void OpenUCSendPayroll()
-        {
-            OpenDialog(new SendPayrollUC(CloseDialog));
-        }
+        public void OpenUCSendPayroll() => OpenDialog(new SendPayrollUC(CloseDialog));
+
+        public void OpenDialogChangePassword(UserModel user) => OpenDialog(new ChangePasswordUC(user, CloseDialog));
     }
 }

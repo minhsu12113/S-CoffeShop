@@ -44,6 +44,14 @@ namespace CoffeShop.Viewmodel.CheckIn
             set { _isShowExcel = value; OnPropertyChanged(); }
         }
 
+        private bool _isShowFunc = true;
+        public bool IsShowFunc
+        {
+            get { return _isShowFunc; }
+            set { _isShowFunc = value; OnPropertyChanged(); }
+        }
+
+
         public string FileNameExcel { get; set; } = "BangChamCong.xlsx";
 
         public Task<Workbook> LoadWorkBook()
