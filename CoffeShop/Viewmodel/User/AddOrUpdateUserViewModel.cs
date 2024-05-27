@@ -95,6 +95,7 @@ namespace CoffeShop.Viewmodel.User
                 CurrentUser = new UserModel(); 
                 Permision = PermisionList[0];
                 Header = "Thêm Mới Tài Khoản";
+                IsShowPasswordSection = true;
             }
             else  // Edit
             {
