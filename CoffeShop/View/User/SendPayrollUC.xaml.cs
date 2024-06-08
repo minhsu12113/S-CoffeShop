@@ -47,8 +47,8 @@ namespace CoffeShop.View.User
                     return;
                 }
 
-                string passMail = "";
-                string mailMaster = "minhsu12113@gmail.com";
+                string passMail = "vczr dsdh gzpf jfzg";
+                string mailMaster = "hoangnguyenba1112@gmail.com";
 
                 foreach (var user in ViewModel.UserModelList)
                 {

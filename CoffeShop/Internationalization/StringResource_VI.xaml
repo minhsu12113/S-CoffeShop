@@ -45,7 +45,7 @@
     <!--#region [Navigate] -->
     <sys:String x:Key="HOME">Trang chủ</sys:String>
     <sys:String x:Key="DASHBOARD">Bảng điều khiển</sys:String>
-    <sys:String x:Key="FOODS">Thức ăn</sys:String>
+    <sys:String x:Key="FOODS">Thực đơn</sys:String>
     <sys:String x:Key="CATEGORY">Danh mục</sys:String>
     <sys:String x:Key="STATISTICS">Thống kê</sys:String>
     <sys:String x:Key="USER">Tài khoản</sys:String>

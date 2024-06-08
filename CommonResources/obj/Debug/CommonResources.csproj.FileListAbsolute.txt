@@ -32,3 +32,10 @@ D:\Codes\mentor\S-CoffeShop\CommonResources\obj\Debug\CommonResources.g.resource
 D:\Codes\mentor\S-CoffeShop\CommonResources\obj\Debug\CommonResources.csproj.CoreCompileInputs.cache
 D:\Codes\mentor\S-CoffeShop\CommonResources\obj\Debug\CommonResources.dll
 D:\Codes\mentor\S-CoffeShop\CommonResources\obj\Debug\CommonResources.pdb
+D:\CoffeeShop\CommonResources\bin\Debug\CommonResources.dll
+D:\CoffeeShop\CommonResources\bin\Debug\CommonResources.pdb
+D:\CoffeeShop\CommonResources\obj\Debug\CommonResources.csproj.AssemblyReference.cache
+D:\CoffeeShop\CommonResources\obj\Debug\CommonResources.g.resources
+D:\CoffeeShop\CommonResources\obj\Debug\CommonResources.csproj.CoreCompileInputs.cache
+D:\CoffeeShop\CommonResources\obj\Debug\CommonResources.dll
+D:\CoffeeShop\CommonResources\obj\Debug\CommonResources.pdb

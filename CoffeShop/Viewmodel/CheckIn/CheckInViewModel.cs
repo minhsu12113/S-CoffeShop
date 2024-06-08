@@ -65,7 +65,7 @@ namespace CoffeShop.Viewmodel.CheckIn
                     res = Workbook.Load(filePath);
 
                     var dt = AccountDAO.Instance.Get_All();
-
+                    
                    await App.Current.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         var users = UserModel.ParseUsers(dt)?.OrderBy(x => DateTime.ParseExact(x.DateCreate, "MM/dd/yyyy HH:mm:ss", DateTimeFormatInfo.InvariantInfo)).ToList();
